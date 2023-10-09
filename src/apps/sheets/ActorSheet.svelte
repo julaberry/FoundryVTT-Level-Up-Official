@@ -17,6 +17,7 @@
     import ActorSkillsPage from "../components/pages/ActorSkillsPage.svelte";
     import ActorSpellsPage from "../components/pages/ActorSpellsPage.svelte";
     import NavigationBar from "../components/navigation/NavigationBar.svelte";
+    import NewNavigation from "../components/navigation/NewNavigation.svelte";
 
     import ActorSheetTempSettingsStore from "../../stores/ActorSheetTempSettingsStore";
 
@@ -39,55 +40,71 @@
         return [
             {
                 name: "core",
+                icon: "fa-solid fa-home",
                 label: "A5E.TabCore",
                 component: ActorCorePage,
             },
             {
                 name: "skills",
+                icon: "fa-solid fa-graduation-cap",
                 label: "A5E.TabSkills",
                 component: ActorSkillsPage,
                 display: actor.flags?.a5e?.showFavoritesSection ?? true,
             },
             {
                 name: "inventory",
+                icon: "fa-solid fa-box-open",
                 label: "A5E.TabInventory",
                 component: ActorInventoryPage,
             },
             {
                 name: "features",
+                icon: "fa-solid fa-table-list",
                 label: "A5E.TabFeatures",
                 component: ActorFeaturesPage,
             },
             {
                 name: "maneuvers",
+                icon: "fa-solid fa-hand-fist",
                 label: "A5E.TabManeuvers",
                 component: ActorManeuversPage,
                 display: actor.flags?.a5e?.showManeuverTab,
             },
             {
                 name: "spells",
+                icon: "fa-solid fa-wand-sparkles",
                 label: "A5E.TabSpells",
                 component: ActorSpellsPage,
                 display: actor.flags?.a5e?.showSpellTab,
             },
             {
                 name: "biography",
+                icon: "fa-solid fa-id-card",
                 label: "A5E.TabBiography",
                 component: ActorBioPage,
                 display: actor.type === "character",
             },
             {
                 name: "notes",
+                icon: "fa-solid fa-file-lines",
                 label: "A5E.TabNotes",
                 component: ActorNotesPage,
             },
+            // {
+            //     name: "bonuses",
+            //     icon: "fa-solid fa-angles-up",
+            //     label: "Bonuses",
+            //     component: ActorEffectsPage,
+            // },
             {
                 name: "effects",
+                icon: "fa-solid fa-person-rays",
                 label: "A5E.TabEffects",
                 component: ActorEffectsPage,
             },
             {
                 name: "settings",
+                icon: "fa-solid fa-gear",
                 label: "A5E.TabSettings",
                 component: ActorSettingsPage,
                 display:
@@ -128,7 +145,14 @@
         <section class="main-container">
             <ActorSheetHeader />
 
-            <NavigationBar
+            <!-- <NavigationBar
+                {currentTab}
+                {tabs}
+                showLock={true}
+                on:tab-change={updateCurrentTab}
+            /> -->
+
+            <NewNavigation
                 {currentTab}
                 {tabs}
                 showLock={true}

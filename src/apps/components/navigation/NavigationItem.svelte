@@ -15,9 +15,9 @@
         class:nav-item-active={tab.name === currentTab.name}
         on:click={() => dispatch("tab-change", index)}
     >
-        {#if tab.icon}
+        <!-- {#if tab.icon}
             <i class="nav-icon {tab.icon}" />
-        {/if}
+        {/if} -->
 
         {#if tab.label}{localize(tab.label)}{/if}
     </button>
