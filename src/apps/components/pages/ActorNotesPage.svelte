@@ -2,20 +2,46 @@
     import { getContext } from "svelte";
     import { localize } from "#runtime/svelte/helper";
 
-    import Editor from "../Editor.svelte";
+    import updateDocumentDataFromField from "../../../utils/updateDocumentDataFromField";
 
-    const actor = getContext("actor");
+    import Editor from "../Editor.svelte";
+    import SecondaryNavigationBar from "../navigation/SecondaryNavigationBar.svelte";
 
     let isGM = game.user.isGM;
+    const actor = getContext("actor");
+
+    const charChoicesLabel = {
+        classes: "A5E.ClassPlural",
+        archetype: "A5E.Archetype",
+        // background: "A5E.Background",
+        // culture: "A5E.Culture",
+        // destiny: "A5E.Destiny",
+        // heritage: "A5E.Heritage",
+        prestige: "A5E.Prestige",
+    };
+
+    const traitsLabel = {
+        age: "A5E.DetailsAge",
+        eyeColor: "A5E.DetailsEyeColor",
+        hairColor: "A5E.DetailsHairColor",
+        skinColor: "A5E.DetailsSkinColor",
+        height: "A5E.DetailsHeight",
+        weight: "A5E.DetailsWeight",
+        gender: "A5E.DetailsGender",
+    };
 
     const tabs = {
-        notes: {
-            label: "A5E.TabNotes",
-            display: !isGM,
+        appearance: {
+            label: "Character Details",
+            display: $actor.type === "character",
         },
         bio: {
-            label: "A5E.TabBiography",
-            display: isGM && $actor.type === "npc",
+            label: $actor.type === "npc" ? "A5E.TabBiography" : "Backstory",
+            display:
+                $actor.type === "character" || (isGM && $actor.type === "npc"),
+        },
+        notes: {
+            label: "A5E.TabNotes",
         },
         privateNotes: {
             label: "A5E.DetailsNotesPrivate",
@@ -23,36 +49,104 @@
         },
     };
 
-    let currentEditor = "notes";
+    let currentTab = $actor.type === "npc" ? "bio" : "appearance";
 </script>
+
+<SecondaryNavigationBar
+    {currentTab}
+    {tabs}
+    on:tab-change={({ detail }) => (currentTab = detail)}
+/>
 
 <div class="notes-page">
     <section class="notes__container">
-        {#if $actor.type === "npc"}
-            <div class="notes__tabs">
-                {#each Object.entries(tabs) as [name, { label, display }]}
-                    {#if display || isGM}
-                        <button
-                            class="a5e-button"
-                            class:active={currentEditor === name}
-                            on:click={() => (currentEditor = name)}
+        {#if currentTab === "appearance"}
+            <section class="a5e-box u-p-md a5e-form__section--bio-wrapper">
+                {#each Object.entries(charChoicesLabel) as [key, label]}
+                    <div
+                        class="u-flex u-flex-col a5e-input-container u-gap-xs"
+                        data-type={key}
+                    >
+                        <label
+                            class="u-text-bold u-text-sm u-flex-shrink-0 u-mb-0"
+                            class:disable-pointer-events={!$actor.isOwner}
+                            for="{actor.id}-details-{key}"
                         >
                             {localize(label)}
-                        </button>
-                    {/if}
+                        </label>
+
+                        <input
+                            class="a5e-input a5e-input--slim u-w-full"
+                            class:disable-pointer-events={!$actor.isOwner}
+                            id="{actor.id}-details-{key}"
+                            type="text"
+                            name="system.details.{key}"
+                            value={$actor.system.details[key] ?? ""}
+                            on:change={({ target }) => {
+                                updateDocumentDataFromField(
+                                    $actor,
+                                    target.name,
+                                    key === "prestige"
+                                        ? Number(target.value)
+                                        : target.value
+                                );
+                            }}
+                        />
+                    </div>
                 {/each}
-            </div>
+            </section>
+
+            <section class="a5e-box u-p-md a5e-form__section--bio-wrapper">
+                {#each Object.entries(traitsLabel) as [key, label]}
+                    <div
+                        class="u-flex u-flex-col a5e-input-container u-gap-xs"
+                        data-type={key}
+                    >
+                        <label
+                            class="u-text-bold u-text-sm u-flex-shrink-0 u-mb-0"
+                            class:disable-pointer-events={!$actor.isOwner}
+                            for="{actor.id}-details-{key}"
+                        >
+                            {localize(label)}
+                        </label>
+
+                        <input
+                            class="a5e-input a5e-input--slim"
+                            class:disable-pointer-events={!$actor.isOwner}
+                            id="{actor.id}-details-{key}"
+                            type="text"
+                            name="system.details.{key}"
+                            value={$actor.system.details[key]}
+                            on:change={({ target }) => {
+                                updateDocumentDataFromField(
+                                    $actor,
+                                    target.name,
+                                    target.value
+                                );
+                            }}
+                        />
+                    </div>
+                {/each}
+            </section>
+
+            <h3 class="appearance-heading">Appearance</h3>
         {/if}
 
         <Editor
             document={actor}
-            content={$actor.system.details[currentEditor]}
-            updatePath="system.details.{currentEditor}"
+            content={$actor.system.details[currentTab]}
+            updatePath="system.details.{currentTab}"
         />
     </section>
 </div>
 
 <style lang="scss">
+    .appearance-heading {
+        font-size: 0.833rem;
+        font-weight: bold;
+        margin-left: 0.25rem;
+    }
+
     .notes-page {
         display: flex;
         flex-direction: column;

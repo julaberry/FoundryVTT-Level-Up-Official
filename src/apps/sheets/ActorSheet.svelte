@@ -5,7 +5,6 @@
     import { getContext, setContext } from "svelte";
 
     import ActorCorePage from "../components/pages/ActorCorePage.svelte";
-    import ActorBioPage from "../components/pages/ActorBioPage.svelte";
     import ActorEffectsPage from "../components/pages/ActorEffectsPage.svelte";
     import ActorFeaturesPage from "../components/pages/ActorFeaturesPage.svelte";
     import ActorInventoryPage from "../components/pages/ActorInventoryPage.svelte";
@@ -16,8 +15,7 @@
     import ActorSidebar from "../components/actorSidebar/ActorSidebar.svelte";
     import ActorSkillsPage from "../components/pages/ActorSkillsPage.svelte";
     import ActorSpellsPage from "../components/pages/ActorSpellsPage.svelte";
-    import NavigationBar from "../components/navigation/NavigationBar.svelte";
-    import NewNavigation from "../components/navigation/NewNavigation.svelte";
+    import NewNavigationBar from "../components/navigation/NewNavigationBar.svelte";
 
     import ActorSheetTempSettingsStore from "../../stores/ActorSheetTempSettingsStore";
 
@@ -76,13 +74,6 @@
                 label: "A5E.TabSpells",
                 component: ActorSpellsPage,
                 display: actor.flags?.a5e?.showSpellTab,
-            },
-            {
-                name: "biography",
-                icon: "fa-solid fa-id-card",
-                label: "A5E.TabBiography",
-                component: ActorBioPage,
-                display: actor.type === "character",
             },
             {
                 name: "notes",
@@ -152,7 +143,7 @@
                 on:tab-change={updateCurrentTab}
             /> -->
 
-            <NewNavigation
+            <NewNavigationBar
                 {currentTab}
                 {tabs}
                 showLock={true}
