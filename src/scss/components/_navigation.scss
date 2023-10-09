@@ -46,6 +46,10 @@
     transform: scale(1.2);
   }
 
+  &--lock {
+    margin-left: auto;
+  }
+
   &:hover {
     transform: scale(1.2);
   }

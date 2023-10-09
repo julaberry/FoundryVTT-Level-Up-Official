@@ -2,16 +2,19 @@
     import { getContext } from "svelte";
     import { localize } from "#runtime/svelte/helper";
 
-    import AddButton from "./AddButton.svelte";
-    import LockButton from "./LockButton.svelte";
-    import NavigationItem from "./NewNavigationItem.svelte";
+    import toggleSheetLockedState from "../../handlers/toggleSheetLockedState";
 
-    const actor = getContext("actor");
+    import NavigationItem from "./NewNavigationItem.svelte";
 
     export let currentTab;
     export let tabs;
     export let showLock = false;
-    export let showAdd = false;
+
+    const actor = getContext("actor");
+
+    $: sheetIsLocked = !$actor.isOwner
+        ? true
+        : $actor.flags?.a5e?.sheetIsLocked ?? true;
 </script>
 
 <nav class="a5e-nav-wrapper">
@@ -33,9 +36,21 @@
         {/each}
 
         <!-- svelte-ignore missing-declaration -->
-        <!-- {#if showLock && $actor.permission !== CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER}
-            <LockButton />
-        {/if} -->
+        {#if showLock && $actor.permission !== CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER}
+            <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
+            <li
+                class="a5e-nav-item a5e-nav-item--lock fa-solid {sheetIsLocked
+                    ? 'fa-lock'
+                    : 'fa-unlock'}"
+                class:a5e-nav-item--active={sheetIsLocked}
+                on:click={({ target }) => {
+                    toggleSheetLockedState($actor);
+                    target.blur();
+                }}
+                data-tooltip="Toggle Sheet Lock"
+                data-tooltip-direction="UP"
+            />
+        {/if}
 
         <!-- svelte-ignore missing-declaration -->
         <!-- {#if showAdd}
