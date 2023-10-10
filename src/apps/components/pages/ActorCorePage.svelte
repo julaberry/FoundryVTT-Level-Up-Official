@@ -66,11 +66,11 @@
     .resources-container {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
+        align-items: center;
         gap: 0.5rem;
         width: 100%;
-        align-items: center;
         margin: 0;
-        padding: 0;
+        padding: 0.5rem 0.75rem 0 0.75rem;
         list-style: none;
     }
 </style>

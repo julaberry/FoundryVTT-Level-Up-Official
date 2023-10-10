@@ -22,84 +22,73 @@
     export let { document, sheet } = getContext("#external").application;
     export let elementRoot;
 
-    function updateCurrentTab(event) {
+    function updateCurrentTab({ detail: name }) {
         const { uuid } = $actor;
-        currentTab = tabs[event.detail];
+        currentTab = name;
 
         ActorSheetTempSettingsStore.update((currentSettings) => ({
             ...currentSettings,
             [uuid]: {
-                currentTab: currentTab.name,
+                currentTab: name,
             },
         }));
     }
 
     function getTabs(actor) {
-        return [
-            {
-                name: "core",
+        return {
+            core: {
                 icon: "fa-solid fa-home",
                 label: "A5E.TabCore",
                 component: ActorCorePage,
             },
-            {
-                name: "skills",
+            skills: {
                 icon: "fa-solid fa-graduation-cap",
                 label: "A5E.TabSkills",
                 component: ActorSkillsPage,
                 display: actor.flags?.a5e?.showFavoritesSection ?? true,
             },
-            {
-                name: "inventory",
+            inventory: {
                 icon: "fa-solid fa-box-open",
                 label: "A5E.TabInventory",
                 component: ActorInventoryPage,
             },
-            {
-                name: "features",
+            features: {
                 icon: "fa-solid fa-table-list",
                 label: "A5E.TabFeatures",
                 component: ActorFeaturesPage,
             },
-            {
-                name: "maneuvers",
+            maneuvers: {
                 icon: "fa-solid fa-hand-fist",
                 label: "A5E.TabManeuvers",
                 component: ActorManeuversPage,
                 display: actor.flags?.a5e?.showManeuverTab,
             },
-            {
-                name: "spells",
+            spells: {
                 icon: "fa-solid fa-wand-sparkles",
                 label: "A5E.TabSpells",
                 component: ActorSpellsPage,
                 display: actor.flags?.a5e?.showSpellTab,
             },
-            {
-                name: "notes",
+            notes: {
                 icon: "fa-solid fa-file-lines",
                 label: "A5E.TabNotes",
                 component: ActorNotesPage,
             },
-            // {
-            //     name: "bonuses",
+            // bonuses: {
             //     icon: "fa-solid fa-angles-up",
             //     label: "Bonuses",
             //     component: ActorEffectsPage,
             // },
-            {
-                name: "effects",
+            effects: {
                 icon: "fa-solid fa-person-rays",
                 label: "A5E.TabEffects",
                 component: ActorEffectsPage,
             },
-            // {
-            //     name: "prestige",
+            // prestige: {
             //     icon: "fa-solid fa-medal",
             //     label: "Prestige",
             // },
-            {
-                name: "settings",
+            settings: {
                 icon: "fa-solid fa-gear",
                 label: "A5E.TabSettings",
                 component: ActorSettingsPage,
@@ -108,7 +97,7 @@
                     actor.permission !==
                         CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER,
             },
-        ];
+        };
     }
 
     let tempSettings = {};
@@ -123,10 +112,7 @@
     let tabs = getTabs($actor);
     $: tabs = getTabs($actor);
 
-    let currentTab =
-        tabs.find(
-            (tab) => tab.name === tempSettings[$actor?.uuid]?.currentTab
-        ) ?? tabs[0];
+    let currentTab = tempSettings[$actor?.uuid]?.currentTab ?? "core";
 
     setContext("actor", actor);
     setContext("sheet", sheet);
@@ -155,7 +141,7 @@
                 on:tab-change={updateCurrentTab}
             />
 
-            <svelte:component this={currentTab.component} />
+            <svelte:component this={tabs[currentTab]?.component} />
         </section>
     </main>
 </ApplicationShell>
@@ -183,7 +169,6 @@
         flex-direction: column;
         gap: 0.5rem;
         height: 100%;
-        padding: 0.75rem;
         overflow: hidden;
     }
 </style>

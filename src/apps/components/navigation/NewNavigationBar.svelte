@@ -19,19 +19,19 @@
 
 <nav class="a5e-nav-wrapper">
     <!-- This allows us to reserve enough space for the largest tab name -->
-    {#each tabs as { name, label }}
+    {#each Object.entries(tabs) as [name, { label }]}
         <span
             class="current-tab-label"
-            class:current-tab-label--active={name === currentTab.name}
+            class:current-tab-label--active={name === currentTab}
         >
             {localize(label)}
         </span>
     {/each}
 
     <ul class="a5e-nav-list">
-        {#each tabs as tab, index}
+        {#each Object.entries(tabs) as [name, tab]}
             {#if tab?.display ?? true}
-                <NavigationItem on:tab-change {tab} {index} {currentTab} />
+                <NavigationItem on:tab-change {tab} {name} {currentTab} />
             {/if}
         {/each}
 
