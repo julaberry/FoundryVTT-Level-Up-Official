@@ -87,13 +87,10 @@
     $: flags = $actor.flags;
 </script>
 
-<section
-    class="u-flex-grow u-flex u-flex-col u-overflow-y-auto u-gap-md u-px-md"
-    style="grid-auto-rows: min-content;"
->
+<section class="a5e-page-wrapper a5e-page-wrapper--settings">
     <section class="setting-group">
-        <header class="setting-header">
-            <h3 class="setting-heading">Global Bonuses</h3>
+        <header class="a5e-section-header a5e-section-header--rounded">
+            <h3 class="a5e-section-header__heading">Global Bonuses</h3>
         </header>
 
         <small class="hint">
@@ -419,8 +416,8 @@
     </section>
 
     <section class="setting-group">
-        <header class="setting-header">
-            <h3 class="setting-heading">Inventory Settings</h3>
+        <header class="a5e-section-header a5e-section-header--rounded">
+            <h3 class="a5e-section-header__heading">Inventory Settings</h3>
         </header>
 
         <FormSection>
@@ -472,12 +469,12 @@
         {/if}
     </section>
 
-    <section class="setting-group">
-        <header class="setting-header">
-            <h3 class="setting-heading">Roll Modifiers</h3>
-        </header>
+    {#if $actor.type === "character"}
+        <section class="setting-group">
+            <header class="a5e-section-header a5e-section-header--rounded">
+                <h3 class="a5e-section-header__heading">Roll Modifiers</h3>
+            </header>
 
-        {#if $actor.type === "character"}
             <FormSection hint="A5E.settings.hints.halflingLuck" --gap="0.25rem">
                 <Checkbox
                     label="A5E.settings.halflingLuck"
@@ -508,12 +505,12 @@
                     }}
                 />
             </FormSection>
-        {/if}
-    </section>
+        </section>
+    {/if}
 
     <section class="setting-group">
-        <header class="setting-header">
-            <h3 class="setting-heading">Sheet Customization</h3>
+        <header class="a5e-section-header a5e-section-header--rounded">
+            <h3 class="a5e-section-header__heading">Sheet Customization</h3>
         </header>
 
         <FormSection>
@@ -621,8 +618,8 @@
     <!-- svelte-ignore missing-declaration -->
     {#if $actor.type === "npc" && game.settings.get("a5e", "randomizeNPCHitPoints")}
         <section class="setting-group">
-            <header class="setting-header">
-                <h3 class="setting-heading">Token Options</h3>
+            <header class="a5e-section-header a5e-section-header--rounded">
+                <h3 class="a5e-section-header__heading">Token Options</h3>
             </header>
 
             <FormSection --gap="0.25rem">
@@ -642,8 +639,8 @@
     {/if}
 
     <section class="setting-group">
-        <header class="setting-header">
-            <h3 class="setting-heading">Triggers</h3>
+        <header class="a5e-section-header a5e-section-header--rounded">
+            <h3 class="a5e-section-header__heading">Triggers</h3>
         </header>
 
         <button

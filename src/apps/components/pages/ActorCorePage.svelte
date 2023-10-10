@@ -38,7 +38,7 @@
 {/if}
 
 {#if flags.a5e?.showFavoritesSection ?? true}
-    <section class="core-page">
+    <section class="a5e-page-wrapper a5e-page-wrapper--core">
         <ItemCategory
             label="A5E.FavoriteItems"
             icon="fas fa-star heading-icon"
