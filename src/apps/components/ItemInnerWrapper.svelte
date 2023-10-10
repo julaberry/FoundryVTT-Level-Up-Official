@@ -473,7 +473,8 @@
     }
 
     .name {
-        font-size: $font-size-sm;
+        font-family: var(--font-serif);
+        font-size: var(--font-size-sm);
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;

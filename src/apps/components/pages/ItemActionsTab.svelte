@@ -98,10 +98,11 @@
         gap: 0.5rem;
         padding: 0.125rem;
         padding-right: 0.5rem;
+        font-family: var(--font-serif);
+        font-size: var(--font-size-sm);
         background: rgba(0, 0, 0, 0.05);
         border: 1px solid #ccc;
         border-radius: $border-radius-standard;
-        font-size: $font-size-sm;
 
         &__image {
             display: block;
