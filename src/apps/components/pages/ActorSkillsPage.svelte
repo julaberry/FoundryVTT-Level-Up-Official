@@ -16,9 +16,9 @@
     );
 </script>
 
-<div class="a5e-item-page-wrapper">
+<div class="a5e-item-page-wrapper a5e-item-page-wrapper--skills">
     {#if showSpecialties}
-        <section class="a5e-section">
+        <section class="a5e-section a5e-section--skill-specialties">
             <header class="a5e-section-header">
                 <h3 class="a5e-section-header__heading">Skill Specialties</h3>
             </header>

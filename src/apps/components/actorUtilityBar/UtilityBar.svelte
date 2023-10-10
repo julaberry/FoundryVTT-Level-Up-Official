@@ -1,22 +1,11 @@
 <script>
 </script>
 
-<section class="utility-bar">
+<section class="a5e-utility-bar">
     <slot />
 </section>
 
 <style lang="scss">
-    .utility-bar {
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 0.75rem;
-        padding-right: 0.25rem;
-        font-size: $font-size-md;
-        color: rgba(0 0 0 / 0.2);
-    }
-
     :global {
         .tjs-menu {
             --tjs-menu-background: url("/ui/denim075.png") repeat,
