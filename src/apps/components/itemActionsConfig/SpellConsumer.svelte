@@ -4,6 +4,8 @@
 
     import updateDocumentDataFromField from "../../../utils/updateDocumentDataFromField";
 
+    import FormSection from "../FormSection.svelte";
+
     export let consumer;
     export let consumerId;
 
@@ -34,125 +36,126 @@
     $: spellLevel, updateSpellLevel();
 </script>
 
-<section class="action-config__wrapper">
-    <div class="a5e-field-group a5e-field-group--label">
-        <label for="{actionId}-{consumerId}-label">
-            {localize("A5E.Label")}
-        </label>
+<FormSection
+    heading="A5E.Label"
+    --background="none"
+    --direction="column"
+    --width="calc(100% - 2.5rem)"
+    --padding="0"
+>
+    <input
+        id="{actionId}-{consumerId}-label"
+        name="{actionId}-{consumerId}-label"
+        type="text"
+        value={consumer.label ?? ""}
+        on:change={() =>
+            updateDocumentDataFromField(
+                $item,
+                `system.actions.${actionId}.consumers.${consumerId}.label`
+            )}
+    />
+</FormSection>
 
-        <input
-            id="{actionId}-{consumerId}-label"
-            name="{actionId}-{consumerId}-label"
-            type="text"
-            value={consumer.label ?? ""}
-            on:change={() =>
-                updateDocumentDataFromField(
-                    $item,
-                    `system.actions.${actionId}.consumers.${consumerId}.label`
-                )}
-        />
-    </div>
+<div class="a5e-field-group u-flex-row u-gap-md">
+    <FormSection
+        heading="A5E.ConsumerSpellMode"
+        --background="none"
+        --direction="column"
+        --padding="0"
+    >
+        <select
+            name="{actionId}-{consumerId}-item-id"
+            class="u-w-fit"
+            bind:value={mode}
+        >
+            {#each Object.entries(A5E.spellConsumerModes) as [value, label]}
+                <option {value} selected={mode === value}>
+                    {localize(label)}
+                </option>
+            {/each}
+        </select>
+    </FormSection>
 
-    <div class="a5e-field-group u-flex-row u-gap-md">
-        <div class="u-flex u-flex-col u-gap-sm">
-            <h3 class="a5e-field-group__heading">
-                {localize("A5E.ConsumerSpellMode")}
-            </h3>
-
+    {#if ["variable", "slotsOnly"].includes(mode)}
+        <FormSection
+            heading="A5E.SpellLevel"
+            --background="none"
+            --direction="column"
+            --padding="0"
+        >
             <select
                 name="{actionId}-{consumerId}-item-id"
                 class="u-w-fit"
-                bind:value={mode}
+                bind:value={spellLevel}
             >
-                {#each Object.entries(A5E.spellConsumerModes) as [value, label]}
-                    <option {value} selected={mode === value}>
+                {#each Object.entries(A5E.spellLevels).slice(1) as [value, label]}
+                    <option value={Number(value)}>
                         {localize(label)}
                     </option>
                 {/each}
             </select>
-        </div>
+        </FormSection>
+    {/if}
 
-        {#if ["variable", "slotsOnly"].includes(mode)}
-            <div class="u-flex u-flex-col u-gap-sm">
-                <h3 class="a5e-field-group__heading">
-                    {localize("A5E.SpellLevel")}
-                </h3>
-
-                <select
-                    name="{actionId}-{consumerId}-item-id"
-                    class="u-w-fit"
-                    bind:value={spellLevel}
-                >
-                    {#each Object.entries(A5E.spellLevels).slice(1) as [value, label]}
-                        <option value={Number(value)}>
-                            {localize(label)}
-                        </option>
-                    {/each}
-                </select>
-            </div>
-        {/if}
-
-        {#if mode === "pointsOnly"}
-            <div class="u-flex u-flex-col u-gap-sm u-w-30">
-                <h3 class="a5e-field-group__heading">
-                    {localize("A5E.SpellPoints")}
-                </h3>
-
-                <input
-                    type="number"
-                    d-type="Number"
-                    value={consumer.points ?? 1}
-                    on:change={({ target }) =>
-                        updateDocumentDataFromField(
-                            $item,
-                            `system.actions.${actionId}.consumers.${consumerId}.points`,
-                            Number(target.value)
-                        )}
-                />
-            </div>
-        {/if}
-    </div>
-
-    <div class="5e-field-group">
-        <!-- svelte-ignore a11y-click-events-have-key-events -->
-        <!-- svelte-ignore a11y-no-static-element-interactions -->
-        <header
-            class="u-align-center u-flex u-gap-md u-pointer u-w-fit"
-            on:click={() => (hintToggle = !hintToggle)}
+    {#if mode === "pointsOnly"}
+        <FormSection
+            heading="A5E.SpellPoints"
+            --background="none"
+            --direction="column"
+            --padding="0"
         >
-            <h3 class="a5e-field-group__heading">
-                {localize("A5E.ConsumerSpellModeHintTitle")}
-            </h3>
-            <i
-                class="u-text-xs fas"
-                class:fa-minus={hintToggle}
-                class:fa-plus={!hintToggle}
+            <input
+                type="number"
+                d-type="Number"
+                value={consumer.points ?? 1}
+                on:change={({ target }) =>
+                    updateDocumentDataFromField(
+                        $item,
+                        `system.actions.${actionId}.consumers.${consumerId}.points`,
+                        Number(target.value)
+                    )}
             />
-        </header>
+        </FormSection>
+    {/if}
+</div>
 
-        {#if hintToggle}
-            <div class="a5e-box hint">
-                <dt class="u-text-bold">Variable</dt>
-                <dd class="u-m-0 u-p-0">
-                    Variable mode allows you to select from spell slots or spell
-                    points at casting time.
-                </dd>
+<div class="5e-field-group">
+    <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-static-element-interactions -->
+    <header
+        class="u-align-center u-flex u-gap-md u-pointer u-w-fit u-mt-md"
+        on:click={() => (hintToggle = !hintToggle)}
+    >
+        <h3 class="a5e-field-group__heading">
+            {localize("A5E.ConsumerSpellModeHintTitle")}
+        </h3>
 
-                <dt class="u-text-bold">Spell Points Only</dt>
-                <dd class="u-m-0 u-p-0">
-                    Always consumes spells points, ignoring available spell
-                    slots.
-                </dd>
+        <i
+            class="u-text-xs fas"
+            class:fa-minus={hintToggle}
+            class:fa-plus={!hintToggle}
+        />
+    </header>
 
-                <dt class="u-text-bold">Spell Slots Only</dt>
-                <dd class="u-m-0 u-p-0">
-                    Always consumes spell slots, ignoring available spell
-                    points.
-                </dd>
-            </div>
-        {/if}
-    </div>
-</section>
+    {#if hintToggle}
+        <div class="a5e-box hint">
+            <dt class="u-text-bold">Variable</dt>
+            <dd class="u-m-0 u-p-0">
+                Variable mode allows you to select from spell slots or spell
+                points at casting time.
+            </dd>
+
+            <dt class="u-text-bold">Spell Points Only</dt>
+            <dd class="u-m-0 u-p-0">
+                Always consumes spells points, ignoring available spell slots.
+            </dd>
+
+            <dt class="u-text-bold">Spell Slots Only</dt>
+            <dd class="u-m-0 u-p-0">
+                Always consumes spell slots, ignoring available spell points.
+            </dd>
+        </div>
+    {/if}
+</div>
 
 <style lang="scss">
     .hint {

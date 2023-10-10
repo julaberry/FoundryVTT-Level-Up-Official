@@ -82,129 +82,143 @@
     <div class="main-container">
         <!-- Action Resources Section -->
         <div class="u-flex u-flex-col u-gap-md u-mb-lg">
-            <FormSection heading="A5E.Uses">
-                <div class="u-flex u-gap-lg u-w-full">
-                    <div class="u-flex u-flex-col u-gap-xs u-w-30">
-                        <h3 class="u-text-sm">{localize("A5E.UsesCurrent")}</h3>
+            <header class="action-config__section-header">
+                <h2 class="action-config__section-header">
+                    {localize("A5E.Uses")}
+                </h2>
+            </header>
 
+            <FormSection>
+                <FormSection
+                    heading="A5E.UsesCurrent"
+                    --background="none"
+                    --direction="column"
+                    --padding="0"
+                >
+                    <input
+                        type="number"
+                        d-type="Number"
+                        name="system.actions.{actionId}.uses.value"
+                        value={action.uses?.value ?? 0}
+                        on:change={({ target }) =>
+                            updateDocumentDataFromField(
+                                $item,
+                                target.name,
+                                Number(target.value)
+                            )}
+                    />
+                </FormSection>
+
+                <FormSection
+                    heading="A5E.UsesMax"
+                    --background="none"
+                    --direction="column"
+                    --padding="0"
+                >
+                    <input
+                        type="text"
+                        name="system.actions.{actionId}.uses.max"
+                        value={action.uses?.max ?? ""}
+                        on:change={({ target }) => {
+                            handleDeterministicInput(target.value);
+                            updateDocumentDataFromField(
+                                $item,
+                                target.name,
+                                target.value
+                            );
+                        }}
+                    />
+                </FormSection>
+
+                <FormSection
+                    heading="A5E.UsesPer"
+                    --background="none"
+                    --direction="column"
+                    --padding="0"
+                >
+                    <select
+                        class="u-w-40"
+                        name="system.actions.{actionId}.uses.per"
+                        on:change={({ target }) =>
+                            updateDocumentDataFromField(
+                                $item,
+                                target.name,
+                                target.value
+                            )}
+                    >
+                        <option value="" />
+
+                        {#each Object.entries(A5E.resourceRecoveryOptions) as [key, name]}
+                            <option
+                                {key}
+                                value={key}
+                                selected={action.uses?.per === key}
+                            >
+                                {localize(name)}
+                            </option>
+                        {/each}
+                    </select>
+                </FormSection>
+            </FormSection>
+
+            <header class="action-config__section-header u-mt-md">
+                <h2 class="action-config__section-header">
+                    {localize("A5E.ItemRechargeConfiguration")}
+                </h2>
+            </header>
+
+            {#if action.uses?.per === "recharge"}
+                <FormSection>
+                    <FormSection
+                        heading="A5E.ItemRechargeFormula"
+                        --background="none"
+                        --direction="column"
+                        --padding="0"
+                    >
                         <input
-                            type="number"
-                            d-type="Number"
-                            name="system.actions.{actionId}.uses.value"
-                            value={action.uses?.value ?? 0}
-                            on:change={({ target }) =>
-                                updateDocumentDataFromField(
-                                    $item,
-                                    target.name,
-                                    Number(target.value)
-                                )}
-                        />
-                    </div>
-
-                    <div class="u-flex u-flex-col u-gap-xs u-w-30">
-                        <h3 class="u-text-sm">{localize("A5E.UsesMax")}</h3>
-
-                        <input
+                            id="{actionId}-recharge-formula"
                             type="text"
-                            name="system.actions.{actionId}.uses.max"
-                            value={action.uses?.max ?? ""}
+                            value={action.uses?.recharge?.formula ?? "1d6"}
+                            placeholder="1d6"
                             on:change={({ target }) => {
                                 handleDeterministicInput(target.value);
                                 updateDocumentDataFromField(
                                     $item,
-                                    target.name,
+                                    `system.actions.${actionId}.uses.recharge.formula`,
                                     target.value
                                 );
                             }}
                         />
-                    </div>
+                    </FormSection>
 
-                    <div class="u-flex u-flex-col u-gap-xs u-w-fit">
-                        <h3 class="u-text-sm">{localize("A5E.UsesPer")}</h3>
-                        <select
-                            class="u-w-40"
-                            name="system.actions.{actionId}.uses.per"
+                    <FormSection
+                        heading="A5E.ItemRechargeThreshold"
+                        --background="none"
+                        --direction="column"
+                        --padding="0"
+                    >
+                        <input
+                            id="{actionId}-recharge-threshold"
+                            class="u-text-center"
+                            type="number"
+                            value={action.uses?.recharge?.threshold ?? 6}
                             on:change={({ target }) =>
                                 updateDocumentDataFromField(
                                     $item,
-                                    target.name,
-                                    target.value
+                                    `system.actions.${actionId}.uses.recharge.threshold`,
+                                    Number(target.value)
                                 )}
-                        >
-                            <option value="" />
-
-                            {#each Object.entries(A5E.resourceRecoveryOptions) as [key, name]}
-                                <option
-                                    {key}
-                                    value={key}
-                                    selected={action.uses?.per === key}
-                                >
-                                    {localize(name)}
-                                </option>
-                            {/each}
-                        </select>
-                    </div>
-                </div>
-            </FormSection>
-
-            {#if action.uses?.per === "recharge"}
-                <FormSection heading="A5E.ItemRechargeConfiguration">
-                    <div class="u-flex u-gap-md u-w-full">
-                        <div class="recharge-formula">
-                            <label
-                                class="recharge-formula__label"
-                                for="{actionId}-recharge-formula"
-                            >
-                                {localize("A5E.ItemRechargeFormula")}
-                            </label>
-
-                            <input
-                                id="{actionId}-recharge-formula"
-                                type="text"
-                                value={action.uses?.recharge?.formula ?? "1d6"}
-                                placeholder="1d6"
-                                on:change={({ target }) => {
-                                    handleDeterministicInput(target.value);
-                                    updateDocumentDataFromField(
-                                        $item,
-                                        `system.actions.${actionId}.uses.recharge.formula`,
-                                        target.value
-                                    );
-                                }}
-                            />
-                        </div>
-
-                        <div class="recharge-threshold">
-                            <label
-                                class="recharge-threshold__label"
-                                for="{actionId}-recharge-threshold"
-                            >
-                                {localize("A5E.ItemRechargeThreshold")}
-                            </label>
-
-                            <input
-                                id="{actionId}-recharge-threshold"
-                                class="u-text-center"
-                                type="number"
-                                value={action.uses?.recharge?.threshold ?? 6}
-                                on:change={({ target }) =>
-                                    updateDocumentDataFromField(
-                                        $item,
-                                        `system.actions.${actionId}.uses.recharge.threshold`,
-                                        Number(target.value)
-                                    )}
-                            />
-                        </div>
-                    </div>
+                        />
+                    </FormSection>
                 </FormSection>
             {/if}
         </div>
         <!-- Consumers Section -->
-        <ul class="consumers-config-list">
+        <section class="consumers-config-list">
             {#each Object.entries(consumerTypes) as [consumerType, { heading, component }] (consumerType)}
                 {#if Object.values(consumers).filter((consumer) => consumer.type === consumerType).length}
-                    <li class="consumers-config-list__item">
-                        <header class="action-config__section-header">
+                    <div>
+                        <header class="action-config__section-header u-mb-md">
                             <h2 class="action-config__section-header">
                                 {localize(heading)}
                             </h2>
@@ -225,11 +239,12 @@
                                 </li>
                             {/each}
                         </ul>
-                    </li>
+                    </div>
                 {/if}
             {/each}
-        </ul>
+        </section>
     </div>
+
     <div class="sticky-add-button">
         <CreateMenu
             {menuList}

@@ -1,6 +1,8 @@
 <script>
     import { getContext } from "svelte";
 
+    import FormSection from "../FormSection.svelte";
+
     const item = getContext("item");
     const actionId = getContext("actionId");
 
@@ -18,7 +20,7 @@
 </script>
 
 <li class="consumer" data-consumer-id={consumerId}>
-    <article class="config-wrapper">
+    <FormSection --direction="column">
         <div class="button-wrapper">
             <!-- svelte-ignore a11y-click-events-have-key-events -->
             <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -29,7 +31,7 @@
         </div>
 
         <slot />
-    </article>
+    </FormSection>
 </li>
 
 <style lang="scss">

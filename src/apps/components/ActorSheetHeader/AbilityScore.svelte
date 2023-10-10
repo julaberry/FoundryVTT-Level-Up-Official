@@ -89,7 +89,6 @@
         align-items: center;
         width: 100%;
         color: $color-light-text;
-        font-family: var(--font-serif);
         border-radius: $border-radius-standard;
         gap: 0.25rem;
         overflow: hidden;
@@ -99,8 +98,8 @@
             text-transform: uppercase;
 
             h3 {
-                font-size: 1rem;
                 font-family: var(--font-serif);
+                font-size: var(--font-size-sm);
             }
         }
 
@@ -108,13 +107,14 @@
             display: flex;
             align-items: center;
             height: 26px;
-            border: 0;
-            color: $color-dark-text;
             margin-bottom: 0;
-            background: none;
-            font-size: $font-size-lg;
+            font-family: var(--font-serif);
+            font-size: var(--font-size-lg);
             font-weight: inherit;
             text-align: center;
+            color: $color-dark-text;
+            background: none;
+            border: 0;
 
             &:focus {
                 box-shadow: none;

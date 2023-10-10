@@ -5,6 +5,7 @@
     import updateDocumentDataFromField from "../../../utils/updateDocumentDataFromField";
 
     import Editor from "../Editor.svelte";
+    import FormSection from "../../components/FormSection.svelte";
     import SecondaryNavigationBar from "../navigation/SecondaryNavigationBar.svelte";
 
     let isGM = game.user.isGM;
@@ -63,18 +64,13 @@
         {#if currentTab === "appearance"}
             <section class="a5e-box u-p-md a5e-form__section--bio-wrapper">
                 {#each Object.entries(charChoicesLabel) as [key, label]}
-                    <div
-                        class="u-flex u-flex-col a5e-input-container u-gap-xs"
-                        data-type={key}
+                    <FormSection
+                        heading={label}
+                        --background="none"
+                        --direction="column"
+                        --gap="0.25rem"
+                        --padding="0"
                     >
-                        <label
-                            class="u-text-bold u-text-sm u-flex-shrink-0 u-mb-0"
-                            class:disable-pointer-events={!$actor.isOwner}
-                            for="{actor.id}-details-{key}"
-                        >
-                            {localize(label)}
-                        </label>
-
                         <input
                             class="a5e-input a5e-input--slim u-w-full"
                             class:disable-pointer-events={!$actor.isOwner}
@@ -92,24 +88,19 @@
                                 );
                             }}
                         />
-                    </div>
+                    </FormSection>
                 {/each}
             </section>
 
             <section class="a5e-box u-p-md a5e-form__section--bio-wrapper">
                 {#each Object.entries(traitsLabel) as [key, label]}
-                    <div
-                        class="u-flex u-flex-col a5e-input-container u-gap-xs"
-                        data-type={key}
+                    <FormSection
+                        heading={label}
+                        --background="none"
+                        --direction="column"
+                        --gap="0.25rem"
+                        --padding="0"
                     >
-                        <label
-                            class="u-text-bold u-text-sm u-flex-shrink-0 u-mb-0"
-                            class:disable-pointer-events={!$actor.isOwner}
-                            for="{actor.id}-details-{key}"
-                        >
-                            {localize(label)}
-                        </label>
-
                         <input
                             class="a5e-input a5e-input--slim"
                             class:disable-pointer-events={!$actor.isOwner}
@@ -125,7 +116,7 @@
                                 );
                             }}
                         />
-                    </div>
+                    </FormSection>
                 {/each}
             </section>
 
@@ -142,7 +133,8 @@
 
 <style lang="scss">
     .appearance-heading {
-        font-size: 0.833rem;
+        font-family: var(--font-serif);
+        font-size: var(--font-size-md);
         font-weight: bold;
         margin-left: 0.25rem;
     }

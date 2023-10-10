@@ -1,9 +1,9 @@
 <script>
     import { getContext } from "svelte";
-    import { localize } from "#runtime/svelte/helper";
 
     import updateDocumentDataFromField from "../../../utils/updateDocumentDataFromField";
     import prepareHitDice from "../../dataPreparationHelpers/prepareHitDice";
+    import FormSection from "../FormSection.svelte";
 
     export let consumer;
     export let consumerId;
@@ -35,27 +35,29 @@
     if (!selected) updateSelection();
 </script>
 
-<section class="action-config__wrapper">
-    <div class="a5e-field-group a5e-field-group--label">
-        <label for="{actionId}-{consumerId}-label">
-            {localize("A5E.Label")}
-        </label>
-        <input
-            id="{actionId}-{consumerId}-label"
-            name="{actionId}-{consumerId}-label"
-            type="text"
-            value={consumer.label ?? ""}
-            on:change={({ target }) =>
-                updateDocumentDataFromField(
-                    $item,
-                    `system.actions.${actionId}.consumers.${consumerId}.label`,
-                    target.value
-                )}
-        />
-    </div>
+<FormSection
+    heading="A5E.Label"
+    --background="none"
+    --direction="column"
+    --width="calc(100% - 2.5rem)"
+    --padding="0"
+>
+    <input
+        id="{actionId}-{consumerId}-label"
+        name="{actionId}-{consumerId}-label"
+        type="text"
+        value={consumer.label ?? ""}
+        on:change={({ target }) =>
+            updateDocumentDataFromField(
+                $item,
+                `system.actions.${actionId}.consumers.${consumerId}.label`,
+                target.value
+            )}
+    />
+</FormSection>
 
-    <!-- Select HIt Dice that can be consumed -->
-    <!-- <div class="a5e-field-group">
+<!-- Select HIt Dice that can be consumed -->
+<!-- <div class="a5e-field-group">
         {#if $item.actor}
             <h3 class="a5e-field-group__heading">
                 {localize("A5E.ConsumerHitDiceDefault")}
@@ -92,5 +94,4 @@
         </div>
     </div> -->
 
-    <!-- Add resource to add ish too -->
-</section>
+<!-- Add resource to add ish too -->

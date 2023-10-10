@@ -36,6 +36,7 @@
         align-items: var(--item-alignment, initial);
         justify-content: var(--item-justification, initial);
         gap: var(--gap, 0.375rem);
+        width: var(--width);
         margin: var(--margin, 0);
         padding: var(--padding, 0.5rem);
         background: var(--background, rgba(0, 0, 0, 0.05));

@@ -1,8 +1,9 @@
 <script>
     import { getContext } from "svelte";
-    import { localize } from "#runtime/svelte/helper";
 
     import updateDocumentDataFromField from "../../../utils/updateDocumentDataFromField";
+
+    import FormSection from "../FormSection.svelte";
 
     export let consumer;
     export let consumerId;
@@ -11,40 +12,43 @@
     const actionId = getContext("actionId");
 </script>
 
-<section class="action-config__wrapper">
-    <div class="a5e-field-group a5e-field-group--label">
-        <label for="{actionId}-{consumerId}-label">
-            {localize("A5E.Label")}
-        </label>
+<FormSection
+    heading="A5E.Label"
+    --background="none"
+    --direction="column"
+    --width="calc(100% - 2.5rem)"
+    --padding="0"
+>
+    <input
+        id="{actionId}-{consumerId}-label"
+        name="{actionId}-{consumerId}-label"
+        type="text"
+        value={consumer.label ?? ""}
+        on:change={({ target }) =>
+            updateDocumentDataFromField(
+                $item,
+                `system.actions.${actionId}.consumers.${consumerId}.label`,
+                target.value
+            )}
+    />
+</FormSection>
 
-        <input
-            id="{actionId}-{consumerId}-label"
-            name="{actionId}-{consumerId}-label"
-            type="text"
-            value={consumer.label ?? ""}
-            on:change={({ target }) =>
-                updateDocumentDataFromField(
-                    $item,
-                    `system.actions.${actionId}.consumers.${consumerId}.label`,
-                    target.value
-                )}
-        />
-    </div>
-
-    <div class="a5e-field-group">
-        <div class="u-flex u-flex-col u-gap-sm u-w-fit">
-            <h3 class="a5e-field-group__heading">Default Consumption Amount</h3>
-            <input
-                type="number"
-                d-type="Number"
-                value={consumer.quantity ?? 1}
-                on:change={({ target }) =>
-                    updateDocumentDataFromField(
-                        $item,
-                        `system.actions.${actionId}.consumers.${consumerId}.quantity`,
-                        Number(target.value)
-                    )}
-            />
-        </div>
-    </div>
-</section>
+<FormSection
+    heading="Default Consumption Amount"
+    --background="none"
+    --direction="column"
+    --width="max-content"
+    --padding="0"
+>
+    <input
+        type="number"
+        d-type="Number"
+        value={consumer.quantity ?? 1}
+        on:change={({ target }) =>
+            updateDocumentDataFromField(
+                $item,
+                `system.actions.${actionId}.consumers.${consumerId}.quantity`,
+                Number(target.value)
+            )}
+    />
+</FormSection>
