@@ -59,7 +59,7 @@
     on:tab-change={({ detail }) => (currentTab = detail)}
 />
 
-<div class="notes-page">
+<div class="a5e-page-wrapper a5e-page-wrapper--notes">
     <section class="notes__container">
         {#if currentTab === "appearance"}
             <section class="a5e-box u-p-md a5e-form__section--bio-wrapper">
@@ -120,7 +120,9 @@
                 {/each}
             </section>
 
-            <h3 class="appearance-heading">Appearance</h3>
+            <heading class="a5e-section-header a5e-section-header--rounded">
+                <h3 class="a5e-section-header__heading">Appearance</h3>
+            </heading>
         {/if}
 
         <Editor

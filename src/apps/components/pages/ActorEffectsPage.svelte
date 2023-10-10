@@ -58,7 +58,7 @@
     // let strife = $actor.system.attributes.strife ?? 0;
 </script>
 
-<div class="a5e-item-page-wrapper">
+<div class="a5e-page-wrapper">
     {#if $actor.isOwner}
         <UtilityBar>
             <Search {reducerType} />

@@ -1,4 +1,4 @@
-.a5e-item-page-wrapper {
+.a5e-page-wrapper {
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -7,6 +7,12 @@
   padding-right: 0;
   overflow: hidden;
 
+  &--notes {
+    padding-top: 0.125rem;
+  }
+
+  &--notes,
+  &--settings,
   &--skills {
     padding-right: 0.5rem;
   }

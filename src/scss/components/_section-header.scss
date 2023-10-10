@@ -15,8 +15,13 @@
     gap: 0.5rem;
     margin-bottom: 0.175rem;
     font-size: var(--font-size-sm);
-    border-radius: 3px;
     text-align: center;
+  }
+
+  &--rounded,
+  &--document-list {
+    border-radius: 3px;
+
   }
 
   &__heading {

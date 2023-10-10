@@ -2,8 +2,18 @@
     import { getContext } from "svelte";
     import { localize } from "#runtime/svelte/helper";
 
-    import FormSection from "../FormSection.svelte";
     import Skill from "../Skill.svelte";
+
+    function getSkillSpecialties(skillKey, skill) {
+        return skill.specialties
+            .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
+            .map((specialty) => {
+                if (!skillSpecialties[skillKey]) return specialty;
+
+                return skillSpecialties[skillKey][specialty] ?? specialty;
+            })
+            .join(", ");
+    }
 
     const actor = getContext("actor");
     const { A5E } = CONFIG;
@@ -16,7 +26,7 @@
     );
 </script>
 
-<div class="a5e-item-page-wrapper a5e-item-page-wrapper--skills">
+<div class="a5e-page-wrapper a5e-page-wrapper--skills">
     {#if showSpecialties}
         <section class="a5e-section a5e-section--skill-specialties">
             <header class="a5e-section-header">
@@ -29,23 +39,9 @@
                         <dt class="skill-specialties-list__skill">
                             {localize(A5E.skills[key])}
                         </dt>
-                        <dd class="skill-specialties-list__specialties">
-                            {skill.specialties
-                                .sort((a, b) =>
-                                    a
-                                        .toLowerCase()
-                                        .localeCompare(b.toLowerCase())
-                                )
-                                .map((specialty) => {
-                                    if (!skillSpecialties[key])
-                                        return specialty;
 
-                                    return (
-                                        skillSpecialties[key][specialty] ??
-                                        specialty
-                                    );
-                                })
-                                .join(", ")}
+                        <dd class="skill-specialties-list__specialties">
+                            {getSkillSpecialties(key, skill)}
                         </dd>
                     {/if}
                 {/each}
