@@ -36,7 +36,7 @@
     });
 </script>
 
-<div class="features-page">
+<div class="a5e-item-page-wrapper">
     {#if $actor.isOwner}
         <UtilityBar>
             <Search {reducerType} />
@@ -49,7 +49,7 @@
         </UtilityBar>
     {/if}
 
-    <section class="features-main-container">
+    <section class="a5e-item-list-wrapper">
         {#if $actor.type === "npc"}
             <ItemCategory
                 {showDescription}
@@ -75,23 +75,3 @@
 
     <footer class="features-footer" />
 </div>
-
-<style lang="scss">
-    .features-page {
-        display: flex;
-        flex-direction: column;
-        flex: 1;
-        gap: 0.5rem;
-        padding: 0.5rem;
-        overflow: hidden;
-    }
-
-    .features-main-container {
-        display: flex;
-        flex-grow: 1;
-        flex-direction: column;
-        gap: 0.5rem;
-        overflow-y: auto;
-        overflow-x: hidden;
-    }
-</style>

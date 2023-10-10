@@ -62,7 +62,7 @@
     });
 </script>
 
-<div class="spells-page">
+<div class="a5e-item-page-wrapper">
     {#if $actor.isOwner}
         <UtilityBar>
             <Search {reducerType} />
@@ -75,7 +75,7 @@
         </UtilityBar>
     {/if}
 
-    <section class="spells-main-container">
+    <section class="a5e-item-list-wrapper">
         {#each Object.entries(spellLevels) as [level, label]}
             {#if isSpellLevelVisible(level)}
                 <ItemCategory
@@ -196,23 +196,5 @@
 <style lang="scss">
     .disable-pointer-events {
         pointer-events: none;
-    }
-
-    .spells-page {
-        display: flex;
-        flex-direction: column;
-        flex: 1;
-        gap: 0.5rem;
-        padding: 0.5rem;
-        overflow: hidden;
-    }
-
-    .spells-main-container {
-        display: flex;
-        flex-grow: 1;
-        flex-direction: column;
-        gap: 0.5rem;
-        overflow-y: auto;
-        overflow-x: hidden;
     }
 </style>

@@ -1,0 +1,9 @@
+.a5e-item-list-wrapper {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-right: 0.5rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+}

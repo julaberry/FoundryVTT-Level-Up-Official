@@ -38,7 +38,7 @@
     });
 </script>
 
-<div class="maneuvers-page">
+<div class="a5e-item-page-wrapper">
     {#if $actor.isOwner}
         <UtilityBar>
             <Search {reducerType} />
@@ -51,7 +51,7 @@
         </UtilityBar>
     {/if}
 
-    <section class="maneuvers-main-container">
+    <section class="a5e-item-list-wrapper">
         {#each Object.entries($maneuvers._degrees) as [label, items]}
             {#if items.length}
                 <ItemCategory
@@ -136,23 +136,6 @@
 <style lang="scss">
     .disable-pointer-events {
         pointer-events: none;
-    }
-
-    .maneuvers-page {
-        display: flex;
-        flex-direction: column;
-        flex: 1;
-        gap: 0.5rem;
-        padding: 0.5rem;
-        overflow: hidden;
-    }
-    .maneuvers-main-container {
-        display: flex;
-        flex-grow: 1;
-        flex-direction: column;
-        gap: 0.5rem;
-        overflow-y: auto;
-        overflow-x: hidden;
     }
 
     .recharge-button {

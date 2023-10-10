@@ -7,7 +7,11 @@
 @import './old/base/animations';
 
 @import "./components/navigation";
-@import "./components/section";
+@import "./components/section-header";
+
+@import "./layout/item-list-wrapper";
+@import "./layout/item-page-wrapper";
+@import "./layout/section";
 
 @import './old/components/ability-score';
 @import './old/components//action-config';

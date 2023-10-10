@@ -58,7 +58,7 @@
     // let strife = $actor.system.attributes.strife ?? 0;
 </script>
 
-<div class="effects-page">
+<div class="a5e-item-page-wrapper">
     {#if $actor.isOwner}
         <UtilityBar>
             <Search {reducerType} />
@@ -67,7 +67,7 @@
         </UtilityBar>
     {/if}
 
-    <section class="effects-main-container">
+    <section class="a5e-item-list-wrapper">
         {#each Object.entries($activeEffects._types) as [label, effects]}
             {#if effects.length}
                 <EffectCategory label={subTypes[label]} {effects} />
@@ -119,106 +119,88 @@
 </div>
 
 <style lang="scss">
-    .conditions-list {
-        display: grid;
-        grid-template-columns: repeat(17, 1fr);
-        gap: 0.375rem;
-        align-items: center;
-        justify-content: center;
-        margin: 0;
-        padding: 0.75rem 0.25rem 0.25rem 0.25rem;
-        border-top: 1px solid #ccc;
-        list-style: none;
+    // .conditions-list {
+    //     display: grid;
+    //     grid-template-columns: repeat(17, 1fr);
+    //     gap: 0.375rem;
+    //     align-items: center;
+    //     justify-content: center;
+    //     margin: 0;
+    //     padding: 0.75rem 0.25rem 0.25rem 0.25rem;
+    //     border-top: 1px solid #ccc;
+    //     list-style: none;
 
-        &__item {
-            display: flex;
-            position: relative;
-            height: 1.5rem;
-            width: 1.5rem;
-            border-radius: 50%;
-            cursor: pointer;
+    //     &__item {
+    //         display: flex;
+    //         position: relative;
+    //         height: 1.5rem;
+    //         width: 1.5rem;
+    //         border-radius: 50%;
+    //         cursor: pointer;
 
-            &--active {
-                box-shadow: 0 0 5px var(--color-shadow-primary);
-            }
+    //         &--active {
+    //             box-shadow: 0 0 5px var(--color-shadow-primary);
+    //         }
 
-            &::after {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                position: absolute;
-                top: -0.375rem;
-                right: -0.375rem;
-                width: 0.75rem;
-                height: 0.75rem;
-                padding: 1px;
-                font-family: $font-secondary;
-                font-size: $font-size-xxs;
-                font-weight: 400;
-                color: white;
-                background-color: rgba(0 0 0 / 0.45);
-                border-radius: 50%;
-            }
+    //         &::after {
+    //             display: flex;
+    //             align-items: center;
+    //             justify-content: center;
+    //             position: absolute;
+    //             top: -0.375rem;
+    //             right: -0.375rem;
+    //             width: 0.75rem;
+    //             height: 0.75rem;
+    //             padding: 1px;
+    //             font-family: $font-secondary;
+    //             font-size: $font-size-xxs;
+    //             font-weight: 400;
+    //             color: white;
+    //             background-color: rgba(0 0 0 / 0.45);
+    //             border-radius: 50%;
+    //         }
 
-            &--locked {
-                cursor: not-allowed;
+    //         &--locked {
+    //             cursor: not-allowed;
 
-                &::after {
-                    content: "\f023";
-                    font: var(--fa-font-solid);
-                    font-size: $font-size-xxs;
-                }
-            }
+    //             &::after {
+    //                 content: "\f023";
+    //                 font: var(--fa-font-solid);
+    //                 font-size: $font-size-xxs;
+    //             }
+    //         }
 
-            &--linked {
-                cursor: not-allowed;
+    //         &--linked {
+    //             cursor: not-allowed;
 
-                & ::after {
-                    content: "\f0c1";
-                    font: var(--fa-font-solid);
-                    font-size: $font-size-xxs;
-                }
-            }
+    //             & ::after {
+    //                 content: "\f0c1";
+    //                 font: var(--fa-font-solid);
+    //                 font-size: $font-size-xxs;
+    //             }
+    //         }
 
-            &--fatigue::after {
-                content: var(--fatigue);
-                background-color: var(--fatigue-col);
-                font-size: $font-size-xxs;
-            }
+    //         &--fatigue::after {
+    //             content: var(--fatigue);
+    //             background-color: var(--fatigue-col);
+    //             font-size: $font-size-xxs;
+    //         }
 
-            &--strife::after {
-                content: var(--strife);
-                background-color: var(--strife-col);
-                font-size: $font-size-xxs;
-            }
-        }
-    }
+    //         &--strife::after {
+    //             content: var(--strife);
+    //             background-color: var(--strife-col);
+    //             font-size: $font-size-xxs;
+    //         }
+    //     }
+    // }
 
-    .condition-icon {
-        height: 100%;
-        width: 100%;
-        object-fit: cover;
-        object-position: top;
-        border: 1px solid black;
-        border-radius: 50%;
-        background-color: rgba(0, 0, 0, 0.6);
-    }
-
-    .effects-page {
-        display: flex;
-        flex-direction: column;
-        flex: 1;
-        gap: 0.5rem;
-        padding: 0.75rem;
-        overflow: hidden;
-    }
-
-    .effects-main-container {
-        display: flex;
-        flex-grow: 1;
-        flex-direction: column;
-        gap: 0.5rem;
-        overflow-y: auto;
-        overflow-x: hidden;
-    }
+    // .condition-icon {
+    //     height: 100%;
+    //     width: 100%;
+    //     object-fit: cover;
+    //     object-position: top;
+    //     border: 1px solid black;
+    //     border-radius: 50%;
+    //     background-color: rgba(0, 0, 0, 0.6);
+    // }
 </style>

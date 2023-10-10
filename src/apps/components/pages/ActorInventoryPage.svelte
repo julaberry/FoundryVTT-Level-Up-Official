@@ -42,7 +42,7 @@
     });
 </script>
 
-<div class="inventory-page">
+<div class="a5e-item-page-wrapper">
     {#if $actor.isOwner}
         <UtilityBar>
             <Search {reducerType} />
@@ -55,7 +55,7 @@
         </UtilityBar>
     {/if}
 
-    <section class="inventory-main-container">
+    <section class="a5e-item-list-wrapper">
         {#each sortedObjects as [label, items]}
             {#if items.length}
                 <ItemCategory
@@ -78,23 +78,3 @@
         <ActorInventoryShields />
     </TabFooter>
 </div>
-
-<style lang="scss">
-    .inventory-page {
-        display: flex;
-        flex-direction: column;
-        flex: 1;
-        gap: 0.5rem;
-        padding: 0.5rem;
-        overflow: hidden;
-    }
-
-    .inventory-main-container {
-        display: flex;
-        flex-grow: 1;
-        flex-direction: column;
-        gap: 0.5rem;
-        overflow-y: auto;
-        overflow-x: hidden;
-    }
-</style>
