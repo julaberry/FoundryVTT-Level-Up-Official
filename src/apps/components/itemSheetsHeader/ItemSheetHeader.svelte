@@ -245,8 +245,8 @@
 
     .item-name,
     .item-name[type="text"] {
-        font-family: $font-primary;
-        font-size: $font-size-xxl;
+        font-family: var(--font-name);
+        font-size: var(--font-size-lg);
         border: 0;
         background: transparent;
         text-overflow: ellipsis;
