@@ -18,21 +18,18 @@
 
 <div class="skill-page-wrapper">
     {#if showSpecialties}
-        <FormSection
-            heading="Skill Specialties"
-            --border="1px solid #ccc"
-            --label-border-bottom="1px solid rgb(204, 204, 204)"
-            --label-padding="0 0 0.25rem 0"
-            --label-size="1rem"
-            --label-width="100%"
-        >
-            <dl class="skill-specialties">
+        <section class="a5e-section">
+            <header class="a5e-section-header">
+                <h3 class="a5e-section-header__heading">Skill Specialties</h3>
+            </header>
+
+            <dl class="skill-specialties-list">
                 {#each Object.entries(skills) as [key, skill]}
                     {#if skill.specialties.length}
-                        <dt class="skill-specialties__skill">
+                        <dt class="skill-specialties-list__skill">
                             {localize(A5E.skills[key])}
                         </dt>
-                        <dd class="skill-specialties__list">
+                        <dd class="skill-specialties-list__specialties">
                             {skill.specialties
                                 .sort((a, b) =>
                                     a
@@ -53,14 +50,19 @@
                     {/if}
                 {/each}
             </dl>
-        </FormSection>
+        </section>
     {/if}
 
-    <ul class="skills-container">
-        {#each Object.entries(skills) as [key, skill], i}
-            <Skill {key} {skill} />
-        {/each}
-    </ul>
+    <section class="a5e-section">
+        <header class="a5e-section-header">
+            <h3 class="a5e-section-header__heading">Skills</h3>
+        </header>
+        <ul class="skills-container">
+            {#each Object.entries(skills) as [key, skill], i}
+                <Skill {key} {skill} />
+            {/each}
+        </ul>
+    </section>
 </div>
 
 <style lang="scss">
@@ -71,6 +73,7 @@
         margin: 0;
         padding: 0;
         list-style: none;
+        background: rgba(255, 255, 255, 0.1);
         border: 1px solid #ccc;
         border-radius: $border-radius-standard;
     }
@@ -79,22 +82,24 @@
         display: flex;
         flex-direction: column;
         flex-grow: 1;
-        gap: 0.5rem;
-        padding: 0.375rem 0.75rem 0.75rem 0.75rem;
+        gap: 0.75rem;
+        padding: 0.5rem 0.625rem 0.75rem 0.625rem;
         overflow-x: hidden;
     }
 
-    .skill-specialties {
+    .skill-specialties-list {
         display: grid;
         align-items: center;
         grid-template-columns: min-content 1fr;
+        gap: 0.125rem 0.75rem;
         width: 100%;
-        gap: 0.25rem 0.75rem;
         margin: 0;
+        padding: 0.25rem 0.5rem;
         font-family: var(--font-serif);
         font-size: var(--font-size-sm);
+        background: rgba(255, 255, 255, 0.1);
 
-        &__list {
+        &__specialties {
             margin: 0;
             padding: 0;
             font-weight: 300;

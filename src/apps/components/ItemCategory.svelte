@@ -78,17 +78,19 @@
     );
 </script>
 
-<section class="category-container">
+<section>
     <!-- svelte-ignore missing-declaration -->
     {#if !(type === "featureTypes" && $actor.type === "npc")}
         <header
-            class="category-header"
+            class="a5e-section-header a5e-section-header--document-list"
             style="
                 --headingTemplateAreas: {headingTemplateConfiguration.areas};
                 --headingTemplateColumns: {headingTemplateConfiguration.columns}
             "
         >
-            <h3 class="category-heading category-heading--name">
+            <h3
+                class="a5e-section-header__heading a5e-section-header__heading--name"
+            >
                 <div>
                     {#if icon}
                         <i class={icon} />
@@ -113,13 +115,19 @@
             </h3>
 
             {#if showQuantity}
-                <h3 class="category-heading category-heading--quantity">
+                <h3
+                    class="a5e-section-header__heading a5e-section-header__heading--quantity"
+                >
                     Quantity
                 </h3>
             {/if}
 
             {#if showUses}
-                <h3 class="category-heading category-heading--uses">Uses</h3>
+                <h3
+                    class="a5e-section-header__heading a5e-section-header__heading--uses"
+                >
+                    Uses
+                </h3>
             {/if}
         </header>
     {/if}
@@ -137,22 +145,7 @@
 </section>
 
 <style lang="scss">
-    .category-header {
-        display: grid;
-        grid-template-areas: var(--headingTemplateAreas);
-        grid-template-columns: var(--headingTemplateColumns);
-
-        align-items: center;
-        gap: 0.5rem;
-        margin-bottom: 0.25rem;
-        padding: 0 0.5rem 0.25rem 0.125rem;
-        text-align: center;
-        border-bottom: 1px solid #ccc;
-    }
-
-    .category-heading {
-        font-size: $font-size-sm;
-
+    .a5e-section-header__heading {
         &--name {
             display: grid;
             align-items: center;

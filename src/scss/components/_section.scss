@@ -1,0 +1,31 @@
+.a5e-section {
+  overflow: hidden;
+  border-radius: 3px;
+  box-shadow: var(--outline-gold), 0 3px 5px rgb(0 0 0 / 0.4);
+}
+
+.a5e-section-header {
+  padding: 0.25rem 0.5rem;
+  font-family: var(--font-serif);
+  font-size: var(--font-sizes-sm);
+  color: #f6f2eb;
+  background: #425f65;
+  border-bottom: 1px solid #3e4240;
+  box-shadow: 0 0 10px #2e4246 inset;
+
+  &--document-list {
+    display: grid;
+    grid-template-areas: var(--headingTemplateAreas);
+    grid-template-columns: var(--headingTemplateColumns);
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.175rem;
+    font-size: var(--font-size-sm);
+    border-radius: 3px;
+    text-align: center;
+  }
+
+  &__heading {
+    font-size: inherit;
+  }
+}
