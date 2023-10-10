@@ -49,8 +49,8 @@ input[type='number'] {
     padding-inline: 0 3px;
     border: 0;
     background: transparent;
-    font-family: $font-primary;
-    font-size: $font-size-xxl;
+    font-family: var(--font-name);
+    font-size: var(--font-size-lg);
 
     &:active,
     &:focus {

@@ -44,12 +44,14 @@
     }
 
     .form-heading {
-        font-size: var(--label-size, $font-size-sm);
-        font-weight: var(--label-weight, bold);
         flex-shrink: 1;
         width: var(--label-width, auto);
-        border-bottom: 0;
         margin-bottom: 0;
+        padding: var(--label-padding, 0);
+        font-family: var(--font-serif);
+        font-size: var(--label-size, var(--font-size-sm));
+        font-weight: var(--label-weight, bold);
+        border-bottom: var(--label-border-bottom, 0);
     }
 
     .hint,

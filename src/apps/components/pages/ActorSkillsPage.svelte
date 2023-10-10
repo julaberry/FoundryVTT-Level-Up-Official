@@ -18,7 +18,14 @@
 
 <div class="skill-page-wrapper">
     {#if showSpecialties}
-        <FormSection heading="Skill Specialties" --border="1px solid #ccc">
+        <FormSection
+            heading="Skill Specialties"
+            --border="1px solid #ccc"
+            --label-border-bottom="1px solid rgb(204, 204, 204)"
+            --label-padding="0 0 0.25rem 0"
+            --label-size="1rem"
+            --label-width="100%"
+        >
             <dl class="skill-specialties">
                 {#each Object.entries(skills) as [key, skill]}
                     {#if skill.specialties.length}
@@ -73,6 +80,7 @@
         flex-direction: column;
         flex-grow: 1;
         gap: 0.5rem;
+        padding: 0.375rem 0.75rem 0.75rem 0.75rem;
         overflow-x: hidden;
     }
 
@@ -81,13 +89,15 @@
         align-items: center;
         grid-template-columns: min-content 1fr;
         width: 100%;
-        gap: 0.25rem 0.5rem;
+        gap: 0.25rem 0.75rem;
         margin: 0;
-        font-size: $font-size-sm;
+        font-family: var(--font-serif);
+        font-size: var(--font-size-sm);
 
         &__list {
             margin: 0;
             padding: 0;
+            font-weight: 300;
         }
 
         &__skill {

@@ -89,13 +89,19 @@
         align-items: center;
         width: 100%;
         color: $color-light-text;
-        font-family: $font-primary;
+        font-family: var(--font-serif);
         border-radius: $border-radius-standard;
         gap: 0.25rem;
         overflow: hidden;
 
         &__main {
             grid-column: span 2;
+            text-transform: uppercase;
+
+            h3 {
+                font-size: 1rem;
+                font-family: var(--font-serif);
+            }
         }
 
         &__value {
@@ -106,7 +112,7 @@
             color: $color-dark-text;
             margin-bottom: 0;
             background: none;
-            font-size: $font-size-xl;
+            font-size: $font-size-lg;
             font-weight: inherit;
             text-align: center;
 

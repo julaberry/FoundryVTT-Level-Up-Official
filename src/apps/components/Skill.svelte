@@ -131,7 +131,8 @@
         padding-inline: 0.5rem;
         border: 1px solid #ccc;
         border-top: 0;
-        font-size: $font-size-sm;
+        font-family: var(--font-serif);
+        font-size: var(--font-size-sm);
 
         &:nth-child(even) {
             border-left: 0;
@@ -181,13 +182,15 @@
         }
 
         &__name {
+            flex-grow: 1;
             font-size: inherit;
             cursor: pointer;
-            flex-grow: 1;
         }
 
         &__passive {
             color: #999;
+            min-width: 1.525rem;
+            text-align: center;
         }
 
         &__proficiency-icon {
