@@ -93,6 +93,11 @@
                 label: "A5E.TabEffects",
                 component: ActorEffectsPage,
             },
+            // {
+            //     name: "prestige",
+            //     icon: "fa-solid fa-medal",
+            //     label: "Prestige",
+            // },
             {
                 name: "settings",
                 icon: "fa-solid fa-gear",
