@@ -3,7 +3,7 @@
   gap: 0.25rem;
   font-family: var(--font-serif);
   border-radius: var(--border-radius-md);
-  box-shadow: var(--outline-gold);
+  box-shadow: var(--outline-gold), 0 3px 5px rgba(0, 0, 0, 0.4);
   overflow: hidden;
 
   &__input,
@@ -24,6 +24,7 @@
     color: var(--color-light-text);
     border-right: 1px solid #3e4240;
     background: var(--color-primary);
+    box-shadow: 0 0 10px #2e4246 inset;
   }
 
   &__values {

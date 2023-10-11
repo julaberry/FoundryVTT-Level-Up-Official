@@ -3,15 +3,16 @@
   grid-area: bar;
   height: 1rem;
   width: 100%;
-  background: rgba(0, 0, 0, 0.25);
+  background: transparent;
   border-radius: var(--border-radius-md);
-  box-shadow: var(--outline-gold);
+  box-shadow: var(--outline-gold), 0 3px 5px rgba(0, 0, 0, 0.4);
 
   &__bar {
     height: 100%;
     width: var(--bar-width, 0);
     border-radius: var(--border-radius-md);
     background-color: var(--encumbrance-bar-color);
+    box-shadow: 0 0 10px #2e4246 inset;
   }
 
   &__values {
