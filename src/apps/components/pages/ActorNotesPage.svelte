@@ -7,7 +7,28 @@
     import FormSection from "../../components/FormSection.svelte";
     import SecondaryNavigationBar from "../navigation/SecondaryNavigationBar.svelte";
 
+    import ActorSheetTempSettingsStore from "../../../stores/ActorSheetTempSettingsStore";
+
+    function updateCurrentTab({ detail: name }) {
+        const { uuid } = $actor;
+        currentTab = name;
+
+        ActorSheetTempSettingsStore.update((currentSettings) => ({
+            ...currentSettings,
+            [uuid]: {
+                ...(currentSettings[uuid] ?? {}),
+                currentNotesTab: name,
+            },
+        }));
+    }
+
     let isGM = game.user.isGM;
+    let tempSettings = {};
+
+    ActorSheetTempSettingsStore.subscribe((store) => {
+        tempSettings = store;
+    });
+
     const actor = getContext("actor");
 
     const charChoicesLabel = {
@@ -49,14 +70,12 @@
         },
     };
 
-    let currentTab = $actor.type === "npc" ? "bio" : "appearance";
+    let currentTab =
+        tempSettings[$actor?.uuid]?.currentNotesTab ??
+        ($actor.type === "npc" ? "bio" : "appearance");
 </script>
 
-<SecondaryNavigationBar
-    {currentTab}
-    {tabs}
-    on:tab-change={({ detail }) => (currentTab = detail)}
-/>
+<SecondaryNavigationBar {currentTab} {tabs} on:tab-change={updateCurrentTab} />
 
 <div class="a5e-page-wrapper a5e-page-wrapper--notes">
     {#if currentTab === "appearance"}

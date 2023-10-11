@@ -32,6 +32,7 @@
         ActorSheetTempSettingsStore.update((currentSettings) => ({
             ...currentSettings,
             [uuid]: {
+                ...(currentSettings[uuid] ?? {}),
                 currentTab: name,
             },
         }));

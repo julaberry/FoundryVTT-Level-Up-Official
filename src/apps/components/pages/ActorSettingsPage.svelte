@@ -10,6 +10,21 @@
     import SecondaryNavigationBar from "../navigation/SecondaryNavigationBar.svelte";
     import ActorNpcSettingsTab from "./ActorNPCSettingsTab.svelte";
 
+    import ActorSheetTempSettingsStore from "../../../stores/ActorSheetTempSettingsStore";
+
+    function updateCurrentTab({ detail: name }) {
+        const { uuid } = $actor;
+        currentTab = name;
+
+        ActorSheetTempSettingsStore.update((currentSettings) => ({
+            ...currentSettings,
+            [uuid]: {
+                ...(currentSettings[uuid] ?? {}),
+                currentSettingsTab: name,
+            },
+        }));
+    }
+
     function getDamageBonusSummary(damageBonus) {
         const { damageBonusSummariesByContext, damageTypes } = CONFIG.A5E;
         const damageType = damageTypes[damageBonus.damageType];
@@ -33,6 +48,12 @@
                 : "healing",
         });
     }
+
+    let tempSettings = {};
+
+    ActorSheetTempSettingsStore.subscribe((store) => {
+        tempSettings = store;
+    });
 
     const actor = getContext("actor");
 
@@ -68,14 +89,11 @@
         },
     };
 
-    let currentTab = "general";
+    let currentTab =
+        tempSettings[$actor?.uuid]?.currentSettingsTab ?? "general";
 </script>
 
-<SecondaryNavigationBar
-    {currentTab}
-    {tabs}
-    on:tab-change={({ detail }) => (currentTab = detail)}
-/>
+<SecondaryNavigationBar {currentTab} {tabs} on:tab-change={updateCurrentTab} />
 
 <svelte:component this={tabs[currentTab]?.component} />
 
