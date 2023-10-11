@@ -637,22 +637,6 @@
             </FormSection>
         </section>
     {/if}
-
-    <section class="setting-group">
-        <header class="a5e-section-header a5e-section-header--rounded">
-            <h3 class="a5e-section-header__heading">Triggers</h3>
-        </header>
-
-        <button
-            class="a5e-button trigger-button"
-            on:click={() => {
-                $actor.applyPermanentEffects();
-                document.activeElement.blur();
-            }}
-        >
-            Re-Calculate Permanent Effects
-        </button>
-    </section>
 </section>
 
 <style lang="scss">
@@ -776,22 +760,6 @@
         &:hover {
             box-shadow: none;
             color: rgb(25, 24, 19);
-        }
-    }
-
-    .trigger-button {
-        margin: 0.25rem;
-        width: fit-content;
-        padding-inline: 0.75rem;
-        background: transparent;
-        border: 1px solid #4f4f4f;
-        transition: $standard-transition;
-
-        &:focus,
-        &:hover {
-            box-shadow: none;
-            background: $color-primary;
-            color: $color-light-text;
         }
     }
 
