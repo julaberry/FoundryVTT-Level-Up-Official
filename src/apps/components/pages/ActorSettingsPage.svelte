@@ -2,16 +2,13 @@
     import { getContext } from "svelte";
     import { localize } from "#runtime/svelte/helper";
 
-    import Checkbox from "../Checkbox.svelte";
-    import FormSection from "../FormSection.svelte";
     import ActorGeneralSettingsTab from "./ActorGeneralSettingsTab.svelte";
+    import ActorInventorySettingsTab from "./ActorInventorySettingsTab.svelte";
     import ActorManeuverSettingsTab from "./ActorManeuverSettingsTab.svelte";
     import ActorRollSettingsTab from "./ActorRollSettingsTab.svelte";
     import ActorSpellSettingsTab from "./ActorSpellSettingsTab.svelte";
     import SecondaryNavigationBar from "../navigation/SecondaryNavigationBar.svelte";
-
-    import determineIfPropertyModifiedByEffect from "../../../utils/determineIfPropertyModifiedByEffect ";
-    import updateDocumentDataFromField from "../../../utils/updateDocumentDataFromField";
+    import ActorNpcSettingsTab from "./ActorNPCSettingsTab.svelte";
 
     function getDamageBonusSummary(damageBonus) {
         const { damageBonusSummariesByContext, damageTypes } = CONFIG.A5E;
@@ -44,6 +41,10 @@
             component: ActorGeneralSettingsTab,
             label: "General",
         },
+        inventory: {
+            component: ActorInventorySettingsTab,
+            label: "Inventory",
+        },
         maneuvers: {
             component: ActorManeuverSettingsTab,
             label: "Maneuvers",
@@ -58,61 +59,16 @@
             label: "Rolls",
             display: $actor.type === "character",
         },
+        npc: {
+            component: ActorNpcSettingsTab,
+            label: "NPC Options",
+            display:
+                $actor.type === "npc" &&
+                (game.settings.get("a5e", "randomizeNPCHitPoints") ?? true),
+        },
     };
 
     let currentTab = "general";
-
-    const globalCurrencyWeightTrackingSelection = game.settings.get(
-        "a5e",
-        "currencyWeight"
-    );
-
-    $: disableMeleeWeaponAttack = determineIfPropertyModifiedByEffect(
-        $actor,
-        "system.bonuses.meleeWeaponAttack"
-    );
-
-    $: disableRangedWeaponAttack = determineIfPropertyModifiedByEffect(
-        $actor,
-        "system.bonuses.rangedWeaponAttack"
-    );
-
-    $: disableMeleeSpellAttack = determineIfPropertyModifiedByEffect(
-        $actor,
-        "system.bonuses.meleeSpellAttack"
-    );
-
-    $: disableRangedSpellAttack = determineIfPropertyModifiedByEffect(
-        $actor,
-        "system.bonuses.rangedSpellAttack"
-    );
-
-    $: disableManeuverDC = determineIfPropertyModifiedByEffect(
-        $actor,
-        "system.bonuses.maneuverDC"
-    );
-
-    $: disableSpellDC = determineIfPropertyModifiedByEffect(
-        $actor,
-        "system.bonuses.spellDC"
-    );
-
-    $: disableAbilityCheckBonusGlobal = determineIfPropertyModifiedByEffect(
-        $actor,
-        "system.bonuses.abilities.check"
-    );
-
-    $: disableSavingThrowBonusGlobal = determineIfPropertyModifiedByEffect(
-        $actor,
-        "system.bonuses.abilities.save"
-    );
-
-    $: disableSkillCheckBonusGlobal = determineIfPropertyModifiedByEffect(
-        $actor,
-        "system.bonuses.abilities.skill"
-    );
-
-    $: flags = $actor.flags;
 </script>
 
 <SecondaryNavigationBar
@@ -123,208 +79,7 @@
 
 <svelte:component this={tabs[currentTab]?.component} />
 
-<!-- <section class="a5e-page-wrapper a5e-page-wrapper--settings">
-    <section class="setting-group">
-        <header class="a5e-section-header a5e-section-header--rounded">
-            <h3 class="a5e-section-header__heading">Global Bonuses</h3>
-        </header>
-
-        <small class="hint">
-            All of the fields in this section accept any values valid in roll
-            formulae.
-        </small>
-
-        <div class="global-bonus-container">
-            <FormSection
-                heading="Melee Weapon Attack"
-                showWarning={disableMeleeWeaponAttack}
-                warning="A5E.validations.warnings.modifiedByEffect"
-            >
-                <input
-                    class="a5e-input"
-                    type="text"
-                    name="system.bonuses.meleeWeaponAttack"
-                    value={$actor.system.bonuses.meleeWeaponAttack}
-                    disabled={disableMeleeWeaponAttack}
-                    on:change={({ target }) =>
-                        updateDocumentDataFromField(
-                            $actor,
-                            target.name,
-                            target.value
-                        )}
-                />
-            </FormSection>
-
-            <FormSection
-                heading="Ranged Weapon Attack"
-                showWarning={disableRangedWeaponAttack}
-                warning="A5E.validations.warnings.modifiedByEffect"
-            >
-                <input
-                    class="a5e-input"
-                    type="text"
-                    name="system.bonuses.rangedWeaponAttack"
-                    value={$actor.system.bonuses.rangedWeaponAttack}
-                    disabled={disableRangedWeaponAttack}
-                    on:change={({ target }) =>
-                        updateDocumentDataFromField(
-                            $actor,
-                            target.name,
-                            target.value
-                        )}
-                />
-            </FormSection>
-
-            <FormSection
-                heading="Melee Spell Attack"
-                showWarning={disableMeleeSpellAttack}
-                warning="A5E.validations.warnings.modifiedByEffect"
-            >
-                <input
-                    class="a5e-input"
-                    type="text"
-                    name="system.bonuses.meleeSpellAttack"
-                    value={$actor.system.bonuses.meleeSpellAttack}
-                    disabled={disableMeleeSpellAttack}
-                    on:change={({ target }) =>
-                        updateDocumentDataFromField(
-                            $actor,
-                            target.name,
-                            target.value
-                        )}
-                />
-            </FormSection>
-
-            <FormSection
-                heading="Ranged Spell Attack"
-                showWarning={disableRangedSpellAttack}
-                warning="A5E.validations.warnings.modifiedByEffect"
-            >
-                <input
-                    class="a5e-input"
-                    type="text"
-                    name="system.bonuses.rangedSpellAttack"
-                    value={$actor.system.bonuses.rangedSpellAttack}
-                    disabled={disableRangedSpellAttack}
-                    on:change={({ target }) =>
-                        updateDocumentDataFromField(
-                            $actor,
-                            target.name,
-                            target.value
-                        )}
-                />
-            </FormSection>
-        </div>
-
-        <hr class="divider" />
-
-        <div class="global-bonus-container">
-            <FormSection
-                heading="A5E.ManeuverDCBonus"
-                showWarning={disableManeuverDC}
-                warning="A5E.validations.warnings.modifiedByEffect"
-            >
-                <input
-                    class="a5e-input"
-                    type="text"
-                    name="system.bonuses.maneuverDC"
-                    value={$actor.system.bonuses.maneuverDC}
-                    disabled={disableManeuverDC}
-                    on:change={({ target }) =>
-                        updateDocumentDataFromField(
-                            $actor,
-                            target.name,
-                            target.value
-                        )}
-                />
-            </FormSection>
-
-            <FormSection
-                heading="A5E.SpellDCBonus"
-                showWarning={disableSpellDC}
-                warning="A5E.validations.warnings.modifiedByEffect"
-            >
-                <input
-                    class="a5e-input"
-                    type="text"
-                    name="system.bonuses.spellDC"
-                    value={$actor.system.bonuses.spellDC}
-                    disabled={disableSpellDC}
-                    on:change={({ target }) =>
-                        updateDocumentDataFromField(
-                            $actor,
-                            target.name,
-                            target.value
-                        )}
-                />
-            </FormSection>
-        </div>
-
-        <hr class="divider" />
-
-        <div class="global-bonus-container">
-            <FormSection
-                heading="A5E.AbilityCheckBonusGlobal"
-                showWarning={disableAbilityCheckBonusGlobal}
-                warning="A5E.validations.warnings.modifiedByEffect"
-            >
-                <input
-                    class="a5e-input"
-                    type="text"
-                    name="system.bonuses.abilities.check"
-                    value={$actor.system.bonuses.abilities.check}
-                    disabled={disableAbilityCheckBonusGlobal}
-                    on:change={({ target }) =>
-                        updateDocumentDataFromField(
-                            $actor,
-                            target.name,
-                            target.value
-                        )}
-                />
-            </FormSection>
-
-            <FormSection
-                heading="A5E.SavingThrowBonusGlobal"
-                showWarning={disableSavingThrowBonusGlobal}
-                warning="A5E.validations.warnings.modifiedByEffect"
-            >
-                <input
-                    class="a5e-input"
-                    type="text"
-                    name="system.bonuses.abilities.save"
-                    value={$actor.system.bonuses.abilities.save}
-                    disabled={disableSavingThrowBonusGlobal}
-                    on:change={({ target }) =>
-                        updateDocumentDataFromField(
-                            $actor,
-                            target.name,
-                            target.value
-                        )}
-                />
-            </FormSection>
-
-            <FormSection
-                heading="A5E.SkillCheckBonusGlobal"
-                showWarning={disableSkillCheckBonusGlobal}
-                warning="A5E.validations.warnings.modifiedByEffect"
-            >
-                <input
-                    class="a5e-input"
-                    type="text"
-                    name="system.bonuses.abilities.skill"
-                    value={$actor.system.bonuses.abilities.skill}
-                    disabled={disableSkillCheckBonusGlobal}
-                    on:change={({ target }) =>
-                        updateDocumentDataFromField(
-                            $actor,
-                            target.name,
-                            target.value
-                        )}
-                />
-            </FormSection>
-        </div>
-    </section>
-
+<!--
     <section class="setting-group">
         <header class="setting-header">
             <h3 class="setting-heading">Damage Bonuses</h3>
@@ -453,99 +208,6 @@
 
     <section class="setting-group">
         <header class="a5e-section-header a5e-section-header--rounded">
-            <h3 class="a5e-section-header__heading">Inventory Settings</h3>
-        </header>
-
-        <FormSection>
-            <Checkbox
-                label="A5E.settings.trackInventoryWeight"
-                checked={flags?.a5e?.trackInventoryWeight ?? true}
-                on:updateSelection={({ detail }) => {
-                    updateDocumentDataFromField(
-                        $actor,
-                        "flags.a5e.trackInventoryWeight",
-                        detail
-                    );
-                }}
-            />
-        </FormSection>
-
-        {#if flags?.a5e?.trackInventoryWeight ?? true}
-            <FormSection>
-                <Checkbox
-                    label="A5E.settings.doubleCarryingCapacity"
-                    checked={flags.a5e?.doubleCarryCapacity ?? false}
-                    on:updateSelection={({ detail }) => {
-                        updateDocumentDataFromField(
-                            $actor,
-                            "flags.a5e.doubleCarryCapacity",
-                            detail
-                        );
-                    }}
-                />
-            </FormSection>
-
-            <FormSection
-                hint="A5E.settings.hints.trackCurrencyWeight"
-                --gap="0.25rem"
-            >
-                <Checkbox
-                    label="A5E.settings.trackCurrencyWeight"
-                    checked={flags.a5e?.trackCurrencyWeight ??
-                        globalCurrencyWeightTrackingSelection}
-                    on:updateSelection={({ detail }) => {
-                        updateDocumentDataFromField(
-                            $actor,
-                            "flags.a5e.trackCurrencyWeight",
-                            detail
-                        );
-                    }}
-                />
-            </FormSection>
-        {/if}
-    </section>
-
-    {#if $actor.type === "character"}
-        <section class="setting-group">
-            <header class="a5e-section-header a5e-section-header--rounded">
-                <h3 class="a5e-section-header__heading">Roll Modifiers</h3>
-            </header>
-
-            <FormSection hint="A5E.settings.hints.halflingLuck" --gap="0.25rem">
-                <Checkbox
-                    label="A5E.settings.halflingLuck"
-                    checked={flags.a5e?.halflingLuck ?? false}
-                    on:updateSelection={({ detail }) => {
-                        updateDocumentDataFromField(
-                            $actor,
-                            "flags.a5e.halflingLuck",
-                            detail
-                        );
-                    }}
-                />
-            </FormSection>
-
-            <FormSection
-                hint="A5E.settings.hints.jackOfAllTrades"
-                --gap="0.25rem"
-            >
-                <Checkbox
-                    label="A5E.settings.jackOfAllTrades"
-                    checked={flags.a5e?.jackOfAllTrades ?? false}
-                    on:updateSelection={({ detail }) => {
-                        updateDocumentDataFromField(
-                            $actor,
-                            "flags.a5e.jackOfAllTrades",
-                            detail
-                        );
-                    }}
-                />
-            </FormSection>
-        </section>
-    {/if}
-
-    <section class="setting-group">
-        <header class="a5e-section-header a5e-section-header--rounded">
             <h3 class="a5e-section-header__heading">Sheet Customization</h3>
         </header>
 
@@ -650,37 +312,9 @@
             </FormSection>
         {/if}
     </section>
--->
-<!-- svelte-ignore missing-declaration -->
-<!--
-    {#if $actor.type === "npc" && game.settings.get("a5e", "randomizeNPCHitPoints")}
-        <section class="setting-group">
-            <header class="a5e-section-header a5e-section-header--rounded">
-                <h3 class="a5e-section-header__heading">Token Options</h3>
-            </header>
-
-            <FormSection --gap="0.25rem">
-                <Checkbox
-                    label="Disable Randomized HP Rolls"
-                    checked={flags.a5e?.disableRandomizedHP ?? false}
-                    on:updateSelection={({ detail }) => {
-                        updateDocumentDataFromField(
-                            $actor,
-                            "flags.a5e.disableRandomizedHP",
-                            detail
-                        );
-                    }}
-                />
-            </FormSection>
-        </section>
-    {/if}
 </section> -->
 
 <style lang="scss">
-    .a5e-input[type="text"] {
-        height: 1.75rem;
-    }
-
     .action-button {
         padding: 0.25rem;
         color: #999;
@@ -748,60 +382,9 @@
         list-style: none;
     }
 
-    .divider {
-        border: 0;
-        border-bottom: 0.5px solid #ccc;
-        margin: 0.375rem 0;
-    }
-
     .global-bonus-container {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: 0.25rem;
-    }
-
-    .hint {
-        margin-block: 0.25rem;
-    }
-
-    .setting-group {
-        display: flex;
-        flex-direction: column;
-        gap: 0.25rem;
-
-        &:not(:last-child) {
-            margin-bottom: 0.25rem;
-        }
-    }
-
-    .setting-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 0.5rem 0.25rem 0.125rem;
-        border-bottom: 1px solid #ccc;
-    }
-
-    .setting-header-button {
-        width: fit-content;
-        padding: 0;
-        margin: 0;
-        background: transparent;
-        line-height: 1;
-        font-size: $font-size-sm;
-        color: #7e7960;
-
-        transition: $standard-transition;
-
-        &:focus,
-        &:hover {
-            box-shadow: none;
-            color: rgb(25, 24, 19);
-        }
-    }
-
-    .setting-heading {
-        font-size: $font-size-sm;
-        white-space: nowrap;
     }
 </style>

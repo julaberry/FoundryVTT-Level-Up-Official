@@ -5,12 +5,18 @@
     import FormSection from "../FormSection.svelte";
     import RadioGroup from "../RadioGroup.svelte";
 
+    import determineIfPropertyModifiedByEffect from "../../../utils/determineIfPropertyModifiedByEffect ";
     import updateDocumentDataFromField from "../../../utils/updateDocumentDataFromField";
 
     const actor = getContext("actor");
-    const { abilityAbbreviations, spellLevels } = CONFIG.A5E;
+    const { abilityAbbreviations } = CONFIG.A5E;
 
     $: flags = $actor.flags?.a5e;
+
+    $: disableSpellDC = determineIfPropertyModifiedByEffect(
+        $actor,
+        "system.bonuses.spellDC"
+    );
 </script>
 
 <section class="a5e-page-wrapper a5e-page-wrapper--settings">
@@ -107,6 +113,8 @@
         <FormSection
             heading="A5E.SpellDCBonus"
             hint="This field accepts any values valid in roll formulae."
+            showWarning={disableSpellDC}
+            warning="A5E.validations.warnings.modifiedByEffect"
             --background="rgba(255, 255, 255, 0.1)"
         >
             <div class="u-w-full">
@@ -115,6 +123,7 @@
                     type="text"
                     name="system.bonuses.spellDC"
                     value={$actor.system.bonuses.spellDC}
+                    disabled={disableSpellDC}
                     on:change={({ target }) =>
                         updateDocumentDataFromField(
                             $actor,

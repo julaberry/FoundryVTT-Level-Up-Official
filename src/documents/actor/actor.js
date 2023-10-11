@@ -9,8 +9,6 @@ import RollPreparationManager from '../../managers/RollPreparationManager';
 import AbilityCheckConfigDialog from '../../apps/dialogs/ActorAbilityConfigDialog.svelte';
 import ActorHpConfigDialog from '../../apps/dialogs/ActorHpConfigDialog.svelte';
 import ActorInitConfigDialog from '../../apps/dialogs/ActorInitConfigDialog.svelte';
-import ActorManueverConfigDialog from '../../apps/dialogs/ActorManueverConfigDialog.svelte';
-import ActorSpellConfigDialog from '../../apps/dialogs/ActorSpellConfigDialog.svelte';
 import ArmorProfConfigDialog from '../../apps/dialogs/ArmorProfConfigDialog.svelte';
 import ArmorClassConfigDialog from '../../apps/dialogs/ArmorClassConfigDialog.svelte';
 import ConditionImmunitiesConfigDialog from '../../apps/dialogs/ConditionImmunitiesConfigDialog.svelte';
@@ -62,12 +60,10 @@ export default class ActorA5e extends Actor {
       health: ActorHpConfigDialog,
       initiative: ActorInitConfigDialog,
       languages: LanguagesConfigDialog,
-      maneuvers: ActorManueverConfigDialog,
       movement: MovementConfigDialog,
       senses: SensesConfigDialog,
       size: CreatureSizeConfigDialog,
       skill: SkillConfigDialog,
-      spells: ActorSpellConfigDialog,
       tools: ToolProfConfigDialog,
       types: CreatureTypeConfigDialog,
       weapons: WeaponProfConfigDialog

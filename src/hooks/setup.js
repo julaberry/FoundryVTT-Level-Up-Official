@@ -1,4 +1,9 @@
 import registerSystemSettings from '../settings';
+<<<<<<< HEAD
+=======
+
+// import SpellCompendiumSheet from '../apps/SpellCompendiumSheet';
+>>>>>>> ea357887a (WIP! Finishes off the settings panel. Healing and damage bonuses are missing from this section.)
 import registerConditionsConfig from '../config/registerConditionsConfig';
 
 async function createAdventuringGearIndex() {
@@ -107,6 +112,7 @@ export default function setup() {
   registerSystemSettings();
   registerConditionsConfig();
 
+<<<<<<< HEAD
   createAdventuringGearIndex();
   createMagicItemIndex();
   createManeuverIndex();
@@ -114,4 +120,10 @@ export default function setup() {
   createSpellIndex();
   create5eMonsterIndex();
   create5eSpellIndex();
+=======
+  // TODO: REMOVE THIS RETURN ONCE 0.15.3 IS OUT!
+  // Apply custom compendium styles to the SRD rules compendium.
+  // const spells = game.packs.get('a5e.a5e-spells');
+  // spells.applicationClass = SpellCompendiumSheet;
+>>>>>>> ea357887a (WIP! Finishes off the settings panel. Healing and damage bonuses are missing from this section.)
 }

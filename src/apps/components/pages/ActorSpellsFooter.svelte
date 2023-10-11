@@ -27,7 +27,38 @@
 </script>
 
 {#if preparedSpellCount || ($actor.flags.a5e?.showSpellPoints ?? false) || $actor.type === "npc" || !sheetIsLocked}
-    <TabFooter --padding-right="1.5rem">
+    <TabFooter
+        modifierClasses="a5e-tab-footer--spells"
+        --padding-right="1.5rem"
+    >
+        <!-- NPC Caster Level Configuration -->
+        {#if $actor.type === "npc"}
+            <div class="a5e-footer-field">
+                <h3 class="a5e-footer-field__label">
+                    {localize("A5E.CasterLevel")}
+                </h3>
+
+                <div class="a5e-footer-field__values">
+                    <input
+                        class="a5e-footer-field__input a5e-footer-field__input--spell"
+                        class:disable-pointer-events={!$actor.isOwner ||
+                            sheetIsLocked}
+                        type="number"
+                        name="system.attributes.casterLevel"
+                        value={$actor.system.attributes.casterLevel}
+                        placeholder="0"
+                        min="0"
+                        on:change={({ target }) =>
+                            updateDocumentDataFromField(
+                                $actor,
+                                target.name,
+                                Number(target.value)
+                            )}
+                    />
+                </div>
+            </div>
+        {/if}
+
         <!-- Prepared Spells Count -->
         {#if preparedSpellCount}
             <div
@@ -38,7 +69,9 @@
                 <h3 class="a5e-footer-field__label">Spells Prepared</h3>
 
                 <div class="a5e-footer-field__values">
-                    <span class="a5e-footer-field__input">
+                    <span
+                        class="a5e-footer-field__input a5e-footer-field__input--spell"
+                    >
                         {preparedSpellCount}
                     </span>
                 </div>
@@ -47,85 +80,46 @@
 
         <!-- Spell Points -->
         {#if $actor.flags.a5e?.showSpellPoints ?? false}
-            <div class="u-flex u-flex-wrap u-align-center u-gap-md">
-                <h3 class="u-mb-0 u-text-bold u-text-sm u-flex-grow-1">
+            <div class="a5e-footer-field">
+                <h3 class="a5e-footer-field__label">
                     {localize("A5E.SpellPoints")}
                 </h3>
 
-                <input
-                    class="a5e-footer-group__input"
-                    class:disable-pointer-events={!$actor.isOwner}
-                    type="number"
-                    name="system.spellResources.points.current"
-                    value={spellResources.points.current}
-                    placeholder="0"
-                    min="0"
-                    on:change={({ target }) =>
-                        updateDocumentDataFromField(
-                            $actor,
-                            target.name,
-                            Number(target.value)
-                        )}
-                />
-                /
-                <input
-                    class="a5e-footer-group__input"
-                    type="number"
-                    name="system.spellResources.points.max"
-                    value={spellResources.points.max}
-                    placeholder="0"
-                    min="0"
-                    on:change={({ target }) =>
-                        updateDocumentDataFromField(
-                            $actor,
-                            target.name,
-                            Number(target.value)
-                        )}
-                />
-            </div>
-        {/if}
-
-        <!-- NPC Caster Level Configuration -->
-        {#if $actor.type === "npc"}
-            <div class="u-flex u-flex-wrap u-align-center u-gap-md">
-                <h3 class="u-mb-0 u-text-bold u-text-sm u-flex-grow-1">
-                    {localize("A5E.CasterLevel")}
-                </h3>
-
-                <input
-                    class="a5e-footer-group__input"
-                    class:disable-pointer-events={!$actor.isOwner ||
-                        sheetIsLocked}
-                    type="number"
-                    name="system.attributes.casterLevel"
-                    value={$actor.system.attributes.casterLevel}
-                    placeholder="0"
-                    min="0"
-                    on:change={({ target }) =>
-                        updateDocumentDataFromField(
-                            $actor,
-                            target.name,
-                            Number(target.value)
-                        )}
-                />
-            </div>
-        {/if}
-
-        {#if !sheetIsLocked}
-            <div
-                class="u-align-center u-flex u-gap-md u-h-6"
-                class:u-ml-auto={!$actor.flags.a5e?.showSpellPoints ?? true}
-            >
-                <h3 class="u-mb-0 u-text-bold u-text-sm">
-                    {localize("A5E.ConfigureSpells")}
-                </h3>
-
-                <!-- svelte-ignore a11y-click-events-have-key-events -->
-                <!-- svelte-ignore a11y-no-static-element-interactions -->
-                <i
-                    class="fas fa-gear a5e-config-button u-text-sm"
-                    on:click={() => $actor.configureSpellTab()}
-                />
+                <div class="a5e-footer-field__values">
+                    <input
+                        class="a5e-footer-field__input a5e-footer-field__input--spell"
+                        class:disable-pointer-events={!$actor.isOwner}
+                        type="number"
+                        name="system.spellResources.points.current"
+                        value={spellResources.points.current}
+                        placeholder="0"
+                        min="0"
+                        max="99"
+                        on:change={({ target }) =>
+                            updateDocumentDataFromField(
+                                $actor,
+                                target.name,
+                                Number(target.value)
+                            )}
+                    />
+                    /
+                    <input
+                        class="a5e-footer-field__input a5e-footer-field__input--spell"
+                        class:disable-pointer-events={!$actor.isOwner}
+                        type="number"
+                        name="system.spellResources.points.max"
+                        value={spellResources.points.max}
+                        placeholder="0"
+                        min="0"
+                        max="99"
+                        on:change={({ target }) =>
+                            updateDocumentDataFromField(
+                                $actor,
+                                target.name,
+                                Number(target.value)
+                            )}
+                    />
+                </div>
             </div>
         {/if}
     </TabFooter>
@@ -134,5 +128,9 @@
 <style lang="scss">
     .disable-pointer-events {
         pointer-events: none;
+    }
+
+    .a5e-footer-field__input--spell {
+        width: 2rem;
     }
 </style>

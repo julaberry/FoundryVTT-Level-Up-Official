@@ -1,0 +1,74 @@
+<script>
+    import { getContext } from "svelte";
+
+    import Checkbox from "../Checkbox.svelte";
+    import FormSection from "../FormSection.svelte";
+
+    import updateDocumentDataFromField from "../../../utils/updateDocumentDataFromField";
+
+    const actor = getContext("actor");
+
+    const globalCurrencyWeightTrackingSelection = game.settings.get(
+        "a5e",
+        "currencyWeight"
+    );
+
+    $: flags = $actor.flags;
+</script>
+
+<section class="a5e-page-wrapper a5e-page-wrapper--settings">
+    <div class="a5e-section a5e-section--settings">
+        <header class="a5e-section-header">
+            <h3 class="a5e-section-header__heading">Weight Tracking Options</h3>
+        </header>
+
+        <FormSection --background="rgba(255, 255, 255, 0.1)">
+            <Checkbox
+                label="A5E.settings.trackInventoryWeight"
+                checked={flags?.a5e?.trackInventoryWeight ?? true}
+                on:updateSelection={({ detail }) => {
+                    updateDocumentDataFromField(
+                        $actor,
+                        "flags.a5e.trackInventoryWeight",
+                        detail
+                    );
+                }}
+            />
+        </FormSection>
+
+        {#if flags?.a5e?.trackInventoryWeight ?? true}
+            <FormSection --background="rgba(255, 255, 255, 0.1)">
+                <Checkbox
+                    label="A5E.settings.doubleCarryingCapacity"
+                    checked={flags.a5e?.doubleCarryCapacity ?? false}
+                    on:updateSelection={({ detail }) => {
+                        updateDocumentDataFromField(
+                            $actor,
+                            "flags.a5e.doubleCarryCapacity",
+                            detail
+                        );
+                    }}
+                />
+            </FormSection>
+
+            <FormSection
+                hint="A5E.settings.hints.trackCurrencyWeight"
+                --background="rgba(255, 255, 255, 0.1)"
+                --gap="0.25rem"
+            >
+                <Checkbox
+                    label="A5E.settings.trackCurrencyWeight"
+                    checked={flags.a5e?.trackCurrencyWeight ??
+                        globalCurrencyWeightTrackingSelection}
+                    on:updateSelection={({ detail }) => {
+                        updateDocumentDataFromField(
+                            $actor,
+                            "flags.a5e.trackCurrencyWeight",
+                            detail
+                        );
+                    }}
+                />
+            </FormSection>
+        {/if}
+    </div>
+</section>
