@@ -1,50 +1,14 @@
 <script>
-    import { getContext } from "svelte";
     import { localize } from "#runtime/svelte/helper";
 
-    import calculateCarryCapacity from "../handlers/calculateCarryCapacity";
-    import calculateInventoryWeight from "../handlers/calculateInventoryWeight";
-
-    const actor = getContext("actor");
-
-    $: inventoryWeight = calculateInventoryWeight($actor);
-    $: carryCapacity = calculateCarryCapacity($actor);
-    $: encumbrancePercentage = Math.min(
-        (inventoryWeight / carryCapacity) * 100,
-        100
-    );
+    export let carryCapacity;
+    export let encumbrancePercentage;
+    export let inventoryWeight;
 </script>
 
-<div
-    class="
-		track-container
-		u-border
-        u-border-thin
-        u-border-light-gray
-        u-h-4
-        u-pos-relative
-        u-rounded
-        u-w-full
-    "
-    style="background-color: #a9a594;"
->
-    <div
-        class="u-h-full u-rounded"
-        style="color: #eee; text-shadow: 0 0 2px #000"
-        style:background-color={encumbrancePercentage === 100
-            ? "$color-secondary"
-            : "#0b5a2f"}
-        style:width={`${Math.min(encumbrancePercentage, 100)}%`}
-    >
-        <div
-            class="
-        u-flex
-        u-gap-md
-        u-pos-absolute
-        u-pos-center
-        u-text-light
-            u-text-sm"
-        >
+<div class="a5e-encumbrance-track">
+    <div class="a5e-encumbrance-track__bar">
+        <div class="a5e-encumbrance-track__values">
             <span>
                 {inventoryWeight?.toFixed(1)}
                 {localize("A5E.MeasurementPoundsAbbr")}
@@ -65,9 +29,3 @@
         </div>
     </div>
 </div>
-
-<style lang="scss">
-    .track-container {
-        flex: 0 0 100%;
-    }
-</style>

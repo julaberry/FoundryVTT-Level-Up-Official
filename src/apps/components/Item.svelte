@@ -229,7 +229,6 @@
         padding: 0.125rem;
         padding-right: 0.5rem;
         border: 1px solid #ccc;
-        border-radius: $border-radius-standard;
         background: var(--item-background, rgba(0, 0, 0, 0.05));
         cursor: pointer;
 
@@ -254,6 +253,11 @@
             --track-background: hsl(280, 30%, 90%);
             --track-border-color: hsla(280, 30%, 40%, 0.302);
         }
+    }
+
+    div:last-child {
+        border-bottom-left-radius: var(--border-radius-md);
+        border-bottom-right-radius: var(--border-radius-md);
     }
 
     .item-image {
