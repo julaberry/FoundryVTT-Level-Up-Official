@@ -4,6 +4,11 @@
 
     import Checkbox from "../Checkbox.svelte";
     import FormSection from "../FormSection.svelte";
+    import ActorGeneralSettingsTab from "./ActorGeneralSettingsTab.svelte";
+    import ActorManeuverSettingsTab from "./ActorManeuverSettingsTab.svelte";
+    import ActorRollSettingsTab from "./ActorRollSettingsTab.svelte";
+    import ActorSpellSettingsTab from "./ActorSpellSettingsTab.svelte";
+    import SecondaryNavigationBar from "../navigation/SecondaryNavigationBar.svelte";
 
     import determineIfPropertyModifiedByEffect from "../../../utils/determineIfPropertyModifiedByEffect ";
     import updateDocumentDataFromField from "../../../utils/updateDocumentDataFromField";
@@ -33,6 +38,29 @@
     }
 
     const actor = getContext("actor");
+
+    const tabs = {
+        general: {
+            component: ActorGeneralSettingsTab,
+            label: "General",
+        },
+        maneuvers: {
+            component: ActorManeuverSettingsTab,
+            label: "Maneuvers",
+            display: $actor.type === "character",
+        },
+        spells: {
+            component: ActorSpellSettingsTab,
+            label: "Spells",
+        },
+        rolls: {
+            component: ActorRollSettingsTab,
+            label: "Rolls",
+            display: $actor.type === "character",
+        },
+    };
+
+    let currentTab = "general";
 
     const globalCurrencyWeightTrackingSelection = game.settings.get(
         "a5e",
@@ -87,7 +115,15 @@
     $: flags = $actor.flags;
 </script>
 
-<section class="a5e-page-wrapper a5e-page-wrapper--settings">
+<SecondaryNavigationBar
+    {currentTab}
+    {tabs}
+    on:tab-change={({ detail }) => (currentTab = detail)}
+/>
+
+<svelte:component this={tabs[currentTab]?.component} />
+
+<!-- <section class="a5e-page-wrapper a5e-page-wrapper--settings">
     <section class="setting-group">
         <header class="a5e-section-header a5e-section-header--rounded">
             <h3 class="a5e-section-header__heading">Global Bonuses</h3>
@@ -614,8 +650,9 @@
             </FormSection>
         {/if}
     </section>
-
-    <!-- svelte-ignore missing-declaration -->
+-->
+<!-- svelte-ignore missing-declaration -->
+<!--
     {#if $actor.type === "npc" && game.settings.get("a5e", "randomizeNPCHitPoints")}
         <section class="setting-group">
             <header class="a5e-section-header a5e-section-header--rounded">
@@ -637,7 +674,7 @@
             </FormSection>
         </section>
     {/if}
-</section>
+</section> -->
 
 <style lang="scss">
     .a5e-input[type="text"] {

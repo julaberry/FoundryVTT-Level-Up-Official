@@ -82,10 +82,11 @@
   text-align: center;
   cursor: pointer;
 
-  transition: transform 0.15s ease-in-out;
+  transition: all 0.15s ease-in-out;
 
   &--active {
     font-weight: bold;
+    color: var(--color-primary);
   }
 
   &:not(:last-of-type) {

@@ -1,0 +1,128 @@
+<script>
+    import { getContext } from "svelte";
+
+    import Checkbox from "../Checkbox.svelte";
+    import FormSection from "../FormSection.svelte";
+    import RadioGroup from "../RadioGroup.svelte";
+
+    import updateDocumentDataFromField from "../../../utils/updateDocumentDataFromField";
+
+    const actor = getContext("actor");
+    const { abilityAbbreviations, spellLevels } = CONFIG.A5E;
+
+    $: flags = $actor.flags?.a5e;
+</script>
+
+<section class="a5e-page-wrapper a5e-page-wrapper--settings">
+    <div class="a5e-section a5e-section--settings">
+        <header class="a5e-section-header">
+            <h3 class="a5e-section-header__heading">Spell Resource Settings</h3>
+        </header>
+
+        <FormSection --background="rgba(255, 255, 255, 0.1)">
+            <Checkbox
+                label="A5E.SpellShowSpellSlots"
+                checked={flags.showSpellSlots ?? true}
+                on:updateSelection={({ detail }) => {
+                    updateDocumentDataFromField(
+                        $actor,
+                        "flags.a5e.showSpellSlots",
+                        detail
+                    );
+                }}
+            />
+        </FormSection>
+
+        {#if flags.showSpellSlots ?? true}
+            <FormSection --background="rgba(255, 255, 255, 0.1)">
+                <Checkbox
+                    label="A5E.settings.restoreSpellSlotsOnShortRest"
+                    checked={flags.restoreSpellSlotsOnShortRest ?? false}
+                    on:updateSelection={({ detail }) => {
+                        updateDocumentDataFromField(
+                            $actor,
+                            "flags.a5e.restoreSpellSlotsOnShortRest",
+                            detail
+                        );
+                    }}
+                />
+            </FormSection>
+        {/if}
+
+        <FormSection --background="rgba(255, 255, 255, 0.1)">
+            <Checkbox
+                label="A5E.SpellShowSpellPoints"
+                checked={flags.showSpellPoints ?? false}
+                on:updateSelection={({ detail }) => {
+                    updateDocumentDataFromField(
+                        $actor,
+                        "flags.a5e.showSpellPoints",
+                        detail
+                    );
+                }}
+            />
+        </FormSection>
+
+        {#if flags.showSpellPoints ?? false}
+            <FormSection --background="rgba(255, 255, 255, 0.1)">
+                <Checkbox
+                    label="A5E.settings.restoreSpellPointsOnShortRest"
+                    checked={flags.restoreSpellPointsOnShortRest ?? true}
+                    on:updateSelection={({ detail }) => {
+                        updateDocumentDataFromField(
+                            $actor,
+                            "flags.a5e.restoreSpellPointsOnShortRest",
+                            detail
+                        );
+                    }}
+                />
+            </FormSection>
+        {/if}
+    </div>
+
+    <div class="a5e-section a5e-section--settings">
+        <header class="a5e-section-header">
+            <h3 class="a5e-section-header__heading">
+                Miscellaneous Spell Settings
+            </h3>
+        </header>
+
+        <FormSection
+            heading="A5E.SpellcastingAbilityScore"
+            --background="rgba(255, 255, 255, 0.1)"
+        >
+            <RadioGroup
+                optionStyles="min-width:2rem; text-align: center;"
+                options={Object.entries(abilityAbbreviations)}
+                selected={$actor.system.attributes.spellcasting}
+                on:updateSelection={(event) =>
+                    updateDocumentDataFromField(
+                        $actor,
+                        "system.attributes.spellcasting",
+                        event.detail
+                    )}
+            />
+        </FormSection>
+
+        <FormSection
+            heading="A5E.SpellDCBonus"
+            hint="This field accepts any values valid in roll formulae."
+            --background="rgba(255, 255, 255, 0.1)"
+        >
+            <div class="u-w-full">
+                <input
+                    class="a5e-input"
+                    type="text"
+                    name="system.bonuses.spellDC"
+                    value={$actor.system.bonuses.spellDC}
+                    on:change={({ target }) =>
+                        updateDocumentDataFromField(
+                            $actor,
+                            target.name,
+                            target.value
+                        )}
+                />
+            </div>
+        </FormSection>
+    </div>
+</section>

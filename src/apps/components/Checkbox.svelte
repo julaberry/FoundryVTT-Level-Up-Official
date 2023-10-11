@@ -30,6 +30,7 @@
 
     .checkbox,
     .label {
+        font-family: var(--font-serif);
         cursor: pointer;
     }
 
