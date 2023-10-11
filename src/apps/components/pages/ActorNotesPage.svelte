@@ -1,6 +1,5 @@
 <script>
     import { getContext } from "svelte";
-    import { localize } from "#runtime/svelte/helper";
 
     import updateDocumentDataFromField from "../../../utils/updateDocumentDataFromField";
 
@@ -60,131 +59,73 @@
 />
 
 <div class="a5e-page-wrapper a5e-page-wrapper--notes">
-    <section class="notes__container">
-        {#if currentTab === "appearance"}
-            <section class="a5e-box u-p-md a5e-form__section--bio-wrapper">
-                {#each Object.entries(charChoicesLabel) as [key, label]}
-                    <FormSection
-                        heading={label}
-                        --background="none"
-                        --direction="column"
-                        --gap="0.25rem"
-                        --padding="0"
-                    >
-                        <input
-                            class="a5e-input a5e-input--slim u-w-full"
-                            class:disable-pointer-events={!$actor.isOwner}
-                            id="{actor.id}-details-{key}"
-                            type="text"
-                            name="system.details.{key}"
-                            value={$actor.system.details[key] ?? ""}
-                            on:change={({ target }) => {
-                                updateDocumentDataFromField(
-                                    $actor,
-                                    target.name,
-                                    key === "prestige"
-                                        ? Number(target.value)
-                                        : target.value
-                                );
-                            }}
-                        />
-                    </FormSection>
-                {/each}
-            </section>
+    {#if currentTab === "appearance"}
+        <section class="a5e-box u-p-md a5e-form__section--bio-wrapper">
+            {#each Object.entries(charChoicesLabel) as [key, label]}
+                <FormSection
+                    heading={label}
+                    --background="none"
+                    --direction="column"
+                    --gap="0.25rem"
+                    --padding="0"
+                >
+                    <input
+                        class="a5e-input a5e-input--slim u-w-full"
+                        class:disable-pointer-events={!$actor.isOwner}
+                        id="{actor.id}-details-{key}"
+                        type="text"
+                        name="system.details.{key}"
+                        value={$actor.system.details[key] ?? ""}
+                        on:change={({ target }) => {
+                            updateDocumentDataFromField(
+                                $actor,
+                                target.name,
+                                key === "prestige"
+                                    ? Number(target.value)
+                                    : target.value
+                            );
+                        }}
+                    />
+                </FormSection>
+            {/each}
+        </section>
 
-            <section class="a5e-box u-p-md a5e-form__section--bio-wrapper">
-                {#each Object.entries(traitsLabel) as [key, label]}
-                    <FormSection
-                        heading={label}
-                        --background="none"
-                        --direction="column"
-                        --gap="0.25rem"
-                        --padding="0"
-                    >
-                        <input
-                            class="a5e-input a5e-input--slim"
-                            class:disable-pointer-events={!$actor.isOwner}
-                            id="{actor.id}-details-{key}"
-                            type="text"
-                            name="system.details.{key}"
-                            value={$actor.system.details[key]}
-                            on:change={({ target }) => {
-                                updateDocumentDataFromField(
-                                    $actor,
-                                    target.name,
-                                    target.value
-                                );
-                            }}
-                        />
-                    </FormSection>
-                {/each}
-            </section>
+        <section class="a5e-box u-p-md a5e-form__section--bio-wrapper">
+            {#each Object.entries(traitsLabel) as [key, label]}
+                <FormSection
+                    heading={label}
+                    --background="none"
+                    --direction="column"
+                    --gap="0.25rem"
+                    --padding="0"
+                >
+                    <input
+                        class="a5e-input a5e-input--slim"
+                        class:disable-pointer-events={!$actor.isOwner}
+                        id="{actor.id}-details-{key}"
+                        type="text"
+                        name="system.details.{key}"
+                        value={$actor.system.details[key]}
+                        on:change={({ target }) => {
+                            updateDocumentDataFromField(
+                                $actor,
+                                target.name,
+                                target.value
+                            );
+                        }}
+                    />
+                </FormSection>
+            {/each}
+        </section>
 
-            <heading class="a5e-section-header a5e-section-header--rounded">
-                <h3 class="a5e-section-header__heading">Appearance</h3>
-            </heading>
-        {/if}
+        <heading class="a5e-section-header a5e-section-header--rounded">
+            <h3 class="a5e-section-header__heading">Appearance</h3>
+        </heading>
+    {/if}
 
-        <Editor
-            document={actor}
-            content={$actor.system.details[currentTab]}
-            updatePath="system.details.{currentTab}"
-        />
-    </section>
+    <Editor
+        document={actor}
+        content={$actor.system.details[currentTab]}
+        updatePath="system.details.{currentTab}"
+    />
 </div>
-
-<style lang="scss">
-    .appearance-heading {
-        font-family: var(--font-serif);
-        font-size: var(--font-size-md);
-        font-weight: bold;
-        margin-left: 0.25rem;
-    }
-
-    .notes-page {
-        display: flex;
-        flex-direction: column;
-        flex: 1;
-        gap: 0.5rem;
-        padding: 0.75rem;
-        padding-top: 0.5rem;
-        overflow: hidden;
-    }
-
-    .notes {
-        &__container {
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-            gap: 0.5rem;
-            overflow-y: auto;
-        }
-
-        &__tabs {
-            display: flex;
-            align-content: center;
-            gap: 0.75rem;
-            margin-bottom: 0.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid #ccc;
-        }
-    }
-
-    button {
-        background: transparent;
-        border: 1px solid #ccc;
-        width: fit-content;
-        padding-inline: 0.75rem;
-
-        &:focus,
-        &:hover {
-            box-shadow: none;
-        }
-    }
-
-    .active {
-        background: $color-primary;
-        border: 1px solid $color-primary;
-        color: white;
-    }
-</style>

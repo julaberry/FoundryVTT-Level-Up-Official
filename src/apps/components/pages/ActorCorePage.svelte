@@ -53,16 +53,6 @@
 {/if}
 
 <style lang="scss">
-    .core-page {
-        display: flex;
-        flex-grow: 1;
-        flex-direction: column;
-        gap: 0.75rem;
-        padding: 0.5rem 0.75rem 0.75rem 0.75rem;
-        overflow-y: auto;
-        overflow-x: hidden;
-    }
-
     .resources-container {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
@@ -70,7 +60,7 @@
         gap: 0.5rem;
         width: 100%;
         margin: 0;
-        padding: 0.5rem 0.75rem 0 0.75rem;
+        padding: 0.5rem 0.5rem 0 0.5rem;
         list-style: none;
     }
 </style>
