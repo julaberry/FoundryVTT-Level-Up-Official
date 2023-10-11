@@ -72,6 +72,4 @@
             {/each}
         {/if}
     </section>
-
-    <footer class="features-footer" />
 </div>

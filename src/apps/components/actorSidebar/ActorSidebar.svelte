@@ -173,8 +173,9 @@
     .actor-details {
         display: flex;
         flex-direction: column;
-        gap: 0.6rem;
         flex-grow: 1;
+        gap: 0.6rem;
+        padding-right: 0.25rem;
         overflow-y: auto;
     }
 

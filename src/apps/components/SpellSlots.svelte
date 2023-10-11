@@ -55,15 +55,17 @@
     }
 
     .number-input {
-        height: 1.125rem;
+        height: 1rem;
         width: 5ch;
-        background: transparent;
-        border: 1px solid #bbb;
+        font-size: var(--font-size-xs);
+        line-height: 1;
         text-align: center;
-        font-size: $font-size-xs;
+        color: var(--color-light-text);
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
 
         &:hover {
-            border: 1px solid #bbb;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
     }
 

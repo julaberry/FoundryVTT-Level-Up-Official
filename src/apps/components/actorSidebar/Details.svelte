@@ -112,9 +112,11 @@
 {#each details as { label, values, dialogMethod, propertyKey }}
     {#if values.length || !sheetIsLocked}
         <section class="details-section">
-            <h2 class="details-header">
-                {label}
-            </h2>
+            <header class="a5e-header">
+                <h3 class="a5e-header__heading">
+                    {label}
+                </h3>
+            </header>
 
             {#if !sheetIsLocked}
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
