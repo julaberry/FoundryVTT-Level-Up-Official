@@ -1,5 +1,6 @@
 <script>
     import { getContext } from "svelte";
+    import { fade } from "svelte/transition";
     import { localize } from "#runtime/svelte/helper";
 
     import updateDocumentDataFromField from "../../../utils/updateDocumentDataFromField";
@@ -15,69 +16,59 @@
         : $actor.flags?.a5e?.sheetIsLocked ?? true;
 </script>
 
-<TabFooter --padding-right="1.5rem">
+<TabFooter modifierClasses="a5e-tab-footer--maneuvers" --padding-right="1.5rem">
     {#if $actor.type === "character"}
-        <div class="u-flex u-align-center u-gap-md">
-            <h3 class="u-mb-0 u-text-sm u-text-bold">
+        <div class="a5e-footer-field">
+            <h3 class="a5e-footer-field__label">
                 {localize("A5E.ExertionPool")}
             </h3>
 
-            <input
-                class="a5e-footer-group__input"
-                class:disable-pointer-events={!$actor.isOwner}
-                type="number"
-                name="system.attributes.exertion.current"
-                value={exertion.current}
-                placeholder="0"
-                min="0"
-                on:change={({ target }) =>
-                    updateDocumentDataFromField(
-                        $actor,
-                        target.name,
-                        Number(target.value)
-                    )}
-            />
-            /
-            <input
-                class="a5e-footer-group__input"
-                type="number"
-                name="system.attributes.exertion.max"
-                value={exertion.max}
-                placeholder="0"
-                min="0"
-                on:change={({ target }) =>
-                    updateDocumentDataFromField(
-                        $actor,
-                        target.name,
-                        Number(target.value)
-                    )}
-            />
-
-            {#if exertion.current < exertion.max && exertion.max}
-                <button
-                    class="recharge-button"
-                    data-tooltip="A5E.ExertionRechargeFromHitDice"
-                    data-tooltip-direction="UP"
-                    on:click={() => $actor.recoverExertionUsingHitDice()}
-                >
-                    <i class="fa-solid fa-bolt" />
-                </button>
-            {/if}
+            <div class="a5e-footer-field__values">
+                <input
+                    class="a5e-footer-field__input a5e-footer-field__input--maneuver"
+                    class:disable-pointer-events={!$actor.isOwner}
+                    type="number"
+                    name="system.attributes.exertion.current"
+                    value={exertion.current}
+                    placeholder="0"
+                    min="0"
+                    on:change={({ target }) =>
+                        updateDocumentDataFromField(
+                            $actor,
+                            target.name,
+                            Number(target.value)
+                        )}
+                />
+                /
+                <input
+                    class="a5e-footer-field__input a5e-footer-field__input--maneuver"
+                    type="number"
+                    name="system.attributes.exertion.max"
+                    value={exertion.max}
+                    placeholder="0"
+                    min="0"
+                    disabled={sheetIsLocked}
+                    on:change={({ target }) =>
+                        updateDocumentDataFromField(
+                            $actor,
+                            target.name,
+                            Number(target.value)
+                        )}
+                />
+            </div>
         </div>
-    {/if}
 
-    {#if !sheetIsLocked}
-        <div class="u-flex u-align-center u-gap-md u-ml-auto">
-            <h3 class="u-mb-0 u-text-sm u-text-bold">
-                {localize("A5E.ConfigureManeuvers")}
-            </h3>
-
-            <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-static-element-interactions -->
-            <i
-                class="fas fa-gear a5e-config-button"
-                on:click={() => $actor.configureManeuvers()}
-            />
-        </div>
+        {#if exertion.current < exertion.max && exertion.max}
+            <button
+                class="a5e-recharge-button"
+                data-tooltip="A5E.ExertionRechargeFromHitDice"
+                data-tooltip-direction="UP"
+                transition:fade
+                on:click={() => $actor.recoverExertionUsingHitDice()}
+            >
+                <i class="a5e-recharge-button__icon fa-solid fa-bolt" />
+            </button>
+        {/if}
     {/if}
 </TabFooter>
 
@@ -86,26 +77,34 @@
         pointer-events: none;
     }
 
-    .recharge-button {
-        flex-grow: 0;
-        width: fit-content;
+    .a5e-footer-field__input--maneuver {
+        width: 2rem;
+    }
+
+    .a5e-recharge-button {
+        height: 1.625rem;
+        width: 1.625rem;
         padding: 0;
         margin: 0;
-        margin-left: 0.25rem;
-        background: none;
-        color: #999;
-        border: 0;
+        background: var(--color-primary);
+        color: var(--color-light-text);
+        border: 1px solid #3e4240;
+        border-radius: var(--border-radius-md);
+        box-shadow: 0 0 6px #2e4246 inset, 0 3px 5px rgba(0, 0, 0, 0.4);
 
         transition: $standard-transition;
 
         &:hover {
-            color: #555;
-            transform: scale(1.2);
+            color: #e9d7a1;
         }
 
         &:hover,
         &:focus {
-            box-shadow: none;
+            box-shadow: 0 0 6px #2e4246 inset, 0 3px 5px rgba(0, 0, 0, 0.4);
+        }
+
+        &__icon {
+            margin: 0;
         }
     }
 </style>

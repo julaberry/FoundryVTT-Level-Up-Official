@@ -112,6 +112,7 @@
                         placeholder="0"
                         min="0"
                         max="99"
+                        disabled={sheetIsLocked}
                         on:change={({ target }) =>
                             updateDocumentDataFromField(
                                 $actor,

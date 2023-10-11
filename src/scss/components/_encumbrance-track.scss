@@ -1,7 +1,7 @@
 .a5e-encumbrance-track {
   position: relative;
   grid-area: bar;
-  height: 1rem;
+  height: 1.25rem;
   width: 100%;
   background: transparent;
   border-radius: var(--border-radius-md);
@@ -15,18 +15,23 @@
     box-shadow: 0 0 10px #2e4246 inset;
   }
 
+  &__icon {
+    font-size: var(--font-size-xs);
+  }
+
   &__values {
     position: absolute;
     left: 50%;
     top: 50%;
     display: flex;
+    align-items: center;
     gap: 0.375rem;
     font-size: var(--font-size-sm);
     color: var(--color-light-text);
     transform: translate(-50%, -50%);
-    text-shadow:  1px 1px 0 rgba(0, 0, 0, 0.5),
-      -1px 1px 0 rgba(0, 0, 0, 0.5),
-      -1px -1px 0 rgba(0, 0, 0, 0.5),
-      1px -1px 0 rgba(0, 0, 0, 0.5);
+    text-shadow:  1px 1px 0 rgba(0, 0, 0, 0.4),
+      -1px 1px 0 rgba(0, 0, 0, 0.4),
+      -1px -1px 0 rgba(0, 0, 0, 0.4),
+      1px -1px 0 rgba(0, 0, 0, 0.4);
   }
 }

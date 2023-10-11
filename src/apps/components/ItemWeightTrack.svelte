@@ -9,6 +9,8 @@
 <div class="a5e-encumbrance-track">
     <div class="a5e-encumbrance-track__bar">
         <div class="a5e-encumbrance-track__values">
+            <i class="a5e-encumbrance-track__icon fa-solid fa-weight-hanging" />
+
             <span>
                 {inventoryWeight?.toFixed(1)}
                 {localize("A5E.MeasurementPoundsAbbr")}
