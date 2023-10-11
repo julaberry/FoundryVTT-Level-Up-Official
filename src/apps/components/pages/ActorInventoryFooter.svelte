@@ -1,7 +1,8 @@
 <script>
     import { getContext } from "svelte";
+    import { localize } from "#runtime/svelte/helper";
 
-    import ActorInventoryShields from "../ActorInventoryShields.svelte";
+    import ActorInventoryFields from "../ActorInventoryFields.svelte";
     import ItemWeightTrack from "../ItemWeightTrack.svelte";
     import TabFooter from "../TabFooter.svelte";
 
@@ -17,9 +18,13 @@
         (inventoryWeight / carryCapacity) * 100,
         100
     );
+
+    $: sheetIsLocked = !$actor.isOwner
+        ? true
+        : $actor.flags?.a5e?.sheetIsLocked ?? true;
 </script>
 
-<TabFooter>
+<TabFooter modifierClasses="a5e-tab-footer--inventory">
     {#if $actor.flags?.a5e?.trackInventoryWeight ?? true}
         <ItemWeightTrack
             {carryCapacity}
@@ -32,5 +37,5 @@
         />
     {/if}
 
-    <ActorInventoryShields />
+    <ActorInventoryFields />
 </TabFooter>

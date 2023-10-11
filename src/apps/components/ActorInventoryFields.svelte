@@ -6,30 +6,18 @@
 
     const actor = getContext("actor");
 
-    function getBulkyTooltip(actor) {
-        let bulkyLimit;
+    function getBulkyLimit(actor) {
         const { supply } = actor.system;
 
         if (supply) {
-            bulkyLimit = Math.max(1 + actor.system.abilities.str.mod, 1);
-        } else {
-            bulkyLimit = Math.max(2 + actor.system.abilities.str.mod, 2);
+            return Math.max(1 + actor.system.abilities.str.mod, 1);
         }
 
-        return `Bulky Limit: ${bulkyLimit}`;
+        return Math.max(2 + actor.system.abilities.str.mod, 2);
     }
 
-    function getSupplyTooltip(actor) {
-        const { supply } = actor.system;
-        const freeSupplyLimit = actor.system.abilities.str.value;
-
-        const excessSupply = Math.abs(Math.min(freeSupplyLimit - supply, 0));
-
-        if (excessSupply) {
-            return `Free Supply: ${freeSupplyLimit} &nbsp;&nbsp;|&nbsp;&nbsp; Additional Supply: ${excessSupply}`;
-        } else {
-            return `Free Supply: ${supply} &nbsp;&nbsp;|&nbsp;&nbsp; Additional Supply: 0`;
-        }
+    function getSupplyLimit(actor) {
+        return actor.system.abilities.str.value;
     }
 
     $: bulkyItems = $actor.items.reduce((bulkyCount, item) => {
@@ -42,28 +30,24 @@
         : $actor.flags?.a5e?.sheetIsLocked ?? true;
 
     $: attunement = $actor.system.attributes.attunement;
-    $: bulkyTooltip = getBulkyTooltip($actor);
+    $: bulkyLimit = getBulkyLimit($actor);
     $: currency = $actor.system.currency;
     $: supply = $actor.system.supply;
-    $: supplyTooltip = getSupplyTooltip($actor);
+    $: supplyLimit = getSupplyLimit($actor);
 </script>
 
-<section class="shield-container">
-    {#if $actor.type === "character"}
-        <!-- Attunement -->
-        <div class="shield shield--attunement">
-            <h3 class="footer-shield-header">
-                {localize("A5E.Attunement")}
-            </h3>
+{#if $actor.type === "character"}
+    <!-- Attunement -->
+    <div class="a5e-footer-field">
+        <h3 class="a5e-footer-field__label">{localize("A5E.Attunement")}</h3>
 
-            <span
-                class="a5e-footer-group__value a5e-footer-group__value--attunement"
-            >
+        <div class="a5e-footer-field__values">
+            <span class="a5e-footer-field__input">
                 {attunement.current}
             </span>
             /
             <input
-                class="shield-input a5e-footer-group__input"
+                class="a5e-footer-field__input"
                 class:disable-pointer-events={!$actor.isOwner}
                 type="number"
                 name="system.attributes.attunement.max"
@@ -80,19 +64,15 @@
                     )}
             />
         </div>
+    </div>
 
-        <!-- Supply -->
-        <div class="shield">
-            <h3
-                class="footer-shield-header"
-                data-tooltip={supplyTooltip}
-                data-tooltip-direction="UP"
-            >
-                {localize("A5E.Supply")}
-            </h3>
+    <!-- Supply -->
+    <div class="a5e-footer-field">
+        <h3 class="a5e-footer-field__label">{localize("A5E.Supply")}</h3>
 
+        <div class="a5e-footer-field__values">
             <input
-                class="shield-input a5e-footer-group__input"
+                class="a5e-footer-field__input a5e-footer-field__input--supply"
                 class:disable-pointer-events={!$actor.isOwner}
                 type="number"
                 name="system.supply"
@@ -106,26 +86,33 @@
                         Number(target.value)
                     )}
             />
-        </div>
-
-        <!-- Bulky Items -->
-        <div class="shield">
-            <h3
-                class="footer-shield-header"
-                data-tooltip={bulkyTooltip}
-                data-tooltip-direction="UP"
+            /
+            <span
+                class="a5e-footer-field__input a5e-footer-field__input--supply"
             >
-                {localize("Bulky Items")}
-            </h3>
-
-            <span class="a5e-footer-group__value">
-                {bulkyItems}
+                {supplyLimit}
             </span>
         </div>
-    {/if}
+    </div>
 
-    <!-- Currencies -->
-    <div
+    <!-- Bulky Items -->
+    <div class="a5e-footer-field">
+        <h3 class="a5e-footer-field__label">{localize("Bulky Items")}</h3>
+
+        <div class="a5e-footer-field__values">
+            <span class="a5e-footer-field__input">
+                {bulkyItems}
+            </span>
+            /
+            <span class="a5e-footer-field__input">
+                {bulkyLimit}
+            </span>
+        </div>
+    </div>
+{/if}
+
+<!-- Currencies -->
+<!-- <div
         class="
 		u-flex u-gap-sm u-text-sm
 		shield
@@ -163,10 +150,14 @@
                 </li>
             {/each}
         </ol>
-    </div>
-</section>
+    </div> -->
 
 <style lang="scss">
+    .a5e-footer-field__input--supply {
+        width: 2rem;
+        text-align: center;
+    }
+
     .currency {
         &__item {
             display: flex;
@@ -192,32 +183,5 @@
 
     .disable-pointer-events {
         pointer-events: none;
-    }
-
-    .footer-shield-header {
-        flex: 0 0 100%;
-        text-align: center;
-        font-size: $font-size-sm;
-        font-weight: bold;
-    }
-
-    .shield {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: center;
-        gap: 0.25rem;
-
-        &--attunement {
-            width: 5rem;
-        }
-    }
-
-    .shield-container {
-        display: flex;
-        width: 100%;
-        align-items: center;
-        justify-content: space-around;
-        gap: 0.5rem;
     }
 </style>
