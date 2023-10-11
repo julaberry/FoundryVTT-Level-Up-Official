@@ -27,7 +27,7 @@
 </script>
 
 {#if preparedSpellCount || ($actor.flags.a5e?.showSpellPoints ?? false) || $actor.type === "npc" || !sheetIsLocked}
-    <TabFooter --padding-right="1rem">
+    <TabFooter --padding-right="1.5rem">
         <!-- Prepared Spells Count -->
         {#if preparedSpellCount}
             <div

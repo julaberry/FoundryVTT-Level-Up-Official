@@ -33,8 +33,6 @@
         ? true
         : $actor.flags?.a5e?.sheetIsLocked ?? true;
 
-    $: spellResources = $actor.system.spellResources;
-
     $: isSpellLevelVisible = (level) => {
         if (!sheetIsLocked) return true;
 

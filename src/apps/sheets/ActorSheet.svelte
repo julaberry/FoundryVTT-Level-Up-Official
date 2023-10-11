@@ -80,11 +80,11 @@
                 icon: "fa-solid fa-file-lines",
                 label: "A5E.TabNotes",
             },
-            bonuses: {
-                bodyComponent: ActorEffectsPage,
-                icon: "fa-solid fa-angles-up",
-                label: "Bonuses",
-            },
+            // bonuses: {
+            //     bodyComponent: ActorEffectsPage,
+            //     icon: "fa-solid fa-angles-up",
+            //     label: "Bonuses",
+            // },
             effects: {
                 bodyComponent: ActorEffectsPage,
                 icon: "fa-solid fa-person-rays",

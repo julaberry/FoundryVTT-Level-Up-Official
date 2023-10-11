@@ -16,7 +16,7 @@
 {#if level && level !== "0"}
     <div class="spell-slot-wrapper">
         <input
-            class="number-input"
+            class="number-input number-input--spell-slots"
             class:disable-pointer-events={!$actor.isOwner}
             type="number"
             name="system.spellResources.slots.{level}.current"
@@ -32,7 +32,7 @@
         />
         /
         <input
-            class="number-input"
+            class="number-input number-input--spell-slots"
             type="number"
             name="system.spellResources.slots.{level}.max"
             value={spellResources.slots[level.toString()].max}
@@ -60,12 +60,21 @@
         font-size: var(--font-size-xs);
         line-height: 1;
         text-align: center;
-        color: var(--color-light-text);
-        background: rgba(255, 255, 255, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        background: transparent;
+        border: 1px solid #bbb;
 
         &:hover {
+            border: 1px solid #bbb;
+        }
+
+        &--spell-slots {
+            color: var(--color-light-text);
+            background: rgba(108, 103, 103, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
+
+            &:hover {
+                border: 1px solid rgba(255, 255, 255, 0.2);
+            }
         }
     }
 

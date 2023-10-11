@@ -7,5 +7,7 @@
   font-size: $font-size-sm;
   padding-left: var(--padding-left, 0.5rem);
   padding-right: var(--padding-right, 0.5rem);
-  padding-bottom: 0.5rem;
+  padding-block: 0.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-top: 1px solid #ccc;
 }

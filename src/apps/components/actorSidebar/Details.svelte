@@ -152,16 +152,6 @@
         position: relative;
     }
 
-    .details-header {
-        font-family: $font-secondary;
-        font-size: $font-size-sm;
-        // font-weight: bold;
-        padding-left: 0.125rem;
-        padding-bottom: 0.125rem;
-        margin-bottom: 0.275rem;
-        border-bottom: 1px solid #ccc;
-    }
-
     .details-config {
         position: absolute;
         top: 0.125rem;
