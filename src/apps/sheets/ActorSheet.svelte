@@ -7,13 +7,16 @@
     import ActorCorePage from "../components/pages/ActorCorePage.svelte";
     import ActorEffectsPage from "../components/pages/ActorEffectsPage.svelte";
     import ActorFeaturesPage from "../components/pages/ActorFeaturesPage.svelte";
+    import ActorInventoryFooter from "../components/pages/ActorInventoryFooter.svelte";
     import ActorInventoryPage from "../components/pages/ActorInventoryPage.svelte";
+    import ActorManeuversFooter from "../components/pages/ActorManeuversFooter.svelte";
     import ActorManeuversPage from "../components/pages/ActorManueversPage.svelte";
     import ActorNotesPage from "../components/pages/ActorNotesPage.svelte";
     import ActorSheetHeader from "../components/ActorSheetHeader/ActorSheetHeader.svelte";
     import ActorSettingsPage from "../components/pages/ActorSettingsPage.svelte";
     import ActorSidebar from "../components/actorSidebar/ActorSidebar.svelte";
     import ActorSkillsPage from "../components/pages/ActorSkillsPage.svelte";
+    import ActorSpellsFooter from "../components/pages/ActorSpellsFooter.svelte";
     import ActorSpellsPage from "../components/pages/ActorSpellsPage.svelte";
     import NewNavigationBar from "../components/navigation/NewNavigationBar.svelte";
 
@@ -37,61 +40,64 @@
     function getTabs(actor) {
         return {
             core: {
+                bodyComponent: ActorCorePage,
                 icon: "fa-solid fa-home",
                 label: "A5E.TabCore",
-                component: ActorCorePage,
             },
             skills: {
+                bodyComponent: ActorSkillsPage,
                 icon: "fa-solid fa-graduation-cap",
                 label: "A5E.TabSkills",
-                component: ActorSkillsPage,
                 display: actor.flags?.a5e?.showFavoritesSection ?? true,
             },
             inventory: {
+                bodyComponent: ActorInventoryPage,
+                footerComponent: ActorInventoryFooter,
                 icon: "fa-solid fa-box-open",
                 label: "A5E.TabInventory",
-                component: ActorInventoryPage,
             },
             features: {
+                bodyComponent: ActorFeaturesPage,
                 icon: "fa-solid fa-table-list",
                 label: "A5E.TabFeatures",
-                component: ActorFeaturesPage,
             },
             maneuvers: {
+                bodyComponent: ActorManeuversPage,
+                footerComponent: ActorManeuversFooter,
                 icon: "fa-solid fa-hand-fist",
                 label: "A5E.TabManeuvers",
-                component: ActorManeuversPage,
                 display: actor.flags?.a5e?.showManeuverTab,
             },
             spells: {
+                bodyComponent: ActorSpellsPage,
+                footerComponent: ActorSpellsFooter,
                 icon: "fa-solid fa-wand-sparkles",
                 label: "A5E.TabSpells",
-                component: ActorSpellsPage,
                 display: actor.flags?.a5e?.showSpellTab,
             },
             notes: {
+                bodyComponent: ActorNotesPage,
                 icon: "fa-solid fa-file-lines",
                 label: "A5E.TabNotes",
-                component: ActorNotesPage,
             },
             // bonuses: {
+            //     bodyComponent: ActorEffectsPage,
             //     icon: "fa-solid fa-angles-up",
             //     label: "Bonuses",
-            //     component: ActorEffectsPage,
             // },
             effects: {
+                bodyComponent: ActorEffectsPage,
                 icon: "fa-solid fa-person-rays",
                 label: "A5E.TabEffects",
-                component: ActorEffectsPage,
             },
             // prestige: {
             //     icon: "fa-solid fa-medal",
             //     label: "Prestige",
             // },
             settings: {
+                bodyComponent: ActorSettingsPage,
                 icon: "fa-solid fa-gear",
                 label: "A5E.TabSettings",
-                component: ActorSettingsPage,
                 display:
                     !actor.pack &&
                     actor.permission !==
@@ -141,7 +147,9 @@
                 on:tab-change={updateCurrentTab}
             />
 
-            <svelte:component this={tabs[currentTab]?.component} />
+            <svelte:component this={tabs[currentTab]?.bodyComponent} />
+
+            <svelte:component this={tabs[currentTab]?.footerComponent} />
         </section>
     </main>
 </ApplicationShell>

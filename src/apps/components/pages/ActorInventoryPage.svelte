@@ -3,13 +3,10 @@
 
     import CreateMenu from "../actorUtilityBar/CreateMenu.svelte";
     import Filter from "../actorUtilityBar/Filter.svelte";
-    import ActorInventoryShields from "../ActorInventoryShields.svelte";
     import ItemCategory from "../ItemCategory.svelte";
-    import ItemWeightTrack from "../ItemWeightTrack.svelte";
     import Search from "../actorUtilityBar/Search.svelte";
     import ShowDescription from "../actorUtilityBar/ShowDescription.svelte";
     import Sort from "../actorUtilityBar/Sort.svelte";
-    import TabFooter from "../TabFooter.svelte";
     import UtilityBar from "../actorUtilityBar/UtilityBar.svelte";
 
     import usesRequired from "../../../utils/usesRequired";
@@ -28,6 +25,7 @@
     let showQuantity = quantityRequired(objects);
 
     $: menuList = Object.entries(subTypes);
+
     $: sortedObjects = Object.entries($objects._types).sort(
         (a, b) => sortMap[a[0]] - sortMap[b[0]]
     );
@@ -42,7 +40,11 @@
     });
 </script>
 
-<div class="a5e-page-wrapper">
+<div
+    class="a5e-page-wrapper"
+    class:a5e-page-wrapper--has-footer={$actor.flags?.a5e
+        ?.trackInventoryWeight ?? true}
+>
     {#if $actor.isOwner}
         <UtilityBar>
             <Search {reducerType} />
@@ -69,12 +71,4 @@
             {/if}
         {/each}
     </section>
-
-    <TabFooter>
-        {#if $actor.flags?.a5e?.trackInventoryWeight ?? true}
-            <ItemWeightTrack />
-        {/if}
-
-        <ActorInventoryShields />
-    </TabFooter>
 </div>
