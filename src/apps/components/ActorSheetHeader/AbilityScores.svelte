@@ -14,10 +14,12 @@
 
 <style lang="scss">
     .ability-scores {
-        display: flex;
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
         position: relative;
-        gap: 0.5rem;
+        gap: 0.625rem;
         margin: 0;
+        margin-inline: -0.25rem;
         padding: 0;
         list-style: none;
         font-family: $font-primary;

@@ -7,6 +7,12 @@
   border-bottom: 1px solid #3e4240;
   box-shadow: 0 0 10px #2e4246 inset;
 
+  &--ability-score {
+    grid-area: header;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
   &--document-list {
     display: grid;
     grid-template-areas: var(--headingTemplateAreas);
