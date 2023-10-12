@@ -176,7 +176,6 @@
     .main-container {
         display: flex;
         flex-direction: column;
-        gap: 0.5rem;
         height: 100%;
         overflow: hidden;
     }

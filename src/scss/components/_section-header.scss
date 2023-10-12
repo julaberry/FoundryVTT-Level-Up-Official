@@ -8,6 +8,7 @@
   box-shadow: 0 0 10px #2e4246 inset;
 
   &--ability-score {
+    position: relative;
     grid-area: header;
     text-align: center;
     text-transform: uppercase;

@@ -4,10 +4,11 @@
   gap: 0.25rem;
   align-items: center;
   justify-content: space-between;
-  font-size: $font-size-sm;
+  margin-top: 0.25rem;
   padding-left: var(--padding-left, 0.5rem);
   padding-right: var(--padding-right, 0.5rem);
   padding-block: 0.75rem;
+  font-size: var(-font-size-sm);
   background: rgba(255, 255, 255, 0.1);
   border-top: 1px solid #ccc;
 

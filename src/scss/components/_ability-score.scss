@@ -1,5 +1,4 @@
 .a5e-ability-score {
-  position: relative;
   display: grid;
   grid-template-areas:
     "header header"
@@ -9,6 +8,25 @@
   overflow: hidden;
   border-radius: 3px;
   box-shadow: var(--outline-gold), 0 3px 5px rgb(0 0 0 / 0.4);
+
+  &__config-button {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    height: fit-content;
+    width: fit-content;
+    padding: 0.25rem;
+    font-size: var(--font-size-sm);
+    background: transparent;
+    color: rgba(255, 255, 255, 0.5);
+    transition: all 0.15s ease-in-out;
+
+    &:hover {
+      color: var(--color-text-light);
+      box-shadow: none;
+    }
+  }
 
   &__value[type="number"] {
     grid-area: value;

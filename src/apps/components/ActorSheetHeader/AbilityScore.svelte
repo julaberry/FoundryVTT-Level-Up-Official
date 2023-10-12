@@ -21,6 +21,14 @@
 <li class="a5e-ability-score">
     <header class="a5e-section-header a5e-section-header--ability-score">
         <h3 class="a5e-section-header__heading">{abilityLabel}</h3>
+
+        {#if !(!$actor.isOwner ? true : $actor.flags?.a5e?.sheetIsLocked ?? true)}
+            <button
+                on:click={() =>
+                    $actor.configureAbilityScore({ abilityKey: abilityLabel })}
+                class="a5e-ability-score__config-button fas fa-gear"
+            />
+        {/if}
     </header>
 
     <input
@@ -72,12 +80,4 @@
             {replaceHyphenWithMinusSign(ability.save.deterministicBonus)}
         </div>
     </button>
-
-    {#if !(!$actor.isOwner ? true : $actor.flags?.a5e?.sheetIsLocked ?? true)}
-        <button
-            on:click={() =>
-                $actor.configureAbilityScore({ abilityKey: abilityLabel })}
-            class="a5e-ability-score__edit-button fas fa-gear"
-        />
-    {/if}
 </li>

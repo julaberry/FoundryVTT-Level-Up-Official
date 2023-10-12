@@ -19,7 +19,6 @@
         position: relative;
         gap: 0.625rem;
         margin: 0;
-        margin-inline: -0.25rem;
         padding: 0;
         list-style: none;
         font-family: $font-primary;
