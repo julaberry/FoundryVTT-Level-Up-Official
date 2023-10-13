@@ -55,13 +55,13 @@
     $: showRechargeButton = canRecharge($actor, sheetIsLocked);
 </script>
 
-<li class="resource">
-    <header class="resource-header">
+<li class="a5e-section">
+    <header class="a5e-section-header a5e-section-header--resource">
         <input
+            class="a5e-section-header__heading a5e-section-header__heading--resource"
             type="text"
             name="system.resources.{source}.label"
             value={resource.label}
-            class="a5e-input a5e-input--slim resource-label"
             placeholder={localize(`A5E.Resources${source.capitalize()}`)}
             disabled={sheetIsLocked}
             on:change={({ target }) =>
@@ -69,27 +69,27 @@
         />
 
         {#if !sheetIsLocked}
-            <button class="resource-setting" on:click={configureResource}>
-                <i class="fas fa-gear" />
+            <button class="a5e-resource-button" on:click={configureResource}>
+                <i class="a5e-resource-button__icon fas fa-gear" />
             </button>
         {/if}
 
         {#if showRechargeButton}
             <button
-                class="resource-setting"
+                class="a5e-resource-button"
                 data-tooltip="Recharge Resource"
                 data-tooltip-direction="UP"
                 on:click={() => $actor.rechargeGenericResource(source)}
             >
-                <i class="fas fa-dice" />
+                <i class="a5e-resource-button__icon fas fa-dice" />
             </button>
         {/if}
     </header>
 
-    <div class="resource-value-container">
+    <div class="a5e-resource-values-wrapper">
         {#if resource.hideMax}
             <button
-                class="a5e-button resource-btn fas fa-minus"
+                class="a5e-resource-increment-button fas fa-minus"
                 type="button"
                 disabled={resource.value === 0}
                 on:click={decrementResource}
@@ -97,7 +97,7 @@
         {/if}
 
         <input
-            class="a5e-input a5e-input--inline-item a5e-input--small resource-number-input"
+            class="a5e-resource-input"
             class:disable-pointer-events={!$actor.isOwner}
             type="number"
             name="system.resources.{source}.value"
@@ -114,21 +114,24 @@
 
         {#if resource.hideMax}
             <button
-                class="a5e-button resource-btn fas fa-plus"
+                class="a5e-resource-increment-button fas fa-plus"
                 type="button"
-                on:click={incrementResource}
+                on:click={({ target }) => {
+                    incrementResource();
+                    target.blur();
+                }}
             />
         {:else}
             <span class="resource-seperator"> / </span>
 
             <input
+                class="a5e-resource-input"
                 type="number"
                 name="system.resources.{source}.max"
                 value={getDeterministicBonus(
                     resource.max ?? 0,
                     $actor.getRollData()
                 )}
-                class="a5e-input a5e-input--inline-item a5e-input--small resource-number-input"
                 placeholder="0"
                 disabled
             />
@@ -137,29 +140,52 @@
 </li>
 
 <style lang="scss">
-    .disable-pointer-events {
-        pointer-events: none;
-    }
-
-    .resource {
-        position: relative;
-        padding: 0.125rem 0.25rem 0.25rem 0.25rem;
-        border: 1px solid #ccc;
-        border-radius: $border-radius-standard;
-        min-width: 7rem;
-    }
-
-    .resource-header {
+    .a5e-resource-button {
         display: flex;
-        gap: 0.125rem;
+        align-items: center;
+        justify-content: center;
+        height: 1rem;
+        width: 1rem;
+        color: rgba(255, 255, 255, 0.5);
+        background: transparent;
+
+        transition: all 0.15s ease-in-out;
+
+        &:hover {
+            box-shadow: none;
+            color: var(--color-light-text);
+            transform: scale(1.2);
+        }
+
+        &__icon {
+            margin: 0;
+            line-height: 1;
+        }
     }
 
-    .resource-label {
+    .a5e-resource-increment-button {
+        height: 100%;
+        margin: 0;
         padding: 0;
+        opacity: 0.8;
+        background: transparent;
+        color: var(--color-text);
+
+        transition: all 0.15s ease-in-out;
+
+        &:focus,
+        &:hover {
+            box-shadow: none;
+            opacity: 1;
+            transform: scale(1.2);
+        }
+    }
+
+    .a5e-resource-input {
         border: 0;
+        border-radius: 0;
         background: transparent;
         text-align: center;
-        text-overflow: ellipsis;
 
         &:active,
         &:focus {
@@ -167,50 +193,14 @@
         }
     }
 
-    .resource-value-container {
+    .a5e-resource-values-wrapper {
         display: flex;
         align-items: center;
         gap: 0.25rem;
+        height: 1.5rem;
     }
 
-    .resource-number-input {
-        flex-grow: 1;
-        height: 1.125rem;
-    }
-
-    .resource-setting {
-        padding: 0;
-        margin: 0;
-        height: 27px;
-        width: fit-content;
-        background: transparent;
-        color: #7e7960;
-        cursor: pointer;
-
-        &:hover {
-            box-shadow: none;
-            color: #555;
-        }
-
-        i {
-            height: 27px;
-            transition: $standard-transition;
-
-            &:hover {
-                transform: scale(1.2);
-            }
-        }
-    }
-
-    .resource-btn {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 1.125rem;
-        height: 1.125rem;
-        padding: 0;
-        font-size: $font-size-sm;
-        color: #555;
-        background-color: rgba(0 0 0 / 0.1);
+    .disable-pointer-events {
+        pointer-events: none;
     }
 </style>

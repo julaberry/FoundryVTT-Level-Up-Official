@@ -25,6 +25,13 @@
     text-align: center;
   }
 
+  &--resource {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding-right: 0.25rem;
+  }
+
   &--rounded,
   &--document-list {
     border-radius: 3px;
@@ -32,5 +39,24 @@
 
   &__heading {
     font-size: inherit;
+
+    &--resource[type="text"] {
+      height: fit-content;
+      padding: 0;
+      color: inherit;
+      text-align: center;
+      line-height: 1;
+      border: 0;
+      background: transparent;
+
+      &:active,
+      &:focus {
+        box-shadow: none;
+      }
+    }
+
+    &--resource::placeholder {
+      color: inherit;
+    }
   }
 }
