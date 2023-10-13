@@ -1,0 +1,9 @@
+.a5e-currencies-wrapper {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.5rem;
+  grid-area: currency;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}

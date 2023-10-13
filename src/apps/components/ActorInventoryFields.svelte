@@ -38,8 +38,18 @@
 
 {#if $actor.type === "character"}
     <!-- Attunement -->
-    <div class="a5e-footer-field">
-        <h3 class="a5e-footer-field__label">{localize("A5E.Attunement")}</h3>
+    <div
+        class="a5e-footer-field a5e-footer-field--attunement"
+        class:a5e-footer-field--stacked={$actor.flags?.a5e
+            ?.trackInventoryWeight ?? true}
+    >
+        <h3
+            class="a5e-footer-field__label"
+            class:a5e-footer-field__label--stacked={$actor.flags?.a5e
+                ?.trackInventoryWeight ?? true}
+        >
+            {localize("A5E.Attunement")}
+        </h3>
 
         <div class="a5e-footer-field__values">
             <span class="a5e-footer-field__input">
@@ -67,8 +77,18 @@
     </div>
 
     <!-- Supply -->
-    <div class="a5e-footer-field">
-        <h3 class="a5e-footer-field__label">{localize("A5E.Supply")}</h3>
+    <div
+        class="a5e-footer-field a5e-footer-field--supply"
+        class:a5e-footer-field--stacked={$actor.flags?.a5e
+            ?.trackInventoryWeight ?? true}
+    >
+        <h3
+            class="a5e-footer-field__label"
+            class:a5e-footer-field__label--stacked={$actor.flags?.a5e
+                ?.trackInventoryWeight ?? true}
+        >
+            {localize("A5E.Supply")}
+        </h3>
 
         <div class="a5e-footer-field__values">
             <input
@@ -95,9 +115,8 @@
         </div>
     </div>
 
-    <!-- Bulky Items -->
-    <div class="a5e-footer-field">
-        <h3 class="a5e-footer-field__label">{localize("Bulky Items")}</h3>
+    <div class="a5e-footer-field a5e-footer-field--bulky">
+        <h3 class="a5e-footer-field__label">Bulky</h3>
 
         <div class="a5e-footer-field__values">
             <span class="a5e-footer-field__input">
@@ -111,74 +130,65 @@
     </div>
 {/if}
 
-<!-- Currencies -->
-<!-- <div
-        class="
-		u-flex u-gap-sm u-text-sm
-		shield
-		shield--currency
-	"
-        class:u-ml-auto={$actor.type === "npc"}
-        class:u-mr-auto={$actor.type === "npc"}
-    >
-        <ol class="currency__list">
-            {#each Object.entries(currency) as [label, value]}
-                <li class="currency__item" data-type={label}>
-                    <label
-                        class="currency__label"
-                        class:disable-pointer-events={!$actor.isOwner}
-                        for="currency-{label}"
-                    >
-                        {localize(label)}
-                    </label>
+<ul class="a5e-currencies-wrapper">
+    {#each Object.entries(currency) as [label, value]}
+        <li
+            class="a5e-footer-field"
+            class:a5e-footer-field--stacked={$actor.flags?.a5e
+                ?.trackInventoryWeight ?? true}
+            data-type={label}
+        >
+            <label
+                class="a5e-footer-field__label a5e-footer-field__label--currency"
+                class:disable-pointer-events={!$actor.isOwner}
+                class:a5e-footer-field__label--stacked={$actor.flags?.a5e
+                    ?.trackInventoryWeight ?? true}
+                for="currency-{label}"
+            >
+                {#if $actor.flags?.a5e?.trackInventoryWeight ?? true}
+                    <i class="fa-solid fa-coins" />
+                {/if}
 
-                    <input
-                        class="a5e-footer-group__input a5e-footer-group__input--currency shield-input"
-                        class:disable-pointer-events={!$actor.isOwner}
-                        id="currency-{label}"
-                        type="number"
-                        name="system.currency.{label}"
-                        {value}
-                        min="0"
-                        on:change={({ target }) =>
-                            updateDocumentDataFromField(
-                                $actor,
-                                target.name,
-                                Number(target.value)
-                            )}
-                    />
-                </li>
-            {/each}
-        </ol>
-    </div> -->
+                {localize(label)}
+            </label>
+
+            <div class="a5e-footer-field__values">
+                <input
+                    class="a5e-footer-field__input a5e-footer-field__input--currency"
+                    class:disable-pointer-events={!$actor.isOwner}
+                    id="currency-{label}"
+                    type="number"
+                    name="system.currency.{label}"
+                    {value}
+                    min="0"
+                    on:change={({ target }) =>
+                        updateDocumentDataFromField(
+                            $actor,
+                            target.name,
+                            Number(target.value)
+                        )}
+                />
+            </div>
+        </li>
+    {/each}
+</ul>
 
 <style lang="scss">
+    .a5e-footer-field--attunement {
+        grid-area: attunement;
+    }
+
+    .a5e-footer-field--bulky {
+        grid-area: bulky;
+    }
+
+    .a5e-footer-field--supply {
+        grid-area: supply;
+    }
+
     .a5e-footer-field__input--supply {
         width: 2rem;
         text-align: center;
-    }
-
-    .currency {
-        &__item {
-            display: flex;
-            flex-direction: column;
-            gap: 0.125rem;
-        }
-
-        &__label {
-            margin-bottom: 0;
-            font-weight: bold;
-            text-transform: uppercase;
-            text-align: center;
-        }
-
-        &__list {
-            display: flex;
-            gap: 0.25rem;
-            margin: 0;
-            padding: 0;
-            list-style: none;
-        }
     }
 
     .disable-pointer-events {

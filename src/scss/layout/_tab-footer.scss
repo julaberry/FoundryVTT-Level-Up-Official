@@ -13,9 +13,23 @@
   border-top: 1px solid #ccc;
 
   &--inventory,
+  &--inventory-alt,
   &--maneuvers,
   &--spells {
     justify-content: flex-start;
     gap: 0.75rem;
+  }
+
+  &--inventory {
+    display: grid;
+    grid-template-areas: "bar bar bar bulky"
+      "attunement supply currency currency";
+  }
+
+  &--inventory-alt {
+    display: grid;
+    grid-template-areas: "attunement supply bulky x"
+      "currency currency currency currency";
+    grid-template-columns: repeat(3, min-content) 1fr;
   }
 }

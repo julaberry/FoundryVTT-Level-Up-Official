@@ -17,19 +17,19 @@
     overflow-y: auto;
   }
 
+  &--core,
+  &--notes,
+  &--settings,
+  &--skills {
+    padding-right: 0.5rem;
+  }
+
   &--has-footer {
     padding-bottom: 0;
   }
 
   &--notes {
     padding-top: 0.125rem;
-  }
-
-  &--core,
-  &--notes,
-  &--settings,
-  &--skills {
-    padding-right: 0.5rem;
   }
 
   &--notes,

@@ -7,6 +7,7 @@
 @import './old/base/animations';
 
 @import "./components/ability-score";
+@import "./components/currency";
 @import "./components/encumbrance-track";
 @import "./components/footer-field";
 @import "./components/header";
@@ -15,10 +16,14 @@
 @import "./components/utility-bar";
 
 @import "./layout/ability-scores-wrapper";
+@import "./layout/actor-sheet";
+@import "./layout/currencies-wrapper";
 @import "./layout/item-list-wrapper";
 @import "./layout/page-wrapper";
 @import "./layout/section";
 @import "./layout/tab-footer";
+
+@import "./foundry/sheets";
 
 @import './old/components/action-config';
 @import './old/components/area-templates';

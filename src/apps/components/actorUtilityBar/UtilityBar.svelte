@@ -1,7 +1,8 @@
 <script>
+    export let modifierClasses;
 </script>
 
-<section class="a5e-utility-bar">
+<section class="a5e-utility-bar {modifierClasses}">
     <slot />
 </section>
 

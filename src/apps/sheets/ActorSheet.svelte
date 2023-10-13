@@ -156,17 +156,6 @@
 </ApplicationShell>
 
 <style lang="scss">
-    :global {
-        .a5e-actor-sheet {
-            min-width: 47.1875rem;
-        }
-
-        .a5e-sheet .window-content {
-            padding: 0;
-            overflow-y: hidden;
-        }
-    }
-
     main {
         display: flex;
         height: 100%;
@@ -177,6 +166,5 @@
         display: flex;
         flex-direction: column;
         height: 100%;
-        overflow: hidden;
     }
 </style>
