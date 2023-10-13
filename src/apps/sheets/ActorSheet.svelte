@@ -126,12 +126,13 @@
 </script>
 
 <ApplicationShell bind:elementRoot>
-    <main
+    <article
+        class="a5e-actor-sheet-wrapper"
         on:drop|preventDefault|stopPropagation={(event) => sheet._onDrop(event)}
     >
         <ActorSidebar />
 
-        <section class="main-container">
+        <section class="body-container">
             <ActorSheetHeader />
 
             <!-- <NavigationBar
@@ -152,17 +153,11 @@
 
             <svelte:component this={tabs[currentTab]?.footerComponent} />
         </section>
-    </main>
+    </article>
 </ApplicationShell>
 
 <style lang="scss">
-    main {
-        display: flex;
-        height: 100%;
-        background: $color-sheet-background;
-    }
-
-    .main-container {
+    .body-container {
         display: flex;
         flex-direction: column;
         height: 100%;

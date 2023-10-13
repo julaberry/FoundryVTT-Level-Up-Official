@@ -43,11 +43,7 @@
         class:a5e-footer-field--stacked={$actor.flags?.a5e
             ?.trackInventoryWeight ?? true}
     >
-        <h3
-            class="a5e-footer-field__label"
-            class:a5e-footer-field__label--stacked={$actor.flags?.a5e
-                ?.trackInventoryWeight ?? true}
-        >
+        <h3 class="a5e-footer-field__label">
             {localize("A5E.Attunement")}
         </h3>
 
@@ -82,11 +78,7 @@
         class:a5e-footer-field--stacked={$actor.flags?.a5e
             ?.trackInventoryWeight ?? true}
     >
-        <h3
-            class="a5e-footer-field__label"
-            class:a5e-footer-field__label--stacked={$actor.flags?.a5e
-                ?.trackInventoryWeight ?? true}
-        >
+        <h3 class="a5e-footer-field__label">
             {localize("A5E.Supply")}
         </h3>
 
@@ -141,8 +133,6 @@
             <label
                 class="a5e-footer-field__label a5e-footer-field__label--currency"
                 class:disable-pointer-events={!$actor.isOwner}
-                class:a5e-footer-field__label--stacked={$actor.flags?.a5e
-                    ?.trackInventoryWeight ?? true}
                 for="currency-{label}"
             >
                 {#if $actor.flags?.a5e?.trackInventoryWeight ?? true}

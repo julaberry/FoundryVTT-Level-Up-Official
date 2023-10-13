@@ -134,9 +134,6 @@
         padding-inline: 0.5rem;
         border: 1px solid #ccc;
         border-top: 0;
-        font-family: var(--font-serif);
-        font-size: var(--font-size-sm);
-        background: rgba(255, 255, 255, 0.1);
 
         &:nth-child(even) {
             border-left: 0;

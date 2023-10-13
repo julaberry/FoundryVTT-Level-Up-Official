@@ -1,13 +1,18 @@
 .a5e-footer-field {
+  --values-padding: 0.25rem;
+
   display: flex;
   flex-shrink: 0;
-  gap: 0.25rem;
   font-family: var(--font-serif);
+  background: rgba(246, 242, 235, 0.15);
   border-radius: var(--border-radius-md);
   box-shadow: var(--outline-gold), 0 3px 5px rgba(0, 0, 0, 0.4);
   overflow: hidden;
 
   &--stacked {
+    --values-padding: 0;
+    --label-justification: center;
+
     flex-direction: column;
     gap: 0;
   }
@@ -38,6 +43,7 @@
   &__label {
     display: flex;
     align-items: center;
+    justify-content: var(--label-justification, initial);
     padding: 0.25rem 0.5rem;
     line-height: 1;
     font-size: var(--font-size-sm);
@@ -50,15 +56,13 @@
       gap: 0.5rem;
       text-transform: uppercase;
     }
-
-    &--stacked {
-      justify-content: center;
-    }
   }
 
   &__values {
     display: flex;
     align-items: center;
+    padding-left: var(--values-padding);
     color: var(--color-text);
+    border: 1px solid #ccc;
   }
 }

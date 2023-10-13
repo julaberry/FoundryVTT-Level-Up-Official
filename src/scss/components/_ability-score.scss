@@ -7,6 +7,7 @@
   grid-template-columns: repeat(2, 1fr);
   overflow: hidden;
   border-radius: 3px;
+  background: rgba(246, 242, 235, 0.15);
   box-shadow: var(--outline-gold), 0 3px 5px rgb(0 0 0 / 0.4);
 
   &__config-button {
@@ -37,7 +38,7 @@
     line-height: 1;
     text-align: center;
     color: var(--color-text);
-    background: rgba(255, 255, 255, 0.1);
+    background: transparent;
     border: 0;
     border-radius: 0;
 
@@ -70,11 +71,7 @@
       transform: translate(-50%, -50%);
       font: var(--fa-font-solid);
       font-size: var(--font-size-xxl);
-      color: #c8c7be;
-      text-shadow:  1px 1px 0 rgba(120, 100, 82, 0.25),
-        -1px 1px 0 rgba(120, 100, 82, 0.25),
-        -1px -1px 0 rgba(120, 100, 82, 0.25),
-        1px -1px 0 rgba(120, 100, 82, 0.25);
+      color: rgba(0, 0, 0, 0.15);
     }
 
     &--check {

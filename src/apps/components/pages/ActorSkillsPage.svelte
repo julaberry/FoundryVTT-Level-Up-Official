@@ -69,9 +69,8 @@
         margin: 0;
         padding: 0;
         list-style: none;
-        background: rgba(255, 255, 255, 0.1);
-        border: 1px solid #ccc;
-        border-radius: $border-radius-standard;
+        font-size: var(--font-size-sm);
+        background: rgba(246, 242, 235, 0.15);
     }
 
     .skill-specialties-list {
@@ -82,9 +81,7 @@
         width: 100%;
         margin: 0;
         padding: 0.25rem 0.5rem;
-        font-family: var(--font-serif);
         font-size: var(--font-size-sm);
-        background: rgba(255, 255, 255, 0.1);
 
         &__specialties {
             margin: 0;
