@@ -1,0 +1,43 @@
+@property --color-primary-hp-bar {
+  syntax: "<color>";
+  inherits: true;
+}
+
+@property --primary-hp-percentage {
+  syntax: "<percentage>";
+  inherits: true;
+  initial-value: 1;
+}
+
+@property --secondary-hp-percentage {
+  syntax: "<percentage>";
+  inherits: true;
+  initial-value: 1;
+}
+
+.a5e-hp-track {
+  width: 100%;
+  height: 0.75rem;
+  margin-bottom: 0.5rem;
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--outline-gold);
+  overflow: hidden;
+
+  &::after {
+    content: "";
+    display: block;
+    height: 100%;
+    grid-column: 1;
+    grid-row: 1 / 3;
+    width: var(--total-hp-percentage);
+    background: linear-gradient(
+      90deg,
+      var(--color-primary-hp-bar) var(--primary-hp-percentage),
+      var(--color-temp-hp-bar) var(--primary-hp-percentage),
+      var(--color-temp-hp-bar) 100%
+    );
+    border-radius: var(--border-radius-md);
+    box-shadow: 0 0 5px #2e4246 inset;
+    transition: all 0.15s ease-in-out;
+  }
+}

@@ -11,7 +11,7 @@
 </script>
 
 <header class="sheet-header">
-    <section class="sheet-header-top">
+    <!-- <section class="sheet-header-top">
         <section class="sheet-header-top-left">
             <input
                 type="text"
@@ -38,7 +38,7 @@
                 <NpcShields />
             </section>
         {/if}
-    </section>
+    </section> -->
 
     <AbilityScores />
 </header>

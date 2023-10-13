@@ -66,20 +66,19 @@
 
 <div class="actor-sidebar">
     <section class="actor-portrait-wrapper">
-        <HitPointBar {hp}>
-            <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
-            <img
-                class="actor-image"
-                src={$actor.img}
-                alt={$actor.name}
-                title={$actor.name}
-                on:click={onEditImage}
-            />
+        <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
 
-            {#if hp.value === 0}
-                <DeathSaveOverlay />
-            {/if}
-        </HitPointBar>
+        <img
+            class="a5e-actor-image"
+            src={$actor.img}
+            alt={$actor.name}
+            title={$actor.name}
+            on:click={onEditImage}
+        />
+
+        {#if hp.value === 0}
+            <DeathSaveOverlay />
+        {/if}
 
         <StatusTrack
             icon="fa-running"
@@ -103,6 +102,8 @@
 
         <RestTrack />
     </section>
+
+    <HitPointBar {hp} />
 
     <section class="actor-sidebar-lower">
         <HitPointValues {hp} />
@@ -139,16 +140,6 @@
         position: relative;
         padding: 0 0.5rem 0.125rem 0rem;
         margin-block-end: 0.5em;
-    }
-
-    .actor-image {
-        border-radius: 50%;
-        cursor: pointer;
-        width: 8rem;
-        height: 8rem;
-        object-fit: cover;
-        object-position: top;
-        z-index: 1;
     }
 
     .actor-sidebar-lower {

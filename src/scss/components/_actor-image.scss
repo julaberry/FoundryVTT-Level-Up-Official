@@ -1,0 +1,12 @@
+.a5e-actor-image {
+  height: 8rem;
+  width: 8rem;
+  object-position: top;
+  object-fit: cover;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(2px);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--outline-gold);
+  cursor: pointer;
+  z-index: 1;
+}
