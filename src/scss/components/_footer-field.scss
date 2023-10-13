@@ -12,6 +12,8 @@
   &--stacked {
     --values-padding: 0;
     --label-justification: center;
+    --input-height: min-content;
+    --input-padding: 0.125rem;
 
     flex-direction: column;
     gap: 0;
@@ -22,10 +24,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: var(--form-field-height);
+    height: var(--input-height, var(--form-field-height));
     width: 100%;
     min-width: 3ch;
-    padding-inline: 0.5rem;
+    padding: var(--input-padding, 0 0.5rem);
     text-align: center;
     background: transparent;
     border: 0;
