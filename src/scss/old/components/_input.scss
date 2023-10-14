@@ -51,11 +51,6 @@ input[type='number'] {
     background: transparent;
     font-family: var(--font-name);
     font-size: var(--font-size-lg);
-
-    &:active,
-    &:focus {
-      box-shadow: none;
-    }
   }
 
   &--classes,

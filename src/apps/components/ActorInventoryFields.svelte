@@ -31,7 +31,6 @@
 
     $: attunement = $actor.system.attributes.attunement;
     $: bulkyLimit = getBulkyLimit($actor);
-    $: currency = $actor.system.currency;
     $: supply = $actor.system.supply;
     $: supplyLimit = getSupplyLimit($actor);
 </script>
@@ -121,47 +120,6 @@
         </div>
     </div>
 {/if}
-
-<ul class="a5e-currencies-wrapper">
-    {#each Object.entries(currency) as [label, value]}
-        <li
-            class="a5e-footer-field"
-            class:a5e-footer-field--stacked={$actor.flags?.a5e
-                ?.trackInventoryWeight ?? true}
-            data-type={label}
-        >
-            <label
-                class="a5e-footer-field__label a5e-footer-field__label--currency"
-                class:disable-pointer-events={!$actor.isOwner}
-                for="currency-{label}"
-            >
-                {#if $actor.flags?.a5e?.trackInventoryWeight ?? true}
-                    <i class="fa-solid fa-coins" />
-                {/if}
-
-                {localize(label)}
-            </label>
-
-            <div class="a5e-footer-field__values">
-                <input
-                    class="a5e-footer-field__input a5e-footer-field__input--currency"
-                    class:disable-pointer-events={!$actor.isOwner}
-                    id="currency-{label}"
-                    type="number"
-                    name="system.currency.{label}"
-                    {value}
-                    min="0"
-                    on:change={({ target }) =>
-                        updateDocumentDataFromField(
-                            $actor,
-                            target.name,
-                            Number(target.value)
-                        )}
-                />
-            </div>
-        </li>
-    {/each}
-</ul>
 
 <style lang="scss">
     .a5e-footer-field--attunement {

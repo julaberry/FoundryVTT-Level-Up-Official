@@ -20,6 +20,7 @@
     <TJSInput
         {input}
         --tjs-input-placeholder-color="#555"
+        --tjs-input-background="rgba(246, 242, 235, 0.15)"
         --tjs-input-text-margin="0"
         --tjs-input-text-width="100%"
     />

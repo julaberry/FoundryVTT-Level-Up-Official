@@ -2,6 +2,7 @@
     import { getContext, onDestroy } from "svelte";
 
     import CreateMenu from "../actorUtilityBar/CreateMenu.svelte";
+    import Currency from "../Currency.svelte";
     import Filter from "../actorUtilityBar/Filter.svelte";
     import ItemCategory from "../ItemCategory.svelte";
     import Search from "../actorUtilityBar/Search.svelte";
@@ -56,6 +57,8 @@
             <CreateMenu {reducerType} {menuList} />
         </UtilityBar>
     {/if}
+
+    <Currency />
 
     <section class="a5e-item-list-wrapper">
         {#each sortedObjects as [label, items]}

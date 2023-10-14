@@ -3,7 +3,8 @@
   grid-template-columns: repeat(5, 1fr);
   gap: 0.5rem;
   grid-area: currency;
-  margin: 0;
+  margin: 0 0.5rem 0 0;
   padding: 0;
+  font-family: var(--font-serif);
   list-style: none;
 }

@@ -8,24 +8,8 @@
     import calculateCarryCapacity from "../../handlers/calculateCarryCapacity";
     import calculateInventoryWeight from "../../handlers/calculateInventoryWeight";
 
-    function getBulkyLimit(actor) {
-        const { supply } = actor.system;
-
-        if (supply) {
-            return Math.max(1 + actor.system.abilities.str.mod, 1);
-        }
-
-        return Math.max(2 + actor.system.abilities.str.mod, 2);
-    }
-
     const actor = getContext("actor");
 
-    $: bulkyItems = $actor.items.reduce((bulkyCount, item) => {
-        if (item.system.bulky) bulkyCount += 1;
-        return bulkyCount;
-    }, 0);
-
-    $: bulkyLimit = getBulkyLimit($actor);
     $: carryCapacity = calculateCarryCapacity($actor);
     $: inventoryWeight = calculateInventoryWeight($actor);
 
