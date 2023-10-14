@@ -18,10 +18,15 @@
   }
 
   &--core,
+  &--dialog,
   &--notes,
   &--settings,
   &--skills {
     padding-right: 0.5rem;
+  }
+
+  &--dialog {
+    gap: 0.75rem;
   }
 
   &--has-footer {

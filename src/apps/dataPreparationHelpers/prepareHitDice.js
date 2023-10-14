@@ -7,10 +7,10 @@ export default function prepareHitDice(actor) {
     hitDice.push('d20');
   }
 
-  return hitDice.map((hd) => ({
-    die: hd,
-    dieSize: hd,
-    current: actor.system.attributes.hitDice[hd].current,
-    total: actor.system.attributes.hitDice[hd].total
+  return hitDice.map((dieSize) => ({
+    dieSize,
+    icon: `fa-solid fa-dice-${dieSize}`,
+    current: actor.system.attributes.hitDice[dieSize].current,
+    total: actor.system.attributes.hitDice[dieSize].total
   }));
 }

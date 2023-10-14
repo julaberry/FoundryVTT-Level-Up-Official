@@ -40,6 +40,14 @@
   &__heading {
     font-size: inherit;
 
+    &--hit-dice {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-transform: uppercase;
+      gap: 0.5rem;
+    }
+
     &--resource[type="text"] {
       height: fit-content;
       padding: 0;

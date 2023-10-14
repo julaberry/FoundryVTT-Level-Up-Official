@@ -5,11 +5,11 @@
 
     const actor = getContext("actor");
 
+    $: acFormula = getACComponents($actor);
+
     $: sheetIsLocked = !$actor.isOwner
         ? true
         : $actor.flags?.a5e?.sheetIsLocked ?? true;
-
-    $: acFormula = getACComponents($actor);
 </script>
 
 <li class="ac-wrapper">
@@ -44,7 +44,7 @@
         <button
             class="fas fa-cog ac__config-button"
             data-tooltip="A5E.ArmorClassConfigurationTitle"
-            data-tooltip-direction="DOWN"
+            data-tooltip-direction="UP"
             on:click={() => $actor.configureArmorClass()}
         />
     {/if}

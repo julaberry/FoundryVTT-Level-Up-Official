@@ -1456,6 +1456,7 @@
   "A5E.HitPointsTemporaryLabel": "+ Temp HP",
   "A5E.HitPointsMaxModifier": "Maximum HP Modifier",
   "A5E.HitPointsMaxModifierLabel": "+ Max HP",
+  "A5E.HitDiceConfigurationPrompt": "{name}: Configure Hit Dice",
   "A5E.HitPointsConfigurationPrompt": "{name}: Configure Hit Points",
   "A5E.HitPointsConfigurationTooltip": "Configure Hit Points",
   "A5E.IncludeUnit": "Include Unit",

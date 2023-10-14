@@ -1,8 +1,7 @@
 <script>
     import { getContext } from "svelte";
+    import { localize } from "#runtime/svelte/helper";
     import { TJSDocument } from "#runtime/svelte/store/fvtt/document";
-
-    import FormSection from "../components/FormSection.svelte";
 
     import prepareHitDice from "../dataPreparationHelpers/prepareHitDice";
     import updateDocumentDataFromField from "../../utils/updateDocumentDataFromField";
@@ -17,96 +16,54 @@
     ];
 
     const actor = new TJSDocument(actorDocument);
-    const hitDice = prepareHitDice($actor);
-
-    $: hitDieClasses =
-        $actor.type === "character"
-            ? "u-flex u-gap-md"
-            : "u-grid u-grid-3 u-gap-lg";
 
     $: hp = $actor.system.attributes.hp;
 </script>
 
-<article>
-    <div class="u-flex u-flex-col u-gap-md">
+<article class="a5e-page-wrapper a5e-page-wrapper--dialog">
+    <section class="a5e-hp-wrapper">
         {#each hpFields as { label, updateAttribute }}
-            <FormSection
-                heading={label}
-                --item-alignment="center"
-                --label-width="7.5rem"
-            >
-                <div class="u-w-20">
-                    <input
-                        class="a5e-input"
-                        type="number"
-                        data-dtype="Number"
-                        name="system.attributes.hp.{updateAttribute}"
-                        value={hp[updateAttribute]}
-                        on:change={({ target }) =>
-                            updateDocumentDataFromField(
-                                $actor,
-                                target.name,
-                                Number(target.value)
-                            )}
-                    />
-                </div>
-            </FormSection>
+            <div class="a5e-section">
+                <header class="a5e-section-header">
+                    <h3 class="a5e-section-header__heading">
+                        {localize(label)}
+                    </h3>
+                </header>
+
+                <input
+                    class="a5e-hp-input"
+                    type="number"
+                    data-dtype="Number"
+                    name="system.attributes.hp.{updateAttribute}"
+                    value={hp[updateAttribute]}
+                    on:change={({ target }) =>
+                        updateDocumentDataFromField(
+                            $actor,
+                            target.name,
+                            Number(target.value)
+                        )}
+                />
+            </div>
         {/each}
-
-        <hr class="a5e-rule a5e-rule--from u-my-sm" />
-
-        <section class={`u-mt-0 ${hitDieClasses}`}>
-            {#each hitDice as { die, dieSize, current, total }}
-                <div class="a5e-hit-die-wrapper">
-                    <div class="a5e-hit-die">
-                        <span class="a5e-hit-die__label">{dieSize}</span>
-                    </div>
-
-                    <div class="a5e-hit-die__input-container">
-                        <input
-                            class="a5e-hit-die__quantity"
-                            type="number"
-                            data-dtype="Number"
-                            min="0"
-                            name="system.attributes.hitDice.{dieSize}.current"
-                            value={current}
-                            on:change={({ target }) =>
-                                updateDocumentDataFromField(
-                                    $actor,
-                                    target.name,
-                                    Number(target.value)
-                                )}
-                        />
-                        /
-                        <input
-                            class="a5e-hit-die__quantity"
-                            data-dtype="Number"
-                            type="number"
-                            min="0"
-                            name="system.attributes.hitDice.{dieSize}.total"
-                            value={total}
-                            on:change={({ target }) =>
-                                updateDocumentDataFromField(
-                                    $actor,
-                                    target.name,
-                                    Number(target.value)
-                                )}
-                        />
-                    </div>
-                </div>
-            {/each}
-        </section>
-    </div>
+    </section>
 </article>
 
 <style lang="scss">
-    article {
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-        padding: 0.75rem;
+    .a5e-hp-input {
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        text-align: center;
+
+        &:active,
+        &:focus {
+            box-shadow: none;
+        }
+    }
+
+    .a5e-hp-wrapper {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
         gap: 0.5rem;
-        overflow: auto;
-        background: $color-sheet-background;
     }
 </style>

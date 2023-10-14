@@ -6,6 +6,10 @@
     const actor = getContext("actor");
 
     $: availableHitDice = computeTotalAvailableHitDice($actor);
+
+    $: sheetIsLocked = !$actor.isOwner
+        ? true
+        : $actor.flags?.a5e?.sheetIsLocked ?? true;
 </script>
 
 <li class="hit-dice-wrapper">
@@ -35,6 +39,15 @@
             />
         </g>
     </svg>
+
+    {#if !sheetIsLocked}
+        <button
+            class="fas fa-cog hit-dice__config-button"
+            data-tooltip="Configure Hit Dice"
+            data-tooltip-direction="DOWN"
+            on:click={() => $actor.configureHitDice()}
+        />
+    {/if}
 </li>
 
 <style lang="scss">
@@ -67,5 +80,26 @@
 
     .hit-dice-wrapper {
         position: relative;
+    }
+
+    .hit-dice__config-button {
+        width: fit-content;
+        margin: 0;
+        padding: 0;
+        background: transparent;
+        color: rgba(0, 0, 0, 0.25);
+
+        position: absolute;
+        top: 0.175rem;
+        right: -1rem;
+
+        transition: $standard-transition;
+
+        &:focus,
+        &:hover {
+            color: #555;
+            box-shadow: none;
+            transform: scale(1.2);
+        }
     }
 </style>

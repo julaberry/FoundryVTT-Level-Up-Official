@@ -1,20 +1,3 @@
-@property --color-primary-hp-bar {
-  syntax: "<color>";
-  inherits: true;
-}
-
-@property --primary-hp-percentage {
-  syntax: "<percentage>";
-  inherits: true;
-  initial-value: 1;
-}
-
-@property --secondary-hp-percentage {
-  syntax: "<percentage>";
-  inherits: true;
-  initial-value: 1;
-}
-
 .a5e-hp-track {
   width: 100%;
   height: 0.75rem;

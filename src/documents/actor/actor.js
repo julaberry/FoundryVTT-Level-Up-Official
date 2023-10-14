@@ -8,6 +8,7 @@ import RollPreparationManager from '../../managers/RollPreparationManager';
 
 import AbilityCheckConfigDialog from '../../apps/dialogs/ActorAbilityConfigDialog.svelte';
 import ActorHpConfigDialog from '../../apps/dialogs/ActorHpConfigDialog.svelte';
+import ActorHitDiceConfigDialog from '../../apps/dialogs/ActorHitDiceConfigDialog.svelte';
 import ActorInitConfigDialog from '../../apps/dialogs/ActorInitConfigDialog.svelte';
 import ArmorProfConfigDialog from '../../apps/dialogs/ArmorProfConfigDialog.svelte';
 import ArmorClassConfigDialog from '../../apps/dialogs/ArmorClassConfigDialog.svelte';
@@ -58,6 +59,7 @@ export default class ActorA5e extends Actor {
       damageResistances: DamageResistancesConfigDialog,
       damageVulnerabilities: DamageVulnerabilitiesConfigDialog,
       health: ActorHpConfigDialog,
+      hitDice: ActorHitDiceConfigDialog,
       initiative: ActorInitConfigDialog,
       languages: LanguagesConfigDialog,
       movement: MovementConfigDialog,
@@ -798,6 +800,11 @@ export default class ActorA5e extends Actor {
     const title = localize('A5E.HitPointsConfigurationPrompt', { name: this.name });
     options.width ??= 380;
     this.#configure('health', title, data, options);
+  }
+
+  configureHitDice(data = {}, options = {}) {
+    const title = localize('A5E.HitDiceConfigurationPrompt', { name: this.name });
+    this.#configure('hitDice', title, data, options);
   }
 
   configureInitiative(data = {}, options = {}) {

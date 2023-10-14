@@ -39,7 +39,7 @@
         width: var(--width);
         margin: var(--margin, 0);
         padding: var(--padding, 0.5rem);
-        background: var(--background, rgba(0, 0, 0, 0.05));
+        background: var(--background, transparent);
         border: var(--border, none);
         border-radius: $border-radius-standard;
     }
