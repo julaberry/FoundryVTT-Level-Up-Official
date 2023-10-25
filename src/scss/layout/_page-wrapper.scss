@@ -1,7 +1,7 @@
 .a5e-page-wrapper {
   display: flex;
   flex-direction: column;
-  flex: 1;
+  grid-area: body;
   gap: 0.5rem;
   padding: 0.5rem;
   padding-right: 0;

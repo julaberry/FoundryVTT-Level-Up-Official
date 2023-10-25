@@ -57,25 +57,11 @@
         ];
     }
 
-    async function onEditImage() {
-        await editDocumentImage($actor);
-    }
-
     $: hp = $actor.system.attributes.hp;
 </script>
 
 <div class="actor-sidebar">
     <section class="actor-portrait-wrapper">
-        <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
-
-        <img
-            class="a5e-actor-image"
-            src={$actor.img}
-            alt={$actor.name}
-            title={$actor.name}
-            on:click={onEditImage}
-        />
-
         {#if hp.value === 0}
             <DeathSaveOverlay />
         {/if}
@@ -130,10 +116,12 @@
         flex-direction: column;
         flex-grow: 0;
         flex-shrink: 0;
+        grid-area: sidebar;
         height: 100%;
         width: 200px;
         padding: 0.5rem;
         border-right: 1px solid #ccc;
+        overflow: hidden;
     }
 
     .actor-portrait-wrapper {

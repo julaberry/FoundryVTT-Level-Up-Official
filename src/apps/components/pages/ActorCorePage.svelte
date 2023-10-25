@@ -58,9 +58,10 @@
         grid-template-columns: repeat(4, 1fr);
         align-items: center;
         gap: 0.5rem;
+        grid-area: resources;
         width: 100%;
         margin: 0;
-        padding: 0.5rem 0.5rem 0 0.5rem;
+        padding: 0.5rem;
         list-style: none;
     }
 </style>

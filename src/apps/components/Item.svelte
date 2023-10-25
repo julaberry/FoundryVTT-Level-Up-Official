@@ -204,7 +204,7 @@
     .actions-list {
         display: flex;
         flex-direction: column;
-        gap: 0.175rem;
+        // gap: 0.175rem;
         margin: 0;
         padding: 0 0 0 1rem;
     }
@@ -228,9 +228,12 @@
         width: 100%;
         padding: 0.125rem;
         padding-right: 0.5rem;
-        border: 1px solid #ccc;
-        border-radius: var(--border-radius-md);
-        background: var(--item-background, rgba(0, 0, 0, 0.05));
+        // border: 1px solid #ccc;
+        // border-radius: var(--border-radius-md);
+        border: solid transparent;
+        border-width: 0 0 1px;
+        border-image: linear-gradient(90deg, #f1edea, #d5cac1) 1 repeat;
+        // background: var(--item-background, rgba(0, 0, 0, 0.05));
         cursor: pointer;
 
         &--highlight {

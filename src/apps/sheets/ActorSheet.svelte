@@ -130,36 +130,28 @@
         class="a5e-actor-sheet-wrapper"
         on:drop|preventDefault|stopPropagation={(event) => sheet._onDrop(event)}
     >
-        <ActorSidebar />
+        <ActorSheetHeader />
 
-        <section class="body-container">
-            <ActorSheetHeader />
+        <!-- <ActorSidebar /> -->
 
-            <!-- <NavigationBar
+        <NewNavigationBar
+            {currentTab}
+            {tabs}
+            showLock={true}
+            on:tab-change={updateCurrentTab}
+        />
+
+        <!-- <NavigationBar
                 {currentTab}
                 {tabs}
                 showLock={true}
                 on:tab-change={updateCurrentTab}
             /> -->
 
-            <NewNavigationBar
-                {currentTab}
-                {tabs}
-                showLock={true}
-                on:tab-change={updateCurrentTab}
-            />
+        <svelte:component this={tabs[currentTab]?.bodyComponent} />
 
-            <svelte:component this={tabs[currentTab]?.bodyComponent} />
+        <!-- <svelte:component this={tabs[currentTab]?.footerComponent} /> -->
 
-            <svelte:component this={tabs[currentTab]?.footerComponent} />
-        </section>
+        <footer style="grid-area: footer;" />
     </article>
 </ApplicationShell>
-
-<style lang="scss">
-    .body-container {
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-    }
-</style>

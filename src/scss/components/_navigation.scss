@@ -6,6 +6,7 @@
   column-gap: 1rem;
   align-items: center;
   flex-grow: 0;
+  grid-area: primaryNavigation;
   height: 1.25rem;
   margin-block: 0.5rem;
   padding-inline: 1rem;
@@ -58,6 +59,7 @@
 }
 
 .a5e-secondary-nav-wrapper {
+  grid-area: secondaryNavigation;
   margin-top: -0.5rem;
   padding-inline: 1rem;
   font-family: var(--font-serif);

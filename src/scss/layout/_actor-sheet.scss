@@ -3,7 +3,16 @@
 }
 
 .a5e-actor-sheet-wrapper {
-  display: flex;
+  display: grid;
+  grid-template-areas: "header header"
+    "sidebar primaryNavigation"
+    "sidebar secondaryNavigation"
+    "sidebar resources"
+    "sidebar body"
+    "footer footer";
+  grid-template-columns: 200px 1fr;
+  grid-template-rows: 10rem repeat(3, max-content) 1fr max-content;
   height: 100%;
   background-color: rgba(246, 242, 235, 0.15);
+  overflow: hidden;
 }

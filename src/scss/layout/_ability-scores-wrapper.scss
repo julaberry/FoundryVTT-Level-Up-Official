@@ -1,9 +1,11 @@
 .a5e-ability-scores-wrapper {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  position: relative;
   gap: 0.625rem;
+  grid-area: attributes;
   margin: 0;
+  margin-right: 0.5rem;
   padding: 0;
   list-style: none;
   font-family: var(--font-serif);

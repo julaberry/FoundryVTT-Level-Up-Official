@@ -167,7 +167,6 @@
     .items-container {
         display: flex;
         flex-direction: column;
-        gap: 0.175rem;
         padding: 0;
         padding-right: 0.375rem;
         margin: 0;

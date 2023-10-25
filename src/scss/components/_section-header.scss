@@ -19,8 +19,8 @@
     grid-template-areas: var(--headingTemplateAreas);
     grid-template-columns: var(--headingTemplateColumns);
     align-items: center;
+    margin: 0;
     gap: 0.5rem;
-    margin-bottom: 0.175rem;
     font-size: var(--font-size-sm);
     text-align: center;
   }
