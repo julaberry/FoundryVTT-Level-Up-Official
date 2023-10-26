@@ -133,7 +133,7 @@
     {/if}
 
     <ul class="items-container">
-        {#each [...items] as item (item.id)}
+        {#each [...items] as item, i (item.id)}
             <Item
                 {item}
                 {showDescription}

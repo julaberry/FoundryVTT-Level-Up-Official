@@ -232,8 +232,13 @@
         // border-radius: var(--border-radius-md);
         border: solid transparent;
         border-width: 0 0 1px;
-        border-image: linear-gradient(90deg, #f1edea, #d5cac1) 1 repeat;
-        // background: var(--item-background, rgba(0, 0, 0, 0.05));
+        border-image: linear-gradient(
+                90deg,
+                var(--item-border-color-start, #f1edea),
+                var(--item-border-color-end, #d5cac1)
+            )
+            1 repeat;
+        background: var(--item-background, transparent);
         cursor: pointer;
 
         &--highlight {
@@ -243,6 +248,8 @@
             --indicator-text-color: black;
             --input-border-color: hsla(145, 100%, 15%, 0.302);
             --item-background: hsla(145, 100%, 42%, 0.302);
+            --item-border-color-end: hsla(145, 100%, 25%, 0.302);
+            --item-border-color-start: hsla(145, 100%, 42%, 0);
             --track-background: hsl(120, 43%, 87%);
             --track-border-color: hsla(145, 100%, 25%, 0.302);
         }
@@ -254,6 +261,8 @@
             --indicator-text-color: black;
             --input-border-color: hsla(280, 75%, 60%, 0.302);
             --item-background: hsla(280, 75%, 60%, 0.22);
+            --item-border-color-end: hsla(280, 30%, 40%, 0.302);
+            --item-border-color-start: hsla(280, 75%, 60%, 0);
             --track-background: hsl(280, 30%, 90%);
             --track-border-color: hsla(280, 30%, 40%, 0.302);
         }
@@ -296,17 +305,11 @@
         &--shift:hover {
             filter: brightness(0) saturate(100%) invert(58%) sepia(10%)
                 saturate(2832%) hue-rotate(73deg) brightness(88%) contrast(76%);
-
-            // filter: invert(34%) sepia(4%) saturate(4360%) hue-rotate(143deg)
-            //     brightness(78%) contrast(65%);
         }
 
         &--ctrl:hover {
             filter: brightness(0) saturate(100%) invert(18%) sepia(80%)
                 saturate(5142%) hue-rotate(348deg) brightness(74%) contrast(94%);
-
-            // filter: invert(15%) sepia(27%) saturate(4731%) hue-rotate(338deg)
-            //     brightness(101%) contrast(95%);
         }
     }
 </style>
