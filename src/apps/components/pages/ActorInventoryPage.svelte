@@ -46,6 +46,8 @@
     class:a5e-page-wrapper--has-footer={$actor.flags?.a5e
         ?.trackInventoryWeight ?? true}
 >
+    <Currency />
+
     {#if $actor.isOwner}
         <UtilityBar>
             <Search {reducerType} />
@@ -57,8 +59,6 @@
             <CreateMenu {reducerType} {menuList} />
         </UtilityBar>
     {/if}
-
-    <Currency />
 
     <section class="a5e-item-list-wrapper">
         {#each sortedObjects as [label, items]}

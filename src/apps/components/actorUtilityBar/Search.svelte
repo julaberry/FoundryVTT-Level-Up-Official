@@ -23,6 +23,7 @@
         --tjs-input-background="rgba(246, 242, 235, 0.15)"
         --tjs-input-text-margin="0"
         --tjs-input-text-width="100%"
+        --tjs-input-text-border="1px solid rgba(120, 100, 82, 0.2)"
     />
 </div>
 
