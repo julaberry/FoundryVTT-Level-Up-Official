@@ -1,6 +1,8 @@
 <script>
     import { getContext } from "svelte";
 
+    import ArmorClass from "../actorSidebar/ArmorClass.svelte";
+
     import pressedKeysStore from "../../../stores/pressedKeysStore";
 
     import getKeyPressAsOptions from "../../handlers/getKeyPressAsOptions";
@@ -15,6 +17,8 @@
 </script>
 
 <ul class="a5e-ability-scores-wrapper">
+    <ArmorClass />
+
     {#each Object.entries($actor.system.abilities) as [abilityLabel, ability], i}
         <li class="a5e-ability-score">
             <header

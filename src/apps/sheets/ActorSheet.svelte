@@ -4,6 +4,7 @@
     import { ApplicationShell } from "#runtime/svelte/component/core";
     import { getContext, setContext } from "svelte";
 
+    import AbilityScores from "../components/ActorSheetHeader/AbilityScores.svelte";
     import ActorCorePage from "../components/pages/ActorCorePage.svelte";
     import ActorEffectsPage from "../components/pages/ActorEffectsPage.svelte";
     import ActorFeaturesPage from "../components/pages/ActorFeaturesPage.svelte";
@@ -18,7 +19,7 @@
     import ActorSkillsPage from "../components/pages/ActorSkillsPage.svelte";
     import ActorSpellsFooter from "../components/pages/ActorSpellsFooter.svelte";
     import ActorSpellsPage from "../components/pages/ActorSpellsPage.svelte";
-    import NewNavigationBar from "../components/navigation/NewNavigationBar.svelte";
+    import NavigationBar from "../components/navigation/NewNavigationBar.svelte";
 
     import ActorSheetTempSettingsStore from "../../stores/ActorSheetTempSettingsStore";
 
@@ -132,21 +133,14 @@
     >
         <ActorSheetHeader />
 
-        <!-- <ActorSidebar /> -->
+        <AbilityScores />
 
-        <NewNavigationBar
+        <NavigationBar
             {currentTab}
             {tabs}
             showLock={true}
             on:tab-change={updateCurrentTab}
         />
-
-        <!-- <NavigationBar
-                {currentTab}
-                {tabs}
-                showLock={true}
-                on:tab-change={updateCurrentTab}
-            /> -->
 
         <svelte:component this={tabs[currentTab]?.bodyComponent} />
 

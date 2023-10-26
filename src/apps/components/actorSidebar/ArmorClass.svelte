@@ -63,7 +63,7 @@
         background: none;
         font-weight: inherit;
         text-align: center;
-        font-size: $font-size-xl;
+        font-size: $font-size-xxl;
         z-index: 1;
 
         &:disabled {
@@ -75,6 +75,7 @@
         font-size: $font-size-md;
         text-align: center;
         padding-bottom: 0.125rem;
+        margin-top: 0.5rem;
     }
 
     .ac-wrapper {
@@ -83,10 +84,10 @@
 
     .ac-background {
         position: absolute;
-        height: 2.5rem;
-        top: 0.0675rem;
+        height: 100%;
+        top: 0;
         left: 50%;
-        transform: translate(-50%, 50%);
+        transform: translateX(-50%);
         fill: rgba(0, 0, 0, 0.15);
         z-index: 0;
     }
@@ -109,6 +110,14 @@
             color: #555;
             box-shadow: none;
             transform: scale(1.2);
+        }
+    }
+
+    @container sheet (height < 700px) {
+        .ac-wrapper {
+            height: 5.625rem;
+            grid-column-start: 1;
+            grid-column-end: 3;
         }
     }
 </style>
