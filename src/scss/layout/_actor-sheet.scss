@@ -1,5 +1,5 @@
 .a5e-actor-sheet {
-  min-width: 45rem;
+  min-width: 38rem;
   container-type: size;
   container-name: sheet;
 }
@@ -7,14 +7,13 @@
 .a5e-actor-sheet-wrapper {
   display: grid;
   grid-template-areas: "header"
-    "attributes"
     "primaryNavigation"
     "secondaryNavigation"
     "resources"
     "body"
     "footer";
   grid-template-columns: 1fr;
-  grid-template-rows: 10rem repeat(3, max-content) 1fr max-content;
+  grid-template-rows: repeat(3, max-content) 1fr max-content;
   height: 100%;
   background-color: rgba(246, 242, 235, 0.15);
   overflow: hidden;
@@ -23,11 +22,11 @@
 @container sheet (height < 700px) {
   .a5e-actor-sheet-wrapper {
     grid-template-areas: "header header"
-      "attributes primaryNavigation"
+      "primaryNavigation primaryNavigation"
       "attributes secondaryNavigation"
       "attributes resources"
       "attributes body"
       "footer footer";
-    grid-template-columns: 200px 1fr;
+    grid-template-columns: 11.25rem 1fr;
   }
 }

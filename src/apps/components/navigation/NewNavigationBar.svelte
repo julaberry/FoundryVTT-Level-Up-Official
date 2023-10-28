@@ -64,9 +64,16 @@
         grid-area: current;
         opacity: 0;
         font-size: 0.833rem;
+        text-align: center;
 
         &--active {
             opacity: 1;
+        }
+    }
+
+    @container sheet (height > 700px) {
+        .current-tab-label {
+            text-align: left;
         }
     }
 </style>

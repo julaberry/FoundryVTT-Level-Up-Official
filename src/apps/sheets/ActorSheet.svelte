@@ -133,8 +133,6 @@
     >
         <ActorSheetHeader />
 
-        <AbilityScores />
-
         <NavigationBar
             {currentTab}
             {tabs}

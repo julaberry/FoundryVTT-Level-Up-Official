@@ -3,6 +3,7 @@
 
     import AbilityScores from "./AbilityScores.svelte";
     import CharacterShields from "./CharacterShields.svelte";
+    import HitPointBar from "../actorSidebar/HitPointBar.svelte";
     import NpcShields from "./NpcShields.svelte";
 
     import updateDocumentDataFromField from "../../../utils/updateDocumentDataFromField";
@@ -25,19 +26,38 @@
             on:click={onEditImage}
         />
 
-        <input
-            type="text"
-            name="name"
-            value={$actor.name}
-            class="a5e-actor-name"
-            class:disable-pointer-events={!$actor.isOwner}
-            placeholder="Name"
-            on:change={({ target }) =>
-                updateDocumentDataFromField($actor, target.name, target.value)}
-        />
-    </div>
+        <!-- <HitPointBar hp={$actor.system.attributes.hp} /> -->
 
-    <div class="sheet-header__summary">Summary information goes here</div>
+        <div class="name-wrapper">
+            <input
+                type="text"
+                name="name"
+                value={$actor.name}
+                class="a5e-actor-name"
+                class:disable-pointer-events={!$actor.isOwner}
+                placeholder="Name"
+                on:change={({ target }) =>
+                    updateDocumentDataFromField(
+                        $actor,
+                        target.name,
+                        target.value
+                    )}
+            />
+
+            <div class="sheet-header__summary">
+                <span>{CONFIG.A5E.actorSizes[$actor.system.traits.size]}</span>
+                ·
+                <span>
+                    {$actor.system.details.creatureTypes
+                        .map(
+                            (creatureType) =>
+                                CONFIG.A5E.creatureTypes[creatureType]
+                        )
+                        .join(", ")}
+                </span>
+            </div>
+        </div>
+    </div>
 
     <!-- <section class="sheet-header-top">
         <section class="sheet-header-top-left">
@@ -68,30 +88,37 @@
         {/if}
     </section> -->
 
-    <!-- <AbilityScores /> -->
+    <AbilityScores />
 </header>
 
 <style lang="scss">
     .a5e-actor-name[type="text"] {
         display: flex;
         align-items: center;
-        height: 2.25rem;
-        padding-left: 0.75rem;
+        padding: 0;
         font-size: var(--font-size-lg);
         font-family: var(--font-serif);
+        border: 0;
+        background: transparent;
     }
 
     .disable-pointer-events {
         pointer-events: none;
     }
 
+    .name-wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-left: 0.75rem;
+    }
+
     .sheet-header {
         display: grid;
         grid-template-areas:
             "banner banner"
-            "x summary"
             "x attributes";
-        grid-template-columns: 7.5rem 1fr;
+        grid-template-columns: 10rem 1fr;
         grid-template-rows: repeat(3, max-content);
         grid-area: header;
         gap: 0.75rem;
@@ -99,9 +126,10 @@
         margin-bottom: 0.75rem;
 
         &__banner {
+            position: relative;
             display: flex;
             grid-area: banner;
-            height: 2.25rem;
+            height: 3rem;
             margin-top: 1rem;
             color: var(--color-light-text);
             background: var(--color-primary);
@@ -109,8 +137,12 @@
         }
 
         &__summary {
-            grid-area: summary;
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            font-size: var(--font-size-xs);
             font-family: var(--font-serif);
+            opacity: 0.8;
         }
     }
 

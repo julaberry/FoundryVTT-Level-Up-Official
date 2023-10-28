@@ -57,21 +57,26 @@
     "
     />
 
-    {#if sheetIsLocked}
+    <!-- {#if !sheetIsLocked}
         <button
             class="fas fa-cog hp__config-button"
             data-tooltip="Configure Hit Dice"
             data-tooltip-direction="DOWN"
             on:click={() => $actor.configureHealth()}
         />
-    {/if}
+    {/if} -->
 </div>
 
 <style lang="scss">
     .a5e-hp-track-wrapper {
+        position: absolute;
+        left: 1.5rem;
+        top: 8rem;
+        width: 8rem;
         display: flex;
         align-items: center;
         gap: 0.5rem;
+        z-index: 100;
     }
 
     .hp__config-button {

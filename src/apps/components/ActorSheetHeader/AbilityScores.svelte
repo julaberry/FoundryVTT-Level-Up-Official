@@ -17,8 +17,7 @@
 </script>
 
 <ul class="a5e-ability-scores-wrapper">
-    <ArmorClass />
-
+    <!-- <ArmorClass /> -->
     {#each Object.entries($actor.system.abilities) as [abilityLabel, ability], i}
         <li class="a5e-ability-score">
             <header
