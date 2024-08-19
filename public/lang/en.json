@@ -1755,6 +1755,7 @@
   "A5E.ConsumerActionUses": "Uses (action)",
   "A5E.ConsumerAmmunition": "Ammunition Consumer",
   "A5E.ConsumerCharge": "Charges Consumer",
+  "A5E.ConsumerDefaultSelection": "Select Consumer Automatically in Roll Prompt",
   "A5E.ConsumerHitDice": "Hit Dice Consumer",
   "A5E.ConsumerHitDiceDefault": "Default Hit Die",
   "A5E.ConsumerItemUses": "Uses (item)",

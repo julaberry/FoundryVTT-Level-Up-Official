@@ -4,6 +4,7 @@
 
     import updateDocumentDataFromField from "../../../utils/updateDocumentDataFromField";
 
+    import Checkbox from "../Checkbox.svelte";
     import FieldWrapper from "../FieldWrapper.svelte";
     import Section from "../Section.svelte";
 
@@ -112,3 +113,15 @@
         />
     </FieldWrapper>
 </Section>
+
+<Checkbox
+    label="A5E.ConsumerDefaultSelection"
+    checked={consumer.default ?? true}
+    on:updateSelection={({ detail }) => {
+        updateDocumentDataFromField(
+            $item,
+            `system.actions.${actionId}.consumers.${consumerId}.default`,
+            detail,
+        );
+    }}
+/>
