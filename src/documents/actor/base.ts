@@ -209,9 +209,6 @@ class BaseActorA5e extends Actor {
     this.prepareDerivedData();
     this.afterDerivedData();
 
-    // TODO: Deprecation - Remove support for this
-    // @ts-expect-error
-    if ((this.system.schemaVersion?.version ?? this.system.schema?.version) < 0.005) return;
     this.prepareArmorClass();
     this.RollOverrideManager.initialize();
 
@@ -230,21 +227,10 @@ class BaseActorA5e extends Actor {
     this.grants = new ActorGrantsManager(this);
 
     // Add AC data to the actor.
-    // TODO: Deprecation
     // @ts-expect-error
-    if ((this.system.schemaVersion?.version ?? this.system.schema?.version) >= 0.005) {
-      if (typeof this.system.attributes.ac !== 'object') {
-        this.system.attributes.ac = {
-          baseFormula: `${this.system.attributes.ac}`,
-          value: 0
-        };
-      }
-
-      // @ts-expect-error
-      this.system.attributes.ac.changes = {
-        override: null, bonuses: { components: [], value: 0 }
-      };
-    }
+    this.system.attributes.ac.changes = {
+      override: null, bonuses: { components: [], value: 0 }
+    };
   }
 
   /**
@@ -387,9 +373,6 @@ class BaseActorA5e extends Actor {
     this.prepareMovement();
     this.prepareSenses();
 
-    // TODO: Deprecation warning
-    // @ts-expect-error
-    if ((this.system.schemaVersion?.version ?? this.system.schema?.version) < 0.005) return;
     foundry.utils.setProperty(this, 'system.attributes.ac.changes', this.prepareArmorChanges());
   }
 
@@ -559,7 +542,7 @@ class BaseActorA5e extends Actor {
     const actorData = this.system;
     // @ts-expect-error
     const proficiencyBonus = actorData.attributes.prof;
-    const jackOfAllTrades = this.flags.a5e?.jackOfAllTrades;
+    const jackOfAllTrades = this.flags?.a5e?.jackOfAllTrades;
 
     Object.values(actorData.skills).forEach((skill) => {
       // @ts-expect-error
@@ -967,7 +950,7 @@ class BaseActorA5e extends Actor {
 
   override async modifyTokenAttribute(attribute: string, value, isDelta: boolean, isBar: boolean) {
     if (attribute === 'attributes.hp') {
-      const hp = getProperty(this.system, attribute);
+      const hp = foundry.utils.getProperty(this.system, attribute);
       const hpPool = hp.value + hp.temp;
       const delta = hpPool - value;
 
@@ -1113,16 +1096,14 @@ class BaseActorA5e extends Actor {
       sound: CONFIG.sounds.dice,
       rolls: rolls.map(({ roll }) => roll),
       rollMode: visibilityMode ?? game.settings.get('core', 'rollMode'),
-      flags: {
-        a5e: {
-          actorId: this.uuid,
-          cardType: 'abilityCheck',
-          img: this.token?.texture.src ?? this.img,
-          name: this.name,
-          rollData: rolls.map(({ roll, ...rollData }) => rollData)
-        }
+      system: {
+        actorId: this.uuid,
+        actorName: this.name,
+        img: this.token?.texture.src ?? this.img,
+        rollData: rolls.map(({ roll, ...rollData }) => rollData),
+        rollType: 'abilityCheck'
       },
-      content: '<article></article>'
+      type: 'roll'
     };
 
     const hookData = {
@@ -1131,6 +1112,9 @@ class BaseActorA5e extends Actor {
 
     Hooks.callAll('a5e.rollAbilityCheck', this, hookData, rolls);
 
+    // @ts-expect-error
+    ChatMessage.applyRollMode(chatData, visibilityMode ?? game.settings.get('core', 'rollMode'));
+    // @ts-expect-error
     const chatCard = await ChatMessage.create(chatData);
     return chatCard;
   }
@@ -1243,20 +1227,18 @@ class BaseActorA5e extends Actor {
 
     const chatData = {
       author: game.user?.id,
-      speaker: ChatMessage.getSpeaker({ actor: this }),
+      speaker: ChatMessage.getSpeaker({ actor: this as Actor }),
       sound: CONFIG.sounds.dice,
       rolls: rolls.map(({ roll }) => roll),
       rollMode: visibilityMode ?? game.settings.get('core', 'rollMode'),
-      flags: {
-        a5e: {
-          actorId: this.uuid,
-          cardType: 'savingThrow',
-          img: this.token?.texture.src ?? this.img,
-          name: this.name,
-          rollData: rolls.map(({ roll, ...rollData }) => rollData)
-        }
+      system: {
+        actorId: this.uuid,
+        actorName: this.name,
+        img: this.token?.texture.src ?? this.img,
+        rollData: rolls.map(({ roll, ...rollData }) => rollData),
+        rollType: 'savingThrow'
       },
-      content: '<article></article>'
+      type: 'roll'
     };
 
     const hookData = {
@@ -1270,6 +1252,9 @@ class BaseActorA5e extends Actor {
       Hooks.callAll('a5e.rollSavingThrow', this, hookData, rolls);
     }
 
+    // @ts-expect-error
+    ChatMessage.applyRollMode(chatData, visibilityMode ?? game.settings.get('core', 'rollMode'));
+    // @ts-expect-error
     const chatCard = await ChatMessage.create(chatData);
     return chatCard;
   }
@@ -1385,16 +1370,14 @@ class BaseActorA5e extends Actor {
       sound: CONFIG.sounds.dice,
       rolls: rolls.map(({ roll }) => roll),
       rollMode: visibilityMode ?? game.settings.get('core', 'rollMode'),
-      flags: {
-        a5e: {
-          actorId: this.uuid,
-          cardType: 'skillCheck',
-          img: this.token?.texture.src ?? this.img,
-          name: this.name,
-          rollData: rolls.map(({ roll, ...rollData }) => rollData)
-        }
+      system: {
+        actorId: this.uuid,
+        actorName: this.name,
+        img: this.token?.texture.src ?? this.img,
+        rollData: rolls.map(({ roll, ...rollData }) => rollData),
+        rollType: 'skillCheck'
       },
-      content: '<article></article>'
+      type: 'roll'
     };
 
     const hookData = {
@@ -1403,6 +1386,9 @@ class BaseActorA5e extends Actor {
 
     Hooks.callAll('a5e.rollSkillCheck', this, hookData, rolls);
 
+    // @ts-expect-error
+    ChatMessage.applyRollMode(chatData, visibilityMode ?? game.settings.get('core', 'rollMode'));
+    // @ts-expect-error
     const chatCard = await ChatMessage.create(chatData);
     return chatCard;
   }
@@ -1752,21 +1738,9 @@ class BaseActorA5e extends Actor {
   override async _preCreate(data, options, user) {
     await super._preCreate(data, options, user);
 
-    const items = [...this.items];
     // Add schema version
-    // @ts-expect-error
-    if (!this.system.schemaVersion?.version && !this.system.schema?.version) {
-      let version: number | null;
-      // @ts-expect-error
-      if (['number', 'string'].includes(typeof this.system.ac)) version = 0.004;
-      // @ts-expect-error
-      else if (items.some((i) => typeof i.system?.equipped === 'boolean')) version = 0.003;
-      // @ts-expect-error
-      else if (items.some((i) => typeof i.system?.recharge === 'string')) version = 0.002;
-      // @ts-expect-error
-      else if (items.some((i) => typeof i.system?.uses?.max === 'number')) version = 0.001;
-      else if (typeof this.system.attributes.movement?.walk?.unit !== 'string') version = null;
-      else version = MigrationRunnerBase.LATEST_SCHEMA_VERSION;
+    if (!this.system.schemaVersion?.version) {
+      const version: number = MigrationRunnerBase.LATEST_SCHEMA_VERSION;
 
       this.updateSource({
         // @ts-expect-error
