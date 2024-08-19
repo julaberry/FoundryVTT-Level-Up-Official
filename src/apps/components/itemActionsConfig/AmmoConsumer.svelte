@@ -4,6 +4,7 @@
 
     import updateDocumentDataFromField from "../../../utils/updateDocumentDataFromField";
 
+    import Checkbox from "../Checkbox.svelte";
     import FieldWrapper from "../FieldWrapper.svelte";
     import Section from "../Section.svelte";
 
@@ -27,15 +28,9 @@
 
     $: ammunitionItems = $item.actor
         ? $item.actor.items
-              .filter(
-                  (i) =>
-                      i.type === "object" &&
-                      i.system.objectType === "ammunition",
-              )
+              .filter((i) => i.type === "object" && i.system.objectType === "ammunition")
               .map((i) => ({ name: i.name, id: i.id }))
-              .sort((a, b) =>
-                  a.name.toLowerCase().localeCompare(b.name.toLowerCase()),
-              )
+              .sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()))
         : [];
 </script>
 
@@ -88,10 +83,7 @@
     </FieldWrapper>
 
     {#if $item.actor}
-        <FieldWrapper
-            heading="A5E.ItemQuantity"
-            --a5e-field-wrapper-width="7.5rem"
-        >
+        <FieldWrapper heading="A5E.ItemQuantity" --a5e-field-wrapper-width="7.5rem">
             <input
                 type="number"
                 d-type="Number"
@@ -106,3 +98,15 @@
         </FieldWrapper>
     {/if}
 </Section>
+
+<Checkbox
+    label="A5E.ConsumerDefaultSelection"
+    checked={consumer.default ?? true}
+    on:updateSelection={({ detail }) => {
+        updateDocumentDataFromField(
+            $item,
+            `system.actions.${actionId}.consumers.${consumerId}.default`,
+            detail,
+        );
+    }}
+/>

@@ -2,6 +2,8 @@
     import { getContext } from "svelte";
     import { localize } from "#runtime/svelte/helper";
 
+    import Checkbox from "../Checkbox.svelte";
+
     import handleDeterministicInput from "../../../utils/handleDeterministicInput";
     import updateDocumentDataFromField from "../../../utils/updateDocumentDataFromField";
 
@@ -54,7 +56,7 @@
                 updateDocumentDataFromField(
                     $item,
                     `system.actions.${actionId}.consumers.${consumerId}.label`,
-                    target.value
+                    target.value,
                 )}
         />
     </div>
@@ -98,7 +100,7 @@
                         updateDocumentDataFromField(
                             $item,
                             `system.actions.${actionId}.consumers.${consumerId}.formula`,
-                            target.value
+                            target.value,
                         );
                     }}
                 />
@@ -119,13 +121,25 @@
                         updateDocumentDataFromField(
                             $item,
                             `system.actions.${actionId}.consumers.${consumerId}.threshold`,
-                            Number(target.value)
+                            Number(target.value),
                         )}
                 />
             </div>
         </div>
     {/if}
 </section>
+
+<Checkbox
+    label="A5E.ConsumerDefaultSelection"
+    checked={consumer.default ?? true}
+    on:updateSelection={({ detail }) => {
+        updateDocumentDataFromField(
+            $item,
+            `system.actions.${actionId}.consumers.${consumerId}.default`,
+            detail,
+        );
+    }}
+/>
 
 <style lang="scss">
     .row {

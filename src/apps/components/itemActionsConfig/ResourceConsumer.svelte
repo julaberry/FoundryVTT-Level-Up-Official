@@ -111,3 +111,15 @@
             )}
     />
 {/if}
+
+<Checkbox
+    label="A5E.ConsumerDefaultSelection"
+    checked={consumer.default ?? true}
+    on:updateSelection={({ detail }) => {
+        updateDocumentDataFromField(
+            $item,
+            `system.actions.${actionId}.consumers.${consumerId}.default`,
+            detail,
+        );
+    }}
+/>
