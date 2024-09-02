@@ -44,6 +44,7 @@
                 hitDice: hitDiceData,
                 itemUses: itemUsesData,
                 spell: spellData,
+                selectedConsumers,
             },
             damageBonuses: RollPreparationManager.getSelectedBonuses(
                 $actor,
@@ -112,6 +113,7 @@
     let hitDiceData = {} as ResourceConsumptionManager.HitDiceConsumerData;
     let itemUsesData = {} as ResourceConsumptionManager.UsesConsumerData;
     let spellData = {} as ResourceConsumptionManager.SpellConsumerData;
+    let selectedConsumers: string[] = [];
     let selectedDamageBonuses = BonusesManager.getDefaultSelectionsFromBonuses({
         damageBonuses,
     });
@@ -205,6 +207,18 @@
         <Section heading="Prompts Config" --a5e-section-body-gap="0.5rem">
             <PromptsSection {prompts} bind:selectedPrompts />
         </Section>
+    {/if}
+
+    {#if consumers}
+        <CheckboxGroup
+            heading="Consumers"
+            options={Object.entries(consumers ?? {}).map(([key, consumer]) => [
+                key,
+                consumer.label || consumer.defaultLabel || "",
+            ])}
+            selected={selectedConsumers}
+            on:updateSelection={({ detail }) => (selectedConsumers = detail)}
+        />
     {/if}
 
     {#if showConsumersSection}
