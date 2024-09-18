@@ -212,7 +212,7 @@
     {#if consumers}
         <CheckboxGroup
             heading="Consumers"
-            options={Object.entries(consumers ?? {}).map(([key, consumer]) => [
+            options={Object.values(consumers ?? {}).map(([key, consumer]) => [
                 key,
                 consumer.label || consumer.defaultLabel || "",
             ])}
